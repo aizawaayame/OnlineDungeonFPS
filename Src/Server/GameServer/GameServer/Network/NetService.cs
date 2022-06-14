@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using GameServer;
 using Common;
+using Common.Network;
 
-namespace Network
+namespace GameServer.Network
 {
     class NetService
     {
         static TcpSocketListener ServerListener;
         public bool Init(int port)
         {
-            ServerListener = new TcpSocketListener("127.0.0.1", GameServer.Properties.Settings.Default.ServerPort, 10);
+            ServerListener = new TcpSocketListener("127.0.0.1", global::GameServer.Properties.Settings.Default.ServerPort, 10);
             ServerListener.SocketConnected += OnSocketConnected;
             return true;
         }

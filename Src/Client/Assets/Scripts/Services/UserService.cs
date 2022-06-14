@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Network;
 using Common;
+using Modules;
 using SkillBridge.Message;
 using UnityEngine;
 using UnityEngine.Events;
@@ -148,7 +149,7 @@ namespace Services
 
             if (response.Result == Result.Success)
             {
-                Models.User.Instance.Info = response.Userinfo;
+                User.Instance.Info = response.Userinfo;
             }
 
             UserLoginEvent userLoginEvent = GameEvents.userLoginEvent;
@@ -184,8 +185,9 @@ namespace Services
             Debug.LogFormat("OnUserCreateCharacter:{0},{1}",response.Result,response.Errormsg);
             if (response.Result == Result.Success)
             {
-                Models.User.Instance.Info.Player.Characters.Clear(); 
-                Models.User.Instance.Info.Player.Characters.AddRange(response.Characters);
+                User.Instance.Info.Player.Characters.Clear(); 
+                Debug.LogFormat("response返回了{0}个角色",response.Characters.Count);
+                User.Instance.Info.Player.Characters.AddRange(response.Characters);
             }
             UserCreateCharacterEvent userCreateCharacterEvent = GameEvents.userCreateCharacterEvent;
             userCreateCharacterEvent.result = response.Result;

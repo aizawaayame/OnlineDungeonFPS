@@ -30,8 +30,9 @@
 
 using System;
 using System.IO;
+using Protocol;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// PackageHandler
@@ -83,7 +84,7 @@ namespace Network
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public static byte[] PackMessage(SkillBridge.Message.NetMessage message)
+        public static byte[] PackMessage(NetMessage message)
         {
             byte[] package = null;
             using (MemoryStream ms = new MemoryStream())
@@ -103,12 +104,12 @@ namespace Network
         /// <param name="offset"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static SkillBridge.Message.NetMessage UnpackMessage(byte[] packet,int offset,int length)
+        public static NetMessage UnpackMessage(byte[] packet,int offset,int length)
         {
-            SkillBridge.Message.NetMessage message = null;
+            NetMessage message = null;
             using (MemoryStream ms = new MemoryStream(packet, offset, length))
             {
-                message = ProtoBuf.Serializer.Deserialize<SkillBridge.Message.NetMessage>(ms);
+                message = ProtoBuf.Serializer.Deserialize<NetMessage>(ms);
             }
             return message;
         }
@@ -125,7 +126,7 @@ namespace Network
                 if (packageSize + readOffset + 4 <= stream.Position)
                 {//包有效
 
-                    SkillBridge.Message.NetMessage message = UnpackMessage(stream.GetBuffer(), this.readOffset + 4, packageSize);
+                    NetMessage message = UnpackMessage(stream.GetBuffer(), this.readOffset + 4, packageSize);
                     if (message == null)
                     {
                         throw new Exception("PackageHandler ParsePackage faild,invalid package");

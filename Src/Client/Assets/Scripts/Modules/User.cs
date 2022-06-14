@@ -1,7 +1,7 @@
 ﻿
 using Utilities;
 
-namespace Models
+namespace Modules
 {
     public class User : Singleton<User>
     {

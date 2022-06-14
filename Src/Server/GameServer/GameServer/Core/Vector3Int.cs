@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Protocol;
 
 namespace GameServer.Core
 {
     using Common.Utils;
-    using SkillBridge.Message;
     // Vector3Int
     using System;
     /// <summary>

@@ -1,11 +1,12 @@
 //WARNING: DON'T EDIT THIS FILE!!!
-using Common;
 
-namespace Network
+using Protocol;
+
+namespace Common.Network
 {
     public class MessageDispatch<T> : Singleton<MessageDispatch<T>>
     {
-        public void Dispatch(T sender, SkillBridge.Message.NetMessageResponse message)
+        public void Dispatch(T sender, NetMessageResponse message)
         {
             if (message.userRegister != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.userRegister); }
             if (message.userLogin != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.userLogin); }
@@ -17,7 +18,7 @@ namespace Network
             if (message.mapEntitySync != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.mapEntitySync); }   
         }
 
-        public void Dispatch(T sender, SkillBridge.Message.NetMessageRequest message)
+        public void Dispatch(T sender, NetMessageRequest message)
         {
             if (message.userRegister != null) { MessageDistributer<T>.Instance.RaiseEvent(sender,message.userRegister); }
             if (message.userLogin != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.userLogin); }

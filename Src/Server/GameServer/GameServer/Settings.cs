@@ -1,4 +1,7 @@
-﻿namespace GameServer.Properties {
+﻿using System;
+using System.Configuration;
+
+namespace GameServer {
     
     
     // 通过此类可以处理设置类的特定事件: 
@@ -24,5 +27,6 @@
         private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
             // 在此处添加用于处理 SettingsSaving 事件的代码。
         }
+
     }
 }

@@ -18,8 +18,7 @@ namespace GameServer
         public string Username { get; set; }
         public string Password { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-        public int Player_ID { get; set; }
     
-        internal virtual TPlayer Player { get; set; }
+        public virtual TPlayer Player { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace GameServer
         public ExtremeWorldEntities()
             : base("name=ExtremeWorldEntities")
         {
-            Players = Set<TPlayer>();
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,8 +25,8 @@ namespace GameServer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TCharacter> Characters { get; set; }
-        internal virtual DbSet<TPlayer> Players { get; set; }
         public virtual DbSet<TUser> Users { get; set; }
+        public virtual DbSet<TPlayer> Players { get; set; }
+        public virtual DbSet<TCharacter> Characters { get; set; }
     }
 }

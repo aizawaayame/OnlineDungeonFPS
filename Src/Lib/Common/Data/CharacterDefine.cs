@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SkillBridge.Message;
+using Protocol;
 
 namespace Common.Data
 {

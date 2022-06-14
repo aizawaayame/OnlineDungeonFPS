@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Protocol;
 using UnityEngine;
 
-namespace SkillBridge.Message
+namespace Common
 {
 
     public static class MessageExtend

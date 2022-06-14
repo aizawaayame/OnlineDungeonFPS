@@ -14,6 +14,12 @@ namespace GameServer
     
     public partial class TCharacter
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TCharacter()
+        {
+            this.MapID = 1;
+        }
+    
         public int ID { get; set; }
         public int TID { get; set; }
         public string Name { get; set; }
@@ -22,8 +28,7 @@ namespace GameServer
         public int MapPosX { get; set; }
         public int MapPosY { get; set; }
         public int MapPosZ { get; set; }
-        public int Player_ID { get; set; }
     
-        internal virtual TPlayer Player { get; set; }
+        public virtual TPlayer Player { get; set; }
     }
 }

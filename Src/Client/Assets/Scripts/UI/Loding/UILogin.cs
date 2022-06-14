@@ -28,6 +28,8 @@ namespace UI.Loding
             EventManager.RemoveListener<UserLoginEvent>(OnLogin);
         }
         #endregion
+    
+        #region Events
         void OnLogin(UserLoginEvent evt)
         {
             if (evt.result == Result.Success)
@@ -40,8 +42,10 @@ namespace UI.Loding
                 MessageBox.Show("登录失败","错误提示",MessageBoxType.Information,btnOK:"",btnCancel:"");
             }
         }
+        #endregion
 
-        
+        #region UICallBack
+
         public void OnClickLogin()
         {
             if (string.IsNullOrEmpty(this.userName.text))
@@ -56,5 +60,9 @@ namespace UI.Loding
             }
             UserService.Instance.SendLogin(userName.text, password.text);
         }
+
+        #endregion
+        
+
     }
 }

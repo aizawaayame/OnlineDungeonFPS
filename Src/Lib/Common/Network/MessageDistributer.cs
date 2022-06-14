@@ -27,12 +27,13 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Common;
+using Protocol;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// MessageDistributer
@@ -53,7 +54,7 @@ namespace Network
         class MessageArgs
         {
             public T sender;
-            public SkillBridge.Message.NetMessage message;
+            public NetMessage message;
         }
         private Queue<MessageArgs> messageQueue = new Queue<MessageArgs>();
 
@@ -118,7 +119,7 @@ namespace Network
             }
         }
 
-        public void ReceiveMessage(T sender ,SkillBridge.Message.NetMessage message)
+        public void ReceiveMessage(T sender ,NetMessage message)
         {
             this.messageQueue.Enqueue(new MessageArgs() { sender = sender, message = message });
             threadEvent.Set();

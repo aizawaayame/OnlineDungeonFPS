@@ -1,14 +1,19 @@
 ﻿using Common.Data;
 using GameServer.Core;
-using SkillBridge.Message;
+using GameServer.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Protocol;
 
 namespace GameServer.Entities
 {
+    /// <summary>
+    /// Character
+    /// 玩家角色类
+    /// </summary>
     class Character : CharacterBase
     {
        
@@ -28,7 +33,7 @@ namespace GameServer.Entities
             this.Info.Class = (CharacterClass)cha.Class;
             this.Info.mapId = cha.MapID;
             this.Info.Entity = this.EntityData;
-            //this.Define = DataManager.Instance.Characters[this.Info.Tid];
+
         }
     }
 }

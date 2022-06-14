@@ -3,7 +3,7 @@
 // Input: message.proto
 
 #pragma warning disable CS1591, CS0612, CS3021, IDE1006
-namespace SkillBridge.Message
+namespace Protocol
 {
 
     [global::ProtoBuf.ProtoContract()]
@@ -308,7 +308,7 @@ namespace SkillBridge.Message
         public string Errormsg { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(3, Name = @"characters")]
-        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; } = new global::System.Collections.Generic.List<NCharacterInfo>();
+        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; set; } = new global::System.Collections.Generic.List<NCharacterInfo>();
 
     }
 

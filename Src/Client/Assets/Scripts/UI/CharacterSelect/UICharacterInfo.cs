@@ -7,13 +7,11 @@ namespace UI.CharacterSelect
 {
     public class UICharacterInfo : MonoBehaviour
     {
-        public SkillBridge.Message.NCharacterInfo info;
-
         public TMP_Text characterLevel;
         public TMP_Text characterName;
-        public TMP_Text characterClass;
         public Image highlight;
-
+        
+        public SkillBridge.Message.NCharacterInfo Info { get; set; }
         public bool IsSelected
         {
             get { return highlight.IsActive(); }
@@ -22,14 +20,13 @@ namespace UI.CharacterSelect
                 highlight.gameObject.SetActive(value);
             }
         }
-
+        
         void Start()
         {
-            if (info != null)
+            if (Info != null)
             {
-                this.characterLevel.text = this.info.Level + "级";
-                this.characterName.text = this.info.Name;
-                
+                this.characterLevel.text = this.Info.Level + "级";
+                this.characterName.text = this.Info.Name;
             }
         }
     }
