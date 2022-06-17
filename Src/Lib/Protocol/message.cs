@@ -308,7 +308,7 @@ namespace Protocol
         public string Errormsg { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(3, Name = @"characters")]
-        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; set; } = new global::System.Collections.Generic.List<NCharacterInfo>();
+        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; } = new global::System.Collections.Generic.List<NCharacterInfo>();
 
     }
 
@@ -337,6 +337,9 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(2, Name = @"errormsg")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"character")]
+        public NCharacterInfo Character { get; set; }
 
     }
 

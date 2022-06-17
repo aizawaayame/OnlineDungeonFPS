@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
-using GameServer.Modules;
+using GameServer.Models;
 
 namespace GameServer.Managers
 {

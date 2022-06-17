@@ -1,6 +1,5 @@
 using System;
 using Services;
-using SkillBridge.Message;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 using Utilities;
 
 
-namespace UI.Loding
+namespace UI
 {
     public class UILogin : MonoBehaviour
     {
@@ -29,13 +28,13 @@ namespace UI.Loding
         }
         #endregion
     
-        #region Events
+        #region Subscribers
         void OnLogin(UserLoginEvent evt)
         {
-            if (evt.result == Result.Success)
+            if (evt.result == Protocol.Result.Success)
             {   
                 Debug.LogFormat("登录成功，返回SUCCESS");
-                SceneManager.LoadScene("Scenes/CharacterSelect", LoadSceneMode.Single);
+                SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
             }
             else
             {

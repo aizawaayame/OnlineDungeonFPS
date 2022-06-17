@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Loding
+namespace UI
 {
     public class UILoading : MonoBehaviour
     {

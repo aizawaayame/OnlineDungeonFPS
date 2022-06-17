@@ -111,7 +111,7 @@
     <Compile Include="Managers\CharacterManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Managers\MapManager.cs" />
-    <Compile Include="Modules\Map.cs" />
+    <Compile Include="Models\Map.cs" />
     <Compile Include="Network\ExtensionMethods.cs" />
     <Compile Include="Network\NetConnection.cs" />
     <Compile Include="Network\NetEventArgs.cs" />

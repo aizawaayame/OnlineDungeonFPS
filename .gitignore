@@ -66,3 +66,13 @@ ipch/
 *.log
 /Src/Client/Logs
 Art
+*.csproj
+/Src/Client/.idea
+*.csproj
+*.csproj
+*.csproj
+*.csproj
+*.vsconfig
+.idea
+*.csproj
+.idea

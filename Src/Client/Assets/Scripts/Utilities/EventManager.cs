@@ -6,10 +6,16 @@ using UnityEngine.Rendering;
 
 namespace Utilities
 {
+    /// <summary>
+    /// The events base class. the classes derived from it is in Events.cs
+    /// </summary>
     public class GameEvent
     {
     
     }
+    /// <summary>
+    /// Just for service global event.
+    /// </summary>
     public static class EventManager
     {
         static readonly Dictionary<Type, Action<GameEvent>> events = new Dictionary<Type, Action<GameEvent>>();

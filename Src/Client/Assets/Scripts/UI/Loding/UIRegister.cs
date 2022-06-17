@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
-namespace UI.Loding
+namespace UI
 {
     public class UIRegister : MonoBehaviour
     {

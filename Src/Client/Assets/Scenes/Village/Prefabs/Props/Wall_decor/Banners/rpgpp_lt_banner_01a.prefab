@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 4612329036020226}
   - component: {fileID: 33231964671719498}
   - component: {fileID: 23335710059859792}
-  - component: {fileID: 875641286452222821}
   m_Layer: 0
   m_Name: rpgpp_lt_banner_01a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 62
   m_IsActive: 1
 --- !u!4 &4612329036020226
 Transform:
@@ -82,17 +81,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &875641286452222821
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1998368968366392}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d7113c6e2a0f65c4abdb33666078052f, type: 3}

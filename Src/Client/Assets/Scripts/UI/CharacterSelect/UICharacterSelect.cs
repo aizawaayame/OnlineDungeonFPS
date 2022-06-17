@@ -4,13 +4,12 @@ using System.Linq.Expressions;
 using Managers;
 using Modules;
 using Services;
-using SkillBridge.Message;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
-namespace UI.CharacterSelect
+namespace UI
 {
     /// <summary>
     /// Manage the Character Select Scene's UI
@@ -26,7 +25,7 @@ namespace UI.CharacterSelect
         /// Create character
         /// </summary>
         public TMP_Text classDesc;
-        CharacterClass charClass;   // the character class which will be created
+        Protocol.CharacterClass charClass;   // the character class which will be created
         public TMP_InputField inputUserName;
         int nameKsy;
         public string UserName
@@ -107,7 +106,7 @@ namespace UI.CharacterSelect
         {
             panelCreate.SetActive(true);
             panelSelect.SetActive(false);
-            OnSelectedClass((int)CharacterClass.Warrior);
+            OnSelectedClass((int)Protocol.CharacterClass.Warrior);
         }
         
         /// <summary>
@@ -134,11 +133,11 @@ namespace UI.CharacterSelect
         /// <param name="charClass"> the character class that will be created</param>
         public void OnSelectedClass(int charClass)
         {
-            this.charClass = (CharacterClass)charClass;
+            this.charClass = (Protocol.CharacterClass)charClass;
             //TODO class desc is doing
             /*classDesc.text = DataManager.Instance.characters[(int)charClass].Name;*/
         }
-
+    
         public void OnClickCreateCharacter()
         {
             if (string.IsNullOrEmpty(this.inputUserName.text))
@@ -148,15 +147,21 @@ namespace UI.CharacterSelect
             }
             UserService.Instance.SendUserCreateCharacter(this.inputUserName.text, this.charClass);
         }
-        
-        
+
+        public void OnClickPlay()
+        {
+            if (selectCharacterIdx >= 0 )
+            {
+                UserService.Instance.SendGameEnter(selectCharacterIdx);
+            }
+        }
         #endregion
         
         #region Events
 
         void OnCharacterCreate(UserCreateCharacterEvent evt)
         {
-            if (evt.result == Result.Success)
+            if (evt.result == Protocol.Result.Success)
             {
                 Debug.Log("角色创建成功");
                 InitCharacterSelect(true);

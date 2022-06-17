@@ -46,13 +46,13 @@ namespace Common
         }
 
 
-        public static Vector3Int FromNVector3(this Vector3Int self,NVector3 nVector)
+        public static Vector3Int FromNVector3ToVector3Int(this Vector3Int self,NVector3 nVector)
         {
             return new Vector3Int(nVector.X, nVector.Y, nVector.Z);
         }
 
 
-        public static NVector3 FromVector3Int(this NVector3 self, Vector3Int nVector)
+        public static NVector3 FromVector3IntToNVector3(this NVector3 self, Vector3Int nVector)
         {
             self.X = nVector.x;
             self.Y = nVector.y;

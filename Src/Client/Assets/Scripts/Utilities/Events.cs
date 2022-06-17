@@ -1,4 +1,4 @@
-﻿using SkillBridge.Message;
+﻿using Protocol;
 
 namespace Utilities
 {
@@ -12,19 +12,19 @@ namespace Utilities
     # region GameEvents definition
     public class UserRegisterEvent : GameEvent
     {
-        public SkillBridge.Message.Result result;
+        public Result result;
         public string msg;
     }
     
     public class UserLoginEvent : GameEvent
     {
-        public SkillBridge.Message.Result result;
+        public Result result;
         public string msg;
     }
 
     public class UserCreateCharacterEvent : GameEvent
     {
-        public SkillBridge.Message.Result result;
+        public Result result;
         public string msg;
     }
     # endregion

@@ -7,7 +7,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using UnityEngine;
-using SkillBridge.Message;
+using Protocol;
+using Common.Network;
 using Utilities;
 
 namespace Network
@@ -106,7 +107,7 @@ namespace Network
             }
         }
 
-        public bool Connected
+        public bool IsConnected
         {
             get
             {
@@ -228,7 +229,7 @@ namespace Network
                 return;
             }
 
-            if (!this.Connected)
+            if (!this.IsConnected)
             {
                 this.receiveBuffer.Position = 0;
                 this.sendBuffer.Position = sendOffset = 0;
@@ -306,7 +307,7 @@ namespace Network
             if (this.address == null)
                 return false;
 
-            if (this.Connected)
+            if (this.IsConnected)
             {
                 return true;
             }
@@ -434,7 +435,7 @@ namespace Network
             {
                 if (this.ProcessRecv())
                 {
-                    if (this.Connected)
+                    if (this.IsConnected)
                     {
                         this.ProcessSend();
                         this.ProceeMessage();

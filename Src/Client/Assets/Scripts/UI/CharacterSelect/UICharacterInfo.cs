@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.CharacterSelect
+namespace UI
 {
     public class UICharacterInfo : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace UI.CharacterSelect
         public TMP_Text characterName;
         public Image highlight;
         
-        public SkillBridge.Message.NCharacterInfo Info { get; set; }
+        public Protocol.NCharacterInfo Info { get; set; }
         public bool IsSelected
         {
             get { return highlight.IsActive(); }
