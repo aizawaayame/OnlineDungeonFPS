@@ -1,4 +1,5 @@
 using System;
+using Protocol;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -19,32 +20,20 @@ namespace UI
         #region Private Methods
         void Start()
         {
-            EventManager.AddListener<UserLoginEvent>(OnLogin);
+            UserService.Instance.OnLogin += OnLogin;
         }
 
         void OnDestroy()
         {
-            EventManager.RemoveListener<UserLoginEvent>(OnLogin);
-        }
-        #endregion
-    
-        #region Subscribers
-        void OnLogin(UserLoginEvent evt)
-        {
-            if (evt.result == Protocol.Result.Success)
-            {   
-                Debug.LogFormat("登录成功，返回SUCCESS");
-                SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
-            }
-            else
-            {
-                MessageBox.Show("登录失败","错误提示",MessageBoxType.Information,btnOK:"",btnCancel:"");
-            }
+            UserService.Instance.OnLogin -= OnLogin;
         }
         #endregion
 
-        #region UICallBack
-
+        #region Events
+        
+        /// <summary>
+        /// UI Click login button callback.
+        /// </summary>
         public void OnClickLogin()
         {
             if (string.IsNullOrEmpty(this.userName.text))
@@ -60,6 +49,18 @@ namespace UI
             UserService.Instance.SendLogin(userName.text, password.text);
         }
 
+        void OnLogin(Result result, string msg)
+        {
+            if (result == Protocol.Result.Success)
+            {   
+                Debug.LogFormat("登录成功，返回SUCCESS");
+                SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
+            }
+            else
+            {
+                MessageBox.Show("登录失败","错误提示",MessageBoxType.Information,btnOK:"",btnCancel:"");
+            }
+        }
         #endregion
         
 

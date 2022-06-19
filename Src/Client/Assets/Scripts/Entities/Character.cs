@@ -42,7 +42,7 @@ namespace Entities
         public Character(NCharacterInfo nInfo) : base(nInfo.Entity)
         {
             this.NInfo = nInfo;
-            this.Define = DataManager.Instance.Characters[nInfo.Tid];
+            this.Define = DataManager.Instance.Characters[nInfo.ConfigId];
         }
 
         #endregion

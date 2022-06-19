@@ -1,8 +1,6 @@
 ﻿using System;
-using Common;
 using Common.Data;
 using Common.Network;
-using GameObjects;
 using Managers;
 using Modules;
 using Network;
@@ -12,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 namespace Services
 {
-    public class MapService : Singleton<MapService>, IDisposable
+    public class MapService : Utilities.Singleton<MapService>, IDisposable
     {
 
         #region Fields&Properties
@@ -25,19 +23,24 @@ namespace Services
 
         public MapService()
         {
+            Debug.Log("地图服务加载成功");
             MessageDistributer.Instance.Subscribe<MapCharacterEnterResponse>(this.OnMapCharacterEnter);
-            MessageDistributer.Instance.Subscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
+            //MessageDistributer.Instance.Subscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
         }
         public void Dispose()
         {
             MessageDistributer.Instance.Unsubscribe<MapCharacterEnterResponse>(this.OnMapCharacterEnter);
-            MessageDistributer.Instance.Unsubscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
+            //MessageDistributer.Instance.Unsubscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
         }
 
         #endregion
 
         #region Public Methods
 
+        public void Init()
+        {
+            
+        }
         public void SendMapCharacterEnter(int mapId)
         {
             Debug.LogFormat("UserGameEnterRequest::characterId :{0}", mapId);
@@ -69,14 +72,15 @@ namespace Services
 
         #endregion
         
-        #region Subscribers
+        #region Events
 
         void OnMapCharacterEnter(object sender, MapCharacterEnterResponse response)
         {
             Debug.LogFormat("OnMapCharacterEnter:Map:{0} Count:{1}", response.mapId, response.Characters.Count);
             foreach (var nCha in response.Characters)
             {
-                if (User.Instance.CurrentCharacterInfo.Id == nCha.Id)
+                if (User.Instance.CurrentCharacterInfo == null ||
+                    (nCha.Type == CharacterType.Player && User.Instance.CurrentCharacterInfo.Id == nCha.Id))
                 {
                     User.Instance.CurrentCharacterInfo = nCha;
                 }

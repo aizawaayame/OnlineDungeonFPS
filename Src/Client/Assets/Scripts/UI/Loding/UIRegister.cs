@@ -1,3 +1,4 @@
+using Protocol;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -8,20 +9,24 @@ namespace UI
 {
     public class UIRegister : MonoBehaviour
     {
+
+        #region Public Fields to editor
+
         public TMP_InputField userName;
         public TMP_InputField password;
         public TMP_InputField passwordConfirm;
         public Button buttonRegister;
+        
+        #endregion
+        
+        #region Private Mothods
 
         void Awake()
         {
-            EventManager.AddListener<UserRegisterEvent>(OnRegister);
+            UserService.Instance.OnRegister += OnRegister;
         }
     
-        void OnRegister(UserRegisterEvent evt)
-        {
-            MessageBox.Show(string.Format("结果：{0} msg:{1}",evt.result,evt.msg));
-        }
+
         void Update () {
             Debug.Log(userName.text);
             Debug.Log(password.text);
@@ -30,8 +35,15 @@ namespace UI
 
         void OnDestroy()
         {
-            EventManager.RemoveListener<UserRegisterEvent>(OnRegister);
+            UserService.Instance.OnRegister -= OnRegister;
         }
+
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// UI Click register button callback
+        /// </summary>
         public void OnClickRegister()
         {
             if (string.IsNullOrEmpty(this.userName.text))
@@ -56,6 +68,13 @@ namespace UI
             }
             UserService.Instance.SendRegister(this.userName.text, this.password.text);
         }
+        
+        void OnRegister(Result result,string msg)
+        {
+            MessageBox.Show(string.Format("结果：{0} msg:{1}",result,msg));
+        }
+
+        #endregion
     }
 }
 

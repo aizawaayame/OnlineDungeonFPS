@@ -11,15 +11,14 @@ namespace GameServer.Managers
 {
     class CharacterManager : Singleton<CharacterManager>
     {
-        public Dictionary<int, Character> Characters = new Dictionary<int, Character>();
 
-        public CharacterManager()
-        {
-        }
+        #region Fields
+        
+        readonly Dictionary<int, Character> characters = new Dictionary<int, Character>();
+        
+        #endregion
 
-        public void Dispose()
-        {
-        }
+        #region Public Methods
 
         public void Init()
         {
@@ -28,20 +27,30 @@ namespace GameServer.Managers
 
         public void Clear()
         {
-            this.Characters.Clear();
+            this.characters.Clear();
         }
 
         public Character AddCharacter(TCharacter cha)
         {
             Character character = new Character(CharacterType.Player, cha);
-            this.Characters[cha.ID] = character;
+            this.characters[cha.ID] = character;
             return character;
         }
 
 
         public void RemoveCharacter(int characterId)
         {
-            this.Characters.Remove(characterId);
+            var cha = this.characters[characterId];
+            EntityManager.Instance.RemoveEntity(cha.Data.MapID, cha);
+            this.characters.Remove(characterId);
         }
+
+        public Character GetCharacter(int characterId)
+        {
+            Character character = null;
+            this.characters.TryGetValue(characterId, out character);
+            return character;
+        }
+        #endregion
     }
 }

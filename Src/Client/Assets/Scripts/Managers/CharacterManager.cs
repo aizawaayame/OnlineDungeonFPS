@@ -10,7 +10,8 @@ namespace Managers
 {
     public class CharacterManager : Singleton<CharacterManager>, IDisposable    
     {
-
+        public UnityAction<Character> OnCharacterEnter;
+        
         #region Fields&Properties
         /// <summary>
         /// int is the character idx, character is the client entity.
@@ -62,7 +63,7 @@ namespace Managers
 
         #region Actions
 
-        public UnityAction<Character> OnCharacterEnter;
+
 
         #endregion
 

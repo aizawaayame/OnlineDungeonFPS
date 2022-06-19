@@ -46,26 +46,29 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(1, Name = @"id")]
         public int Id { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"tid")]
-        public int Tid { get; set; }
+        [global::ProtoBuf.ProtoMember(2, Name = @"config_id")]
+        public int ConfigId { get; set; }
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"name")]
+        [global::ProtoBuf.ProtoMember(3, Name = @"entity_id")]
+        public int EntityId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4, Name = @"name")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Name { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(4, Name = @"type")]
+        [global::ProtoBuf.ProtoMember(5, Name = @"type")]
         public CharacterType Type { get; set; }
 
-        [global::ProtoBuf.ProtoMember(5, Name = @"class")]
+        [global::ProtoBuf.ProtoMember(6, Name = @"class")]
         public CharacterClass Class { get; set; }
 
-        [global::ProtoBuf.ProtoMember(6, Name = @"level")]
+        [global::ProtoBuf.ProtoMember(7, Name = @"level")]
         public int Level { get; set; }
 
-        [global::ProtoBuf.ProtoMember(7)]
+        [global::ProtoBuf.ProtoMember(8)]
         public int mapId { get; set; }
 
-        [global::ProtoBuf.ProtoMember(8, Name = @"entity")]
+        [global::ProtoBuf.ProtoMember(9, Name = @"entity")]
         public NEntity Entity { get; set; }
 
     }

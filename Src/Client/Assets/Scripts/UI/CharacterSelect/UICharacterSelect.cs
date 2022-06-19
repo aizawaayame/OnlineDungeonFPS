@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Managers;
 using Modules;
+using Protocol;
 using Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using Utilities;
 
@@ -51,14 +53,14 @@ namespace UI
         void Start()
         {
             InitCharacterSelect(true);
-            EventManager.AddListener<UserCreateCharacterEvent>(OnCharacterCreate);
+            UserService.Instance.OnCharacterCreate += OnCharacterCreate;
         }
         
         /// <summary>
         /// Init or refresh the UI
         /// </summary>
         /// <param name="init"></param>
-        public void InitCharacterSelect(bool init)
+        void InitCharacterSelect(bool init)
         {
             panelCreate.SetActive(false);
             panelSelect.SetActive(true);
@@ -73,8 +75,7 @@ namespace UI
             uiCharacters.Clear();
 
             for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
-            {   
-                Debug.LogFormat("创建角色滚动条{0}",User.Instance.Info.Player.Characters.Count);
+            {
                 GameObject obj = Instantiate(this.uiCharacter, this.uiCharacterScroll);
                 UICharacterInfo charInfo = obj.GetComponent<UICharacterInfo>();
                 charInfo.Info = User.Instance.Info.Player.Characters[i];
@@ -95,7 +96,7 @@ namespace UI
         }
         void OnDestroy()
         {
-            EventManager.RemoveListener<UserCreateCharacterEvent>(OnCharacterCreate);
+            UserService.Instance.OnCharacterCreate -= OnCharacterCreate;
         }
     
         #endregion
@@ -159,16 +160,16 @@ namespace UI
         
         #region Events
 
-        void OnCharacterCreate(UserCreateCharacterEvent evt)
+        void OnCharacterCreate(Result result, string msg)
         {
-            if (evt.result == Protocol.Result.Success)
+            if (result == Protocol.Result.Success)
             {
                 Debug.Log("角色创建成功");
                 InitCharacterSelect(true);
             }
             else
             {
-                MessageBox.Show(evt.msg, "错误",MessageBoxType.Error);
+                MessageBox.Show(msg, "错误",MessageBoxType.Error);
             }
 
         }

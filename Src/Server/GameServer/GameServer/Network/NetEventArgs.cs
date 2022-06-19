@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace GameServer.Network
+namespace Network
 {
     /// <summary>
     /// EventArgs class holding a Byte[].

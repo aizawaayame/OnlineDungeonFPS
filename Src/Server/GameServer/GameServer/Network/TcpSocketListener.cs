@@ -32,7 +32,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 
-namespace GameServer.Network
+namespace Network
 {
     /// <summary>
     /// Listens for socket connection on a given address and port.

@@ -33,12 +33,13 @@ using System.Net;
 using System.Net.Sockets;
 using Common.Network;
 
-namespace GameServer.Network
+// ReSharper disable once CheckNamespace
+namespace Network
 {
     /// <summary>
     /// A connection to our server.
     /// </summary>
-    public class NetConnection<T>
+    public class NetConnection<T> where T : INetSession
     {
         /// <summary>
         /// Represents a callback used to inform a listener that a ServerConnection has received data.
@@ -130,23 +131,11 @@ namespace GameServer.Network
             }
         }
 
-        private void SendCallback(IAsyncResult ar)
+        public void SendResponse()
         {
-            try
-            {
-                // Retrieve the socket from the state object.
-                Socket client = (Socket)ar.AsyncState;
-
-                // Complete sending the data to the remote device.
-                int bytesSent = client.EndSend(ar);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+            byte[] data = session.GetResponse();
+            this.SendData(data, 0, data.Length);
         }
-
-
         #endregion
 
 
@@ -216,6 +205,22 @@ namespace GameServer.Network
             args.Completed -= ReceivedCompleted; //MUST Remember This!
             OnDisconnected(args, state.disconnectedCallback);
         }
+        
+        private void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.
+                int bytesSent = client.EndSend(ar);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
         #endregion
 
         #region Events
@@ -244,15 +249,15 @@ namespace GameServer.Network
         #region public Property
 
         /// <summary>
-        /// 获取或设置连接的认证状态
-        /// true : 已认证
-        /// false : 未认证
+        /// get or set the connection verification state
+        /// true : verified
+        /// false : unverified
         /// </summary>
         public bool Verified { get; set; }
 
         private T session;
         /// <summary>
-        /// 获取或设置一个会话对象
+        /// get or set a new session
         /// </summary>
         public T Session { get { return session; } }
 

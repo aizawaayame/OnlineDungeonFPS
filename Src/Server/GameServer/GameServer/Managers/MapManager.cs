@@ -10,35 +10,55 @@ namespace GameServer.Managers
 {
     class MapManager : Singleton<MapManager>
     {
-        Dictionary<int, Map> Maps = new Dictionary<int, Map>();
+
+        #region Fields
+
+        /// <summary>
+        /// the key is mapID
+        /// </summary>
+        readonly Dictionary<int, Map> maps = new Dictionary<int, Map>();
+
+        #endregion
+
+        #region Indexer
+
+        public Map this[int key]
+        {
+            get
+            {
+                return this.maps[key];
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void Init()
         {
             foreach (var mapdefine in DataManager.Instance.Maps.Values)
             {
                 Map map = new Map(mapdefine);
-                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.Define.ID, map.Define.Name);
-                this.Maps[mapdefine.ID] = map;
+                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.define.ID, map.define.Name);
+                this.maps[mapdefine.ID] = map;
             }
         }
-
-
-
-        public Map this[int key]
-        {
-            get
-            {
-                return this.Maps[key];
-            }
-        }
-
 
         public void Update()
         {
-            foreach(var map in this.Maps.Values)
+            foreach(var map in this.maps.Values)
             {
                 map.Update();
             }
         }
+        #endregion
+
+
+
+
+
+
+
+
     }
 }

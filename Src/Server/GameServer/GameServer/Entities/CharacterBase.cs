@@ -12,6 +12,8 @@ namespace GameServer.Entities
     class CharacterBase : Entity
     {
 
+        #region Public Properties
+
         public int Id
         {
             get
@@ -19,8 +21,13 @@ namespace GameServer.Entities
                 return this.entityId;
             }
         }
-        public NCharacterInfo Info;
-        public CharacterDefine Define;
+        public NCharacterInfo Info { get; set; }
+        public CharacterDefine Define { get; set; }
+
+
+        #endregion
+
+        #region Constructors
 
         public CharacterBase(Vector3Int pos, Vector3Int dir):base(pos,dir)
         {
@@ -28,15 +35,17 @@ namespace GameServer.Entities
         }
 
         public CharacterBase(CharacterType type, int tid, int level, Vector3Int pos, Vector3Int dir) :
-           base(pos, dir)
+            base(pos, dir)
         {
             this.Info = new NCharacterInfo();
             this.Info.Type = type;
             this.Info.Level = level;
-            this.Info.Tid = tid;
+            this.Info.ConfigId = tid;
             this.Info.Entity = this.EntityData;
 
             this.Info.Name = this.Define.Name;
         }
+
+        #endregion
     }
 }

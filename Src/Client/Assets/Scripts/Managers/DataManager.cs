@@ -33,7 +33,7 @@ namespace Managers
             json = File.ReadAllText(this.DataPath + "TeleporterDefine.txt");
             this.Teleporters = JsonConvert.DeserializeObject<Dictionary<int, TeleporterDefine>>(json);
 
-            json = File.ReadAllText(this.DataPath + "SpawnPointDefine.txt");
+            json = File.ReadAllText(this.DataPath + "SpawnRuleDefinee.txt");
             this.SpawnPoints = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, SpawnPointDefine>>> (json);
         }
 
@@ -54,7 +54,7 @@ namespace Managers
 
             yield return null;
 
-            json = File.ReadAllText(this.DataPath + "SpawnPointDefine.txt");
+            json = File.ReadAllText(this.DataPath + "SpawnRuleDefine.txt");
             this.SpawnPoints = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, SpawnPointDefine>>>(json);
 
             yield return null;
@@ -69,7 +69,7 @@ namespace Managers
         public void SaveSpawnPoints()
         {
             string json = JsonConvert.SerializeObject(this.SpawnPoints, Formatting.Indented);
-            File.WriteAllText(this.DataPath + "SpawnPointDefine.txt", json);
+            File.WriteAllText(this.DataPath + "SpawnRuleDefine.txt", json);
         }
         
         #endif

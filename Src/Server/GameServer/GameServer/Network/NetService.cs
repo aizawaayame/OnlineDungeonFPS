@@ -2,12 +2,55 @@
 using System.Net.Sockets;
 using Common;
 using Common.Network;
+using GameServer.Network;
 
-namespace GameServer.Network
+
+namespace Network
 {
     class NetService
     {
+
+        #region Static Properties
+
         static TcpSocketListener ServerListener;
+
+        #endregion
+
+        #region Static Methods
+
+        /// <summary>
+        /// disconnected callback
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void Disconnected(NetConnection<NetSession> sender, SocketAsyncEventArgs e)
+        {
+            //Performance.ServerConnect = Interlocked.Decrement(ref Performance.ServerConnect);
+            Log.WarningFormat("Client[{0}] Disconnected", e.RemoteEndPoint);
+        }
+
+
+        /// <summary>
+        /// receive data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void DataReceived(NetConnection<NetSession> sender, DataEventArgs e)
+        {
+            Log.WarningFormat("Client[{0}] DataReceived Len:{1}", e.RemoteEndPoint, e.Length);
+            //由包处理器处理封包
+            lock (sender.packageHandler)
+            {
+                sender.packageHandler.ReceiveData(e.Data, 0, e.Data.Length);
+            }
+            //PacketsPerSec = Interlocked.Increment(ref PacketsPerSec);
+            //RecvBytesPerSec = Interlocked.Add(ref RecvBytesPerSec, e.Data.Length);
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public bool Init(int port)
         {
             ServerListener = new TcpSocketListener("127.0.0.1", global::GameServer.Properties.Settings.Default.ServerPort, 10);
@@ -15,10 +58,9 @@ namespace GameServer.Network
             return true;
         }
 
-
         public void Start()
         {
-            //启动监听
+            //start listening
             Log.Warning("Starting Listener...");
             ServerListener.Start();
 
@@ -37,6 +79,10 @@ namespace GameServer.Network
             MessageDistributer<NetConnection<NetSession>>.Instance.Stop();
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void OnSocketConnected(object sender, Socket e)
         {
             IPEndPoint clientIP = (IPEndPoint)e.RemoteEndPoint;
@@ -53,34 +99,7 @@ namespace GameServer.Network
             Log.WarningFormat("Client[{0}]] Connected", clientIP);
         }
 
+        #endregion
 
-        /// <summary>
-        /// 连接断开回调
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void Disconnected(NetConnection<NetSession> sender, SocketAsyncEventArgs e)
-        {
-            //Performance.ServerConnect = Interlocked.Decrement(ref Performance.ServerConnect);
-            Log.WarningFormat("Client[{0}] Disconnected", e.RemoteEndPoint);
-        }
-
-
-        /// <summary>
-        /// 接受数据回调
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void DataReceived(NetConnection<NetSession> sender, DataEventArgs e)
-        {
-            Log.WarningFormat("Client[{0}] DataReceived Len:{1}", e.RemoteEndPoint, e.Length);
-            //由包处理器处理封包
-            lock (sender.packageHandler)
-            {
-                sender.packageHandler.ReceiveData(e.Data, 0, e.Data.Length);
-            }
-            //PacketsPerSec = Interlocked.Increment(ref PacketsPerSec);
-            //RecvBytesPerSec = Interlocked.Add(ref RecvBytesPerSec, e.Data.Length);
-        }
     }
 }
