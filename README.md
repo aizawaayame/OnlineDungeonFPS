@@ -12,7 +12,7 @@ An online dungeon fps developed with u3d.
 - SQL Server version 17.9
 - Entity Framework 6 version 6.20
 - protobuf version 3.2.0
-# Third-party Free Resources
+# Third-party Free Assests
 - [FPS Microgame and its Add-on]()
 - [Simple Menu](https://assetstore.unity.com/packages/tools/gui/simple-menu-154642)
 - [RPG Poly Pack - Lite](https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410#content)
