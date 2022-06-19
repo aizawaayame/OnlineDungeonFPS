@@ -16,3 +16,6 @@ An online dungeon fps developed with u3d.
 - [FPS Microgame and its Add-on]()
 - [Simple Menu](https://assetstore.unity.com/packages/tools/gui/simple-menu-154642)
 - [RPG Poly Pack - Lite](https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410#content)
+# Database Generation
+- You need to modify the connection string in \Src\Server\GameServer\GameServer\App.config.
+- You should generate the database by EF6 model.
