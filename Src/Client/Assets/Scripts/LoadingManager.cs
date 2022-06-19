@@ -4,8 +4,10 @@ using Services;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class UILoading : MonoBehaviour
+/// <summary>
+/// this class init all the service and data manager.
+/// </summary>
+public class LoadingManager : MonoBehaviour
 {
     public GameObject UILoad;
     public GameObject UILogin;
