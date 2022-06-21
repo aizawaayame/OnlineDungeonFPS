@@ -298,9 +298,9 @@ public class Vector3Int : IEquatable<Vector3Int>
     public static implicit operator Vector3Int(Vector3 v)
     {
         return new Vector3Int(){
-            x = Mathf.RoundToInt(v.x) * 100,
-            y = Mathf.RoundToInt(v.y) * 100,
-            z = Mathf.RoundToInt(v.z) * 100,
+            x = (int)(v.x * 100),
+            y = (int)(v.y * 100),
+            z = (int)(v.z * 100),
 
         };
     }
