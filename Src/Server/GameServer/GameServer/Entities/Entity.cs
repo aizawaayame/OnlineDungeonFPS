@@ -10,77 +10,54 @@ namespace GameServer.Entities
 {
     class Entity
     {
-        public int entityId
+        #region Public Properties
+
+        public int EntityId
         {
-            get { return this.entityData.Id; }
+            get => NEntity.Id;
+            set => NEntity.Id = value;
         }
 
-
-        private Vector3Int position;
-
+        public int MapId
+        {
+            get => NEntity.mapId;
+            set => NEntity.mapId = value;
+        }
         public Vector3Int Position
         {
-            get { return position; }
-            set {
-                position = value;
-                this.entityData.Position = position;
-            }
+            get => NEntity.Position;
+            set => NEntity.Position = value;
         }
 
-        private Vector3Int direction;
         public Vector3Int Direction
         {
-            get { return direction; }
-            set
-            {
-                direction = value;
-                this.entityData.Direction = direction;
-            }
+            get => NEntity.Direction;
+            set => NEntity.Direction = value;
+        }
+        public NEntity NEntity { get; set; }
+        
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Init the Entity including its NEntity menber.
+        /// </summary>
+        /// <param name="nEntity"></param>
+        public Entity(NEntity nEntity)
+        {
+            this.NEntity = nEntity;
         }
 
-        private int speed;
-        public int Speed
+        public Entity(Vector3Int pos, Vector3Int dir)
         {
-            get { return speed; }
-            set
-            {
-                speed = value;
-                this.entityData.Speed = speed;
-            }
+            this.NEntity = new NEntity(){
+                Position = pos,
+                Direction = dir,
+                Id = 0,
+                mapId = 1,
+            };
         }
-
-        private NEntity entityData;
-        public NEntity EntityData
-        {
-            get
-            {
-                return entityData;
-            }
-            set
-            {
-                entityData = value;
-                this.SetEntityData(value);
-            }
-        }
-
-        public Entity(Vector3Int pos,Vector3Int dir)
-        {
-            this.entityData = new NEntity();
-            this.entityData.Position = pos;
-            this.entityData.Direction = dir;
-            this.SetEntityData(this.entityData);
-        }
-
-        public Entity(NEntity entity)
-        {
-            this.entityData = entity;
-        }
-
-        public void SetEntityData(NEntity entity)
-        {
-            this.Position = entity.Position;
-            this.Direction = entity.Direction;
-            this.speed = entity.Speed;
-        }
+        #endregion
     }
 }

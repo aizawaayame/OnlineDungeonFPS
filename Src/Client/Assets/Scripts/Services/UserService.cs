@@ -1,7 +1,7 @@
 using System;
 using Network;
 using Common.Network;
-using Modules;
+using Models;
 using Protocol;
 using UnityEngine;
 using UI;
@@ -94,9 +94,10 @@ namespace Services
             Debug.LogFormat("UserRegisterRequest::user :{0} psw:{1}", user, psw);
             NetMessage message = new NetMessage();
             message.Request = new NetMessageRequest();
-            message.Request.userRegister = new UserRegisterRequest();
-            message.Request.userRegister.User = user;
-            message.Request.userRegister.Passward = psw;
+            message.Request.userRegister = new UserRegisterRequest(){
+                userName = user,
+                Passward = psw,
+            };
 
             if (this.isConnected && NetClient.Instance.IsConnected)
             {
@@ -115,10 +116,10 @@ namespace Services
             Debug.LogFormat("UserLoginRequest::user:{0}  psw:{1}",user,psw);
             NetMessage message = new NetMessage();
             message.Request = new NetMessageRequest();
-            message.Request.userLogin = new UserLoginRequest();
-            message.Request.userLogin.User = user;
-            message.Request.userLogin.Passward = psw;
-
+            message.Request.userLogin = new UserLoginRequest(){
+                userName = user,
+                Passward = psw,
+            };
             if (this.isConnected && NetClient.Instance.IsConnected)
             {
                 this.pendingMessage = null;
@@ -136,10 +137,10 @@ namespace Services
             Debug.LogFormat("SenderCharacterCreate:{0} {1}",name,cls);
             NetMessage message = new NetMessage();
             message.Request = new NetMessageRequest();
-            message.Request.createChar = new UserCreateCharacterRequest();
-            message.Request.createChar.Name = name;
-            message.Request.createChar.Class = cls;
-
+            message.Request.createChar = new UserCreateCharacterRequest(){
+                characterClass = cls,
+                characterName = name,
+            };
             if (this.isConnected && NetClient.Instance.IsConnected)
             {
                 this.pendingMessage = null;
@@ -223,7 +224,7 @@ namespace Services
 
             if (response.Result == Result.Success)
             {
-                User.Instance.Info = response.Userinfo;
+                User.Instance.NUser = response.nUser;
             }
 
             OnLogin?.Invoke(response.Result, response.Errormsg);
@@ -234,9 +235,9 @@ namespace Services
             Debug.LogFormat("OnUserCreateCharacter:{0},{1}",response.Result,response.Errormsg);
             if (response.Result == Result.Success)
             {
-                User.Instance.Info.Player.Characters.Clear(); 
-                Debug.LogFormat("response返回了{0}个角色",response.Characters.Count);
-                User.Instance.Info.Player.Characters.AddRange(response.Characters);
+                User.Instance.NUser.Player.Characters.Clear(); 
+                Debug.LogFormat("response返回了{0}个角色",response.nCharacters.Count);
+                User.Instance.NUser.Player.Characters.AddRange(response.nCharacters);
             }
             OnCharacterCreate?.Invoke(response.Result, response.Errormsg);
         }
@@ -247,10 +248,9 @@ namespace Services
 
             if (response.Result == Result.Success)
             {
-                if (response.Character != null)
+                if (response.nCharacter != null)
                 {
-                    User.Instance.CurrentCharacterInfo = response.Character;
-                    //MapService.Instance.SendMapCharacterEnter(1);
+                    User.Instance.NCharacter = response.nCharacter;
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace Services
         {
             Debug.LogFormat("UserGameLeaveResponse");
             MapService.Instance.CurrentMapId = 0;
-            User.Instance.CurrentCharacterInfo = null;
+            User.Instance.NCharacter = null;
         }
         #endregion
     }

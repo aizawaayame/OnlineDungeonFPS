@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Managers;
-using Modules;
+using Models;
 using Protocol;
 using Services;
 using TMPro;
@@ -74,11 +74,11 @@ namespace UI
             }
             uiCharacters.Clear();
 
-            for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
+            for (int i = 0; i < User.Instance.NUser.Player.Characters.Count; i++)
             {
                 GameObject obj = Instantiate(this.uiCharacter, this.uiCharacterScroll);
                 UICharacterInfo charInfo = obj.GetComponent<UICharacterInfo>();
-                charInfo.Info = User.Instance.Info.Player.Characters[i];
+                charInfo.Info = User.Instance.NUser.Player.Characters[i];
                 Button button = obj.GetComponent<Button>();
                 int idx = i;
                 button.onClick.AddListener(() =>
@@ -89,7 +89,7 @@ namespace UI
                 obj.SetActive(true);
             }
 
-            if (User.Instance.Info.Player.Characters.Count > 0)
+            if (User.Instance.NUser.Player.Characters.Count > 0)
             {
                 OnSelectCharacter(0);
             }
@@ -101,7 +101,7 @@ namespace UI
     
         #endregion
 
-        #region UICallBack
+        #region Events
         
         public void OnClickEnterCreateCharacterPanel()
         {
@@ -117,11 +117,11 @@ namespace UI
         public void OnSelectCharacter(int idx)
         {
             this.selectCharacterIdx = idx;
-            var currentChar = User.Instance.Info.Player.Characters[idx];
+            var currentChar = User.Instance.NUser.Player.Characters[idx];
             Debug.LogFormat("Select Char:[{0}]{1}[{2}]{3}", currentChar.Id, currentChar.Name, currentChar.Class,currentChar.Level);
-            User.Instance.CurrentCharacterInfo = currentChar;
+            User.Instance.NCharacter = currentChar;
             
-            for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
+            for (int i = 0; i < User.Instance.NUser.Player.Characters.Count; i++)
             {
                 UICharacterInfo ci = this.uiCharacters[i].GetComponent<UICharacterInfo>();
                 ci.IsSelected = idx == i;

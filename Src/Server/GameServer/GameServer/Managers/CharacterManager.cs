@@ -1,11 +1,6 @@
 ﻿using Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GameServer.Entities;
-using Protocol;
 
 namespace GameServer.Managers
 {
@@ -13,8 +8,8 @@ namespace GameServer.Managers
     {
 
         #region Fields
-        
-        readonly Dictionary<int, Character> characters = new Dictionary<int, Character>();
+
+        public Dictionary<int, Character> Characters { get; set; }= new Dictionary<int, Character>();
         
         #endregion
 
@@ -27,28 +22,29 @@ namespace GameServer.Managers
 
         public void Clear()
         {
-            this.characters.Clear();
+            this.Characters.Clear();
         }
 
-        public Character AddCharacter(TCharacter cha)
+        public Character AddCharacter(TCharacter tCharacter)
         {
-            Character character = new Character(CharacterType.Player, cha);
-            this.characters[cha.ID] = character;
+            Character character = new Character(tCharacter);
+            EntityManager.Instance.AddEntity(character.MapId,character);
+            this.Characters[character.CharacterId] = character;
             return character;
         }
 
 
         public void RemoveCharacter(int characterId)
         {
-            var cha = this.characters[characterId];
-            EntityManager.Instance.RemoveEntity(cha.Data.MapID, cha);
-            this.characters.Remove(characterId);
+            var cha = this.Characters[characterId];
+            EntityManager.Instance.RemoveEntity(cha.MapId, cha);
+            this.Characters.Remove(characterId);
         }
 
         public Character GetCharacter(int characterId)
         {
             Character character = null;
-            this.characters.TryGetValue(characterId, out character);
+            this.Characters.TryGetValue(characterId, out character);
             return character;
         }
         #endregion

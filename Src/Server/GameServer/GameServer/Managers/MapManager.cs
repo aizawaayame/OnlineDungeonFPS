@@ -36,11 +36,11 @@ namespace GameServer.Managers
 
         public void Init()
         {
-            foreach (var mapdefine in DataManager.Instance.Maps.Values)
+            foreach (var mapDefine in DataManager.Instance.Maps.Values)
             {
-                Map map = new Map(mapdefine);
-                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.define.ID, map.define.Name);
-                this.maps[mapdefine.ID] = map;
+                Map map = new Map(mapDefine);
+                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.Define.ID, map.Define.Name);
+                this.maps[mapDefine.ID] = map;
             }
         }
 
@@ -52,13 +52,6 @@ namespace GameServer.Managers
             }
         }
         #endregion
-
-
-
-
-
-
-
 
     }
 }

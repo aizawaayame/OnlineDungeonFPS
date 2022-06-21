@@ -11,25 +11,25 @@ namespace Entities
     {
 
         #region Fields&Properties
-
-        public int EntityID { get; set; }
-        public Vector3Int Position { get; set; }
-        public Vector3Int Direction { get; set; }
-        public int Speed { get; set; }
-
-        private NEntity nEntityData;
-        public NEntity NEntityData
+        public int MapId { get => NEntity.mapId; }
+        public int EntityID
         {
-            get
-            {
-                return nEntityData;
-            }
-            set
-            {
-                nEntityData = value;
-                this.SetEntityData(value);
-            }
+            get => NEntity.Id;
         }
+
+        public Vector3Int Position
+        {
+            get => NEntity.Position;
+            set => NEntity.Position = value;
+        }
+
+        public Vector3Int Direction
+        {
+            get => NEntity.Direction;
+            set => NEntity.Direction = value;
+        }
+
+        public NEntity NEntity { get; set; }
 
         #endregion
 
@@ -37,37 +37,10 @@ namespace Entities
 
         public Entity(NEntity nEntity)
         {
-            this.EntityID = nEntity.Id;
-            this.nEntityData = nEntity;
-            this.SetEntityData(nEntity);
+            NEntity = nEntity;
         }
 
         #endregion
-        
-        #region Public Methods
 
-        public virtual void OnUpdate(float delta)
-        {
-            if (this.Speed != 0)
-            {
-                Vector3 dir = this.Direction;
-                this.Position += Vector3Int.RoundToInt(dir * Speed * delta / 100f);
-            }
-            NEntityData.Position.FromVector3IntToNVector3(this.Position);
-            NEntityData.Direction.FromVector3IntToNVector3(this.Direction);
-            NEntityData.Speed = this.Speed;
-        }
-        #endregion
-        
-        #region Private Methods
-
-        private void SetEntityData(NEntity entity)
-        {
-            this.Position = this.Position.FromNVector3ToVector3Int(entity.Position);
-            this.Direction = this.Direction.FromNVector3ToVector3Int(entity.Direction);
-            this.Speed = entity.Speed;
-        }
-
-        #endregion
     }
 }

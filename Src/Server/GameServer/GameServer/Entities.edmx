@@ -42,10 +42,9 @@
     <Property Name="TID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Class" Type="int" Nullable="false" />
-    <Property Name="MapID" Type="int" Nullable="false" DefaultValue="1" />
-    <Property Name="MapPosX" Type="int" Nullable="false" />
-    <Property Name="MapPosY" Type="int" Nullable="false" />
-    <Property Name="MapPosZ" Type="int" Nullable="false" />
+    <Property Name="Exp" Type="int" Nullable="false" />
+    <Property Name="Level" Type="int" Nullable="false" />
+    <Property Name="Gold" Type="int" Nullable="false" />
     <Property Name="Player_ID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserPlayer">
@@ -119,11 +118,10 @@
           <Property Name="TID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Class" Type="Int32" Nullable="false" />
-          <Property Name="MapID" Type="Int32" Nullable="false" DefaultValue="1" />
-          <Property Name="MapPosX" Type="Int32" Nullable="false" />
-          <Property Name="MapPosY" Type="Int32" Nullable="false" />
-          <Property Name="MapPosZ" Type="Int32" Nullable="false" />
-        </EntityType>
+          <Property Name="Exp" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Gold" Type="Int32" Nullable="false" />
+          </EntityType>
         <Association Name="PlayerCharacter">
           <End Type="ExtremeWorldModel.TPlayer" Role="Player" Multiplicity="1" />
           <End Type="ExtremeWorldModel.TCharacter" Role="Character" Multiplicity="*" />
@@ -158,10 +156,9 @@
           <ScalarProperty Name="TID" ColumnName="TID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Class" ColumnName="Class" />
-          <ScalarProperty Name="MapID" ColumnName="MapID" />
-          <ScalarProperty Name="MapPosX" ColumnName="MapPosX" />
-          <ScalarProperty Name="MapPosY" ColumnName="MapPosY" />
-          <ScalarProperty Name="MapPosZ" ColumnName="MapPosZ" />
+          <ScalarProperty Name="Exp" ColumnName="Exp" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Gold" ColumnName="Gold" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

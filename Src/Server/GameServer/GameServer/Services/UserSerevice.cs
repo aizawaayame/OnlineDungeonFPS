@@ -28,14 +28,19 @@ namespace GameServer.Services
         {
 
         }
+        
+        #endregion
+
+        #region Private Methods
 
         public void CharacterLeave(Character character)
         {
-            Log.InfoFormat("CharacterLeave: characterID {0}:{1}", character.Id, character.Info.Name);
-            CharacterManager.Instance.RemoveCharacter(character.Id);
+            Log.InfoFormat("CharacterLeave: characterID {0}:{1}", character.CharacterId, character.CharacterName);
+            CharacterManager.Instance.RemoveCharacter(character.CharacterId);
             character.Clear();
-            MapManager.Instance[character.Info.mapId].CharacterLeave(character);
+            MapManager.Instance[character.MapId].MapCharacterLeave(character);
         }
+
         #endregion
 
         #region Events
@@ -47,11 +52,11 @@ namespace GameServer.Services
         /// <param name="request"></param>
         void OnLogin(NetConnection<NetSession> sender, UserLoginRequest request)
         {
-            Log.InfoFormat("UserLoginRequest: User:{0}  Pass:{1}", request.User, request.Passward);
+            Log.InfoFormat("UserLoginRequest: User:{0}  Pass:{1}", request.userName, request.Passward);
             
             sender.Session.Response.userLogin = new UserLoginResponse();
 
-            TUser user = DBService.Instance.Entities.Users.FirstOrDefault(u => u.Username == request.User);
+            TUser user = DBService.Instance.Entities.Users.FirstOrDefault(u => u.Username == request.userName);
             if (user == null)
             {
                 sender.Session.Response.userLogin.Result = Result.Failed;
@@ -68,19 +73,26 @@ namespace GameServer.Services
 
                 sender.Session.Response.userLogin.Result = Result.Success;
                 sender.Session.Response.userLogin.Errormsg = "None";
-                sender.Session.Response.userLogin.Userinfo = new NUserInfo();
-                sender.Session.Response.userLogin.Userinfo.Id = (int)user.ID;
-                sender.Session.Response.userLogin.Userinfo.Player = new NPlayerInfo();
-                sender.Session.Response.userLogin.Userinfo.Player.Id = user.Player.ID;
+                sender.Session.Response.userLogin.nUser = new NUser(){
+                    Id = (int)user.ID,
+                    Player = new NPlayer()
+                    {
+                        Id = user.Player.ID
+                    }
+                };
                 foreach (var c in user.Player.Characters)
                 {
-                    NCharacterInfo info = new NCharacterInfo{
+                    NCharacter info = new NCharacter(){
                         Id = c.ID,
-                        Name = c.Name,
                         Class = (CharacterClass)c.Class,
-                        Type = CharacterType.Player,
+                        ConfigId = c.TID,
+                        Exp = c.Exp,
+                        Gold = c.Gold,
+                        Level = c.Level,
+                        Name = c.Name,
+                        mapId = 1,
                     };
-                    sender.Session.Response.userLogin.Userinfo.Player.Characters.Add(info);
+                    sender.Session.Response.userLogin.nUser.Player.Characters.Add(info);
                 }
 
             }
@@ -94,10 +106,10 @@ namespace GameServer.Services
         /// <param name="request"></param>
         void OnRegister(NetConnection<NetSession> sender, UserRegisterRequest request)
         {
-            Log.InfoFormat("UserRegisterRequest: User:{0}  Pass:{1}", request.User, request.Passward);
+            Log.InfoFormat("UserRegisterRequest: User:{0}  Pass:{1}", request.userName, request.Passward);
             sender.Session.Response.userRegister = new UserRegisterResponse();
             
-            TUser user = DBService.Instance.Entities.Users.FirstOrDefault(u => u.Username == request.User);
+            TUser user = DBService.Instance.Entities.Users.FirstOrDefault(u => u.Username == request.userName);
             if (user != null)
             {
                 sender.Session.Response.userRegister.Result = Result.Failed;
@@ -106,7 +118,7 @@ namespace GameServer.Services
             else
             {
                 TPlayer player = DBService.Instance.Entities.Players.Add(new TPlayer());
-                DBService.Instance.Entities.Users.Add(new TUser() { Username = request.User, Password = request.Passward, Player = player });
+                DBService.Instance.Entities.Users.Add(new TUser() { Username = request.userName, Password = request.Passward, Player = player });
                 DBService.Instance.Entities.SaveChanges();
                 sender.Session.Response.userRegister.Result = Result.Success;
                 sender.Session.Response.userRegister.Errormsg = "None";
@@ -122,17 +134,16 @@ namespace GameServer.Services
         // ReSharper disable once MemberCanBeMadeStatic.Local
         void OnCreateCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
         {
-            Log.InfoFormat("UserCreateCharacterRequest: Name:{0}  Class:{1}", request.Name, request.Class);
+            Log.InfoFormat("UserCreateCharacterRequest: Name:{0}  Class:{1}", request.characterName, request.characterClass);
 
             TCharacter character = new TCharacter()
             {
-                Name = request.Name,
-                Class = (int)request.Class,
-                TID = (int)request.Class,
-                MapID = 1,
-                MapPosX = 6471,
-                MapPosY = 2225,
-                MapPosZ = 4386,
+                Name = request.characterName,
+                Class = (int)request.characterClass,
+                TID = (int)request.characterClass,
+                Exp = 0,
+                Gold = 5000,
+                Level = 1,
             };
             
             DBService.Instance.Entities.Characters.Add(character);
@@ -153,13 +164,14 @@ namespace GameServer.Services
             
             foreach (var c in sender.Session.User.Player.Characters)
             {
-                NCharacterInfo info = new NCharacterInfo{
+                NCharacter info = new NCharacter(){
                     Id = c.ID,
+                    ConfigId = c.TID,
                     Name = c.Name,
                     Class = (CharacterClass)c.Class,
                     Type = (CharacterType.Player),
                 };
-                message.Response.createChar.Characters.Add(info);
+                message.Response.createChar.nCharacters.Add(info);
             }
             sender.SendResponse();
         }
@@ -172,17 +184,19 @@ namespace GameServer.Services
         void OnGameEnter(NetConnection<NetSession> sender, UserGameEnterRequest request)
         {
             TCharacter dbchar = sender.Session.User.Player.Characters.ElementAt(request.characterIdx);
-            Log.InfoFormat("UserGameEnterRequest: characterID:{0}:{1} Map:{2}", dbchar.ID, dbchar.Name, dbchar.MapID);
+            Log.InfoFormat("UserGameEnterRequest: characterID:{0}:{1}", dbchar.ID, dbchar.Name);
             Character character = CharacterManager.Instance.AddCharacter(dbchar);
-            SessionManager.Instance.AddSession(character.Id, sender);
+            SessionManager.Instance.AddSession(character.CharacterId, sender);
             sender.Session.Response.gameEnter = new UserGameEnterResponse(){
                 Result = Result.Success,
                 Errormsg = "None",
-                Character = character.Info
+                nCharacter = character.NCharacter,
             };
             sender.SendResponse();
-            
-            MapManager.Instance[dbchar.MapID].CharacterEnter(sender, character);
+       
+            sender.Session.Character = character;
+            sender.Session.PostResponser = character;
+            MapManager.Instance[1].MapCharacterEnter(sender, character);
         }
         
         /// <summary>
@@ -193,10 +207,10 @@ namespace GameServer.Services
         void OnGameLeave(NetConnection<NetSession> sender, UserGameLeaveRequest request)
         {
             Character character = sender.Session.Character;
-            Log.InfoFormat("UserGameLeavaRequest: characterID {0}:{1} Map:{2}", character.Id, character.Info.Name, character.Info.mapId);
+            Log.InfoFormat("UserGameLeavaRequest: characterID {0}:{1} Map:{2}", character.CharacterId, character.CharacterName, character.MapId);
             CharacterLeave(character);
 
-            SessionManager.Instance.RemoveSession(character.Id);
+            SessionManager.Instance.RemoveSession(character.CharacterId);
             sender.Session.Response.gameLeave = new UserGameLeaveResponse(){
                 Errormsg = "None",
                 Result = Result.Success
@@ -206,7 +220,5 @@ namespace GameServer.Services
         }
 
         #endregion
-        
-  
     }
 }

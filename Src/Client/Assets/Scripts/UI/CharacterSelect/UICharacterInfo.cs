@@ -11,7 +11,7 @@ namespace UI
         public TMP_Text characterName;
         public Image highlight;
         
-        public Protocol.NCharacterInfo Info { get; set; }
+        public Protocol.NCharacter Info { get; set; }
         public bool IsSelected
         {
             get { return highlight.IsActive(); }

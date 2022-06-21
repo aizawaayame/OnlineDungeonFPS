@@ -410,8 +410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c6979e1c84436eb66fccc9f185afac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ACCELARATION_IN_AIR: 25
   mainCamera: {fileID: 5478616744714886590}
   weaponCamera: {fileID: 2343143651620757152}
+  RotationSpeed: 200
+  MovementSharpnessOnGround: 15
+  JumpForce: 30
 --- !u!1 &6606297951496567013
 GameObject:
   m_ObjectHideFlags: 0

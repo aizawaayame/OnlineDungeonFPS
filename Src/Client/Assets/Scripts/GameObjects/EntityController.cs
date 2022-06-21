@@ -1,5 +1,7 @@
 ﻿using Entities;
 using GameObjects;
+using Managers;
+using Protocol;
 using UnityEngine;
 
 namespace GameObjects
@@ -7,7 +9,7 @@ namespace GameObjects
     /// <summary>
     /// Sync entities by NEntity. This script should be placed at Entity root game object.
     /// </summary>
-    public class EntityController : MonoBehaviour
+    public class EntityController : MonoBehaviour, IEntityNotify
     {
 
         #region Fields&Properties
@@ -33,18 +35,19 @@ namespace GameObjects
         {
             if (Entity != null)
             {
+                EntityManager.Instance.RegisterEntityChangeNotify(Entity.EntityID, this);
                 this.UpdateTransform();
             }
         }
         
-        void FixedUpdate()
+        void Update()
         {
             if (this.Entity == null)
             {
                 return;
             }
             
-            this.Entity.OnUpdate(Time.fixedDeltaTime);
+            //this.Entity.OnUpdate(Time.fixedDeltaTime);
 
             if (!this.IsPlayer)
             {
@@ -56,7 +59,7 @@ namespace GameObjects
         {
             if (this.Entity != null)
             {
-                Debug.LogFormat("{0} OnDestroy :ID:{1} POS:{2} DIR:{3} SPD:{4} ", this.name, this.Entity.EntityID, Entity.Position, Entity.Direction, Entity.Speed);
+                Debug.LogFormat("{0} OnDestroy :ID:{1} POS:{2} DIR:{3} ", this.name, this.Entity.EntityID, Entity.Position, Entity.Direction);
             }
             
             //TODO Remove UI
@@ -72,12 +75,31 @@ namespace GameObjects
         /// </summary>
         void UpdateTransform()
         {
-            this.Position = GameObjectTool.LogicV3IntToWorldV3(Entity.Position);
-            this.Direction = GameObjectTool.LogicV3IntToWorldV3(Entity.Direction);
+            this.Position = Entity.Position;
+            this.Direction = Entity.Direction;
 
+            this.transform.position = this.Position;
             this.transform.forward = this.Direction;
             this.lastPosition = this.Position;
             this.lastRotation = this.Rotation;
+        }
+        #endregion
+
+        #region Events
+
+        public void OnEntityChanged(Entity entity)
+        {
+            Debug.LogFormat("OnEntityChanged :ID:{0} POS:{1} DIR:{2}", entity.EntityID, entity.Position, entity.Direction);
+        }
+
+        public void OnEntityRemoved()
+        {
+            Destroy(this.gameObject);
+        }
+
+        public void OnEntityEvent(EntityEvent entityEvent)
+        {
+            
         }
         #endregion
     }

@@ -8,17 +8,13 @@ namespace Entities
     {
 
         #region Fields&Properties
-
-        public NCharacterInfo NInfo { get; set; }
-        public Common.Data.CharacterDefine Define { get; set; }
-
         public string Name
         {
             get
             {
-                if (this.NInfo.Type == CharacterType.Player)
+                if (this.NCharacter.Type == CharacterType.Player)
                 {
-                    return this.NInfo.Name;
+                    return NCharacter.Name;
                 }
                 else
                 {
@@ -26,48 +22,24 @@ namespace Entities
                 }
             }
         }
+        public int CharacterId { get => NCharacter.Id; }
+        public bool IsPlayer { get => this.NCharacter.Id == Models.User.Instance.NCharacter.Id; }
+        public NCharacter NCharacter { get; set; }
 
-        public bool IsPlayer
+        public Common.Data.CharacterDefine Define
         {
-            get
-            {
-                return this.NInfo.Id == Modules.User.Instance.CurrentCharacterInfo.Id;
-            }
+            get => DataManager.Instance.CharacterDefines[(int)NCharacter.Class];
         }
-
+        
         #endregion
 
         #region Constructors
 
-        public Character(NCharacterInfo nInfo) : base(nInfo.Entity)
+        public Character(NCharacter nCharacter) : base(nCharacter.Entity)
         {
-            this.NInfo = nInfo;
-            this.Define = DataManager.Instance.Characters[nInfo.ConfigId];
+            NCharacter = nCharacter;
         }
 
-        #endregion
-        
-        #region Public Methods
-
-        public void Move()
-        {
-            this.Speed = this.Define.Speed;
-        }
-
-        public void Stop()
-        {
-            this.Speed = 0;
-        }
-
-        public void SetDirection(Vector3Int direction)
-        {
-            this.Direction = direction;
-        }
-
-        public void SetPosition(Vector3Int position)
-        {
-            this.Position = position;
-        }
         #endregion
     }
 }

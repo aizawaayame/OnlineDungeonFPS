@@ -2,7 +2,7 @@
 using Common.Data;
 using Common.Network;
 using Managers;
-using Modules;
+using Models;
 using Network;
 using Protocol;
 using UnityEngine;
@@ -25,12 +25,14 @@ namespace Services
         {
             Debug.Log("地图服务加载成功");
             MessageDistributer.Instance.Subscribe<MapCharacterEnterResponse>(this.OnMapCharacterEnter);
-            //MessageDistributer.Instance.Subscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
+            MessageDistributer.Instance.Subscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
+            MessageDistributer.Instance.Subscribe<MapEntitySyncResponse>(this.OnMapEntitySync);
         }
         public void Dispose()
         {
+            MessageDistributer.Instance.Unsubscribe<MapEntitySyncResponse>(OnMapEntitySync);
             MessageDistributer.Instance.Unsubscribe<MapCharacterEnterResponse>(this.OnMapCharacterEnter);
-            //MessageDistributer.Instance.Unsubscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
+            MessageDistributer.Instance.Unsubscribe<MapCharacterLeaveResponse>(this.OnMapCharacterLeave);
         }
 
         #endregion
@@ -52,39 +54,60 @@ namespace Services
 
         }
 
+        public void SendMapEntitySync(EntityEvent entityEvent, NEntity entity)
+        {
+            NetMessage message = new NetMessage(){
+                Request = new NetMessageRequest(){
+                    mapEntitySync = new MapEntitySyncRequest(){
+                        entitySync = new NEntitySync(){
+                            Entity = entity,
+                            Event = entityEvent,
+                            Id = entity.Id
+                        }
+                    }
+                }
+            };
+            NetClient.Instance.SendMessage(message);
+
+        }
         #endregion
         
         #region Private Methods
 
         void EnterMap(int mapId)
         {
-            if (DataManager.Instance.Maps.ContainsKey(mapId))
+            if (DataManager.Instance.MapDefines.ContainsKey(mapId))
             {
-                MapDefine map = DataManager.Instance.Maps[mapId];
-                User.Instance.CurrentMapData = map;
+                MapDefine map = DataManager.Instance.MapDefines[mapId];
                 SceneManager.LoadScene(map.Resource);
+                Debug.Log("LoadSceneSuccess");
             }
             else
             {
                 Debug.LogErrorFormat("EnterMap: Map {0} not existed", mapId);
             }
         }
-
+        
+        
         #endregion
         
         #region Events
-
+        
+        /// <summary>
+        /// Updata User and CharacterManager.
+        /// Execute EnterMap logic if needed.
+        /// </summary>
         void OnMapCharacterEnter(object sender, MapCharacterEnterResponse response)
         {
-            Debug.LogFormat("OnMapCharacterEnter:Map:{0} Count:{1}", response.mapId, response.Characters.Count);
-            foreach (var nCha in response.Characters)
+            Debug.LogFormat($"OnMapCharacterEnter:Map:{0} Count:{1}CurrentMapID{CurrentMapId}", response.mapId, response.nCharacters.Count);
+            foreach (var cha in response.nCharacters)
             {
-                if (User.Instance.CurrentCharacterInfo == null ||
-                    (nCha.Type == CharacterType.Player && User.Instance.CurrentCharacterInfo.Id == nCha.Id))
+                if (User.Instance.NCharacter == null ||
+                    (cha.Type == CharacterType.Player && User.Instance.NCharacter.Id == cha.Id))
                 {
-                    User.Instance.CurrentCharacterInfo = nCha;
+                    User.Instance.NCharacter = cha;
                 }
-                CharacterManager.Instance.AddCharacter(nCha);
+                CharacterManager.Instance.AddCharacter(cha);
             }
             if (CurrentMapId != response.mapId)
             {
@@ -95,9 +118,28 @@ namespace Services
         }
 
 
+        /// <summary>
+        /// Update CharacterManager.
+        /// </summary>
         void OnMapCharacterLeave(object sender, MapCharacterLeaveResponse response)
         {
-            
+            Debug.LogFormat("OnMapCharacterLeave：CharacterId: {0} ", response.EntityId);
+            if (response.EntityId != User.Instance.NCharacter.EntityId)
+            {
+                CharacterManager.Instance.RemoveCharacter(response.EntityId);
+            }
+            else
+            {
+                CharacterManager.Instance.Clear();
+            }
+        }
+        
+        void OnMapEntitySync(object sender, MapEntitySyncResponse response)
+        {
+            foreach (var entity in response.entitySyncs)
+            {
+                EntityManager.Instance.OnEntitySync(entity);
+            }
         }
         #endregion
 

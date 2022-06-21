@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+
 using Common;
 using Common.Data;
 using Common.Network;
+using GameServer.Core;
 using GameServer.Entities;
+using GameServer.Managers;
 using GameServer.Services;
 using Network;
 using Protocol;
@@ -11,80 +14,52 @@ namespace GameServer.Models
 {
     class Map
     {
-
-        #region Internal Class
-
-        internal class MapCharacter
-        {
-            public NetConnection<NetSession> connection;
-            public Character character;
-
-            public MapCharacter(NetConnection<NetSession> conn, Character cha)
-            {
-                this.connection = conn;
-                this.character = cha;
-            }
-        }
-
+        #region Fields
+        
+        internal MapDefine Define { get; set; }
+        public int MapId { get => Define.ID; }
+        /// <summary>
+        /// characters in the map, the key is CharacterID
+        /// </summary>
+        Dictionary<int, (NetConnection<NetSession>, Character)> mapCharacters = new Dictionary<int, (NetConnection<NetSession>, Character)>();
+        
+        
         #endregion
-
+        
         #region Constructors
 
         internal Map(MapDefine define)
         {
-            this.define = define;
+            this.Define = define;
         }
 
         #endregion
-
-        #region Fields
-
-        internal MapDefine define;
-
-        /// <summary>
-        /// characters in the map, the key is CharacterID
-        /// </summary>
-        readonly Dictionary<int, MapCharacter> mapCharacters = new Dictionary<int, MapCharacter>();
         
-        #endregion
-
         #region Public Properties
 
         public int ID
         {
-            get { return this.define.ID; }
+            get { return this.Define.ID; }
         }
 
         #endregion
 
         #region Private Methods
         
-        void SendCharacterEnterMap(NetConnection<NetSession> conn, Character character)
-        {
-            Log.InfoFormat("SendCharacterLeaveMap: To {0}:{1} : Map:{2} Character:{3}:{4}", conn.Session.Character.Id,conn.Session.Character.Info.Name,this.define.ID,character.Id,character.Info.Name);
-            conn.Session.Response.mapCharacterLeave = new MapCharacterLeaveResponse{
-                characterId = character.Id,
-            };
-            conn.SendResponse();
-        }
-        
-        void SendCharacterLeaveMap(NetConnection<NetSession> conn, Character character)
-        {
-            Log.InfoFormat("SendCharacterLeaveMap: To {0}:{1} : Map:{2} Character:{3}:{4}", conn.Session.Character.Id,conn.Session.Character.Info.Name,this.define.ID,character.Id,character.Info.Name);
-            conn.Session.Response.mapCharacterLeave = new MapCharacterLeaveResponse();
-            conn.Session.Response.mapCharacterLeave.characterId = character.Id;
-            conn.SendResponse();
-            
-        }
-        void AddCharacterEnterMap(NetConnection<NetSession> conn, NCharacterInfo character)
+        /// <summary>
+        /// Notice other conn that a character enter the map
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="character"></param>
+        void AddCharacterEnterMap(NetConnection<NetSession> conn,NCharacter character)
         {
             if (conn.Session.Response.mapCharacterEnter == null)
             {
                 conn.Session.Response.mapCharacterEnter = new MapCharacterEnterResponse{
-                    mapId = this.define.ID
+                    mapId = this.ID
                 };
             }
-            conn.Session.Response.mapCharacterEnter.Characters.Add(character);
+            conn.Session.Response.mapCharacterEnter.nCharacters.Add(character);
             conn.SendResponse();
         }
         
@@ -97,59 +72,72 @@ namespace GameServer.Models
         }
 
         /// <summary>
-        /// Character enter the map
+        /// Character enter the map.
         /// </summary>
         /// <param name="conn"></param>
-        /// <param name="character"></param>
-        public void CharacterEnter(NetConnection<NetSession> conn, Character character)
+        /// <param name="character">the character entering the map</param>
+        public void MapCharacterEnter(NetConnection<NetSession> conn, Character character)
         {
-            Log.InfoFormat("CharacterEnter: Map:{0} characterId:{1}", this.define.ID, character.Id);
-            character.Info.mapId = this.ID;
-            this.mapCharacters[character.Id] = new MapCharacter(conn, character);
-
-            conn.Session.Response.mapCharacterEnter = new MapCharacterEnterResponse();
-            conn.Session.Response.mapCharacterEnter.mapId = this.define.ID;
+            Log.InfoFormat("CharacterEnter: Map:{0} characterId:{1}", this.ID, character.CharacterId);
+            character.MapId = this.ID;
+            this.mapCharacters[character.CharacterId] = (conn,character);
+            
+            conn.Session.Response.mapCharacterEnter = new MapCharacterEnterResponse(){
+                mapId = this.ID,
+            };
             foreach (var kv in this.mapCharacters)
             {
-                conn.Session.Response.mapCharacterEnter.Characters.Add(kv.Value.character.Info);
-                if (kv.Value.character != character)
-                    this.AddCharacterEnterMap(kv.Value.connection, character.Info);
+                conn.Session.Response.mapCharacterEnter.nCharacters.Add(kv.Value.Item2.NCharacter);
+                if (kv.Value.Item2 != character)
+                    this.AddCharacterEnterMap(kv.Value.Item1, character.NCharacter);
             }
             /*foreach (var kv in this.MonsterManager.Monsters)
             {
                 sender.Session.Response.mapCharacterEnter.Characters.Add(kv.Value.Info);
             }*/
+            character.Position = GetMapInitPos(character.MapId);
             Log.InfoFormat("send MapCharacterEnterResponse");
             conn.SendResponse();
-            
         }
         
-        public void CharacterLeave(Character cha)
+        public void MapCharacterLeave(Character cha)
         {
-            Log.InfoFormat("CharacterLeave: Map:{0} characterId:{1}", this.define.ID, cha.Id);
+            Log.InfoFormat("CharacterLeave: Map:{0} characterId:{1}", this.ID, cha.CharacterId);
             foreach (var kv in this.mapCharacters)
             {
-                this.SendCharacterLeaveMap(kv.Value.connection, cha);
+                MapService.Instance.SendCharacterLeaveMap(kv.Value.Item1, cha);
             }
-            this.mapCharacters.Remove(cha.Id);
+            this.mapCharacters.Remove(cha.CharacterId);
         }
 
         internal void UpdateEntity(NEntitySync entity)
         {
-            foreach (var mapCharacter in this.mapCharacters)
+            foreach (var kv in this.mapCharacters)
             {
-                if (mapCharacter.Value.character.entityId == entity.Id)
+                if (kv.Value.Item2.EntityId == entity.Id)
                 {
-                    mapCharacter.Value.character.Position = entity.Entity.Position;
-                    mapCharacter.Value.character.Direction = entity.Entity.Direction;
-                    mapCharacter.Value.character.Speed = entity.Entity.Speed;
+                    kv.Value.Item2.Position = entity.Entity.Position;
+                    kv.Value.Item2.Direction = entity.Entity.Direction;
                 }
                 else
                 {
-                    MapService.Instance.SendEntityUpdate(mapCharacter.Value.connection,entity);
+                    MapService.Instance.SendEntityUpdate(kv.Value.Item1,entity);
                 }
             }
         }
+        #endregion
+
+        #region Static Methods
+
+        public static Vector3Int GetMapInitPos(int mapId)
+        {
+            return new Vector3Int(){
+                x = DataManager.Instance.Maps[mapId].MapPosX,
+                y = DataManager.Instance.Maps[mapId].MapPosY,
+                z = DataManager.Instance.Maps[mapId].MapPosZ
+            };
+        }
+
         #endregion
         
     }

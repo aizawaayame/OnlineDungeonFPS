@@ -13,7 +13,7 @@ namespace Common
 
         public static string String(this NEntity self)
         {
-            return string.Format("({0}:pos:{1},dir:{2},spd:{3}", self.Id, self.Position.String(), self.Direction.String(), self.Speed);
+            return string.Format("({0}:pos:{1},dir:{2},spd:{3}", self.Id, self.Position.String(), self.Direction.String());
         }
 
 

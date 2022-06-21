@@ -7,7 +7,7 @@ namespace Protocol
 {
 
     [global::ProtoBuf.ProtoContract()]
-    public partial class NUserInfo : global::ProtoBuf.IExtensible
+    public partial class NUser : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -17,12 +17,12 @@ namespace Protocol
         public int Id { get; set; }
 
         [global::ProtoBuf.ProtoMember(2, Name = @"player")]
-        public NPlayerInfo Player { get; set; }
+        public NPlayer Player { get; set; }
 
     }
 
     [global::ProtoBuf.ProtoContract()]
-    public partial class NPlayerInfo : global::ProtoBuf.IExtensible
+    public partial class NPlayer : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -32,12 +32,12 @@ namespace Protocol
         public int Id { get; set; }
 
         [global::ProtoBuf.ProtoMember(2, Name = @"characters")]
-        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; } = new global::System.Collections.Generic.List<NCharacterInfo>();
+        public global::System.Collections.Generic.List<NCharacter> Characters { get; } = new global::System.Collections.Generic.List<NCharacter>();
 
     }
 
     [global::ProtoBuf.ProtoContract()]
-    public partial class NCharacterInfo : global::ProtoBuf.IExtensible
+    public partial class NCharacter : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -62,13 +62,19 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(6, Name = @"class")]
         public CharacterClass Class { get; set; }
 
-        [global::ProtoBuf.ProtoMember(7, Name = @"level")]
+        [global::ProtoBuf.ProtoMember(7, Name = @"exp")]
+        public int Exp { get; set; }
+
+        [global::ProtoBuf.ProtoMember(8, Name = @"level")]
         public int Level { get; set; }
 
-        [global::ProtoBuf.ProtoMember(8)]
+        [global::ProtoBuf.ProtoMember(9, Name = @"gold")]
+        public long Gold { get; set; }
+
+        [global::ProtoBuf.ProtoMember(10)]
         public int mapId { get; set; }
 
-        [global::ProtoBuf.ProtoMember(9, Name = @"entity")]
+        [global::ProtoBuf.ProtoMember(11, Name = @"entity")]
         public NEntity Entity { get; set; }
 
     }
@@ -101,14 +107,14 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(1, Name = @"id")]
         public int Id { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"position")]
+        [global::ProtoBuf.ProtoMember(2)]
+        public int mapId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"position")]
         public NVector3 Position { get; set; }
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"direction")]
+        [global::ProtoBuf.ProtoMember(4, Name = @"direction")]
         public NVector3 Direction { get; set; }
-
-        [global::ProtoBuf.ProtoMember(4, Name = @"speed")]
-        public int Speed { get; set; }
 
     }
 
@@ -218,9 +224,9 @@ namespace Protocol
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"user")]
+        [global::ProtoBuf.ProtoMember(1)]
         [global::System.ComponentModel.DefaultValue("")]
-        public string User { get; set; } = "";
+        public string userName { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(2, Name = @"passward")]
         [global::System.ComponentModel.DefaultValue("")]
@@ -242,8 +248,8 @@ namespace Protocol
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"userinfo")]
-        public NUserInfo Userinfo { get; set; }
+        [global::ProtoBuf.ProtoMember(3)]
+        public NUser nUser { get; set; }
 
     }
 
@@ -254,9 +260,9 @@ namespace Protocol
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"user")]
+        [global::ProtoBuf.ProtoMember(1)]
         [global::System.ComponentModel.DefaultValue("")]
-        public string User { get; set; } = "";
+        public string userName { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(2, Name = @"passward")]
         [global::System.ComponentModel.DefaultValue("")]
@@ -287,12 +293,12 @@ namespace Protocol
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"name")]
+        [global::ProtoBuf.ProtoMember(1)]
         [global::System.ComponentModel.DefaultValue("")]
-        public string Name { get; set; } = "";
+        public string characterName { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"class")]
-        public CharacterClass Class { get; set; }
+        [global::ProtoBuf.ProtoMember(2)]
+        public CharacterClass characterClass { get; set; }
 
     }
 
@@ -310,8 +316,8 @@ namespace Protocol
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"characters")]
-        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; } = new global::System.Collections.Generic.List<NCharacterInfo>();
+        [global::ProtoBuf.ProtoMember(3)]
+        public global::System.Collections.Generic.List<NCharacter> nCharacters { get; } = new global::System.Collections.Generic.List<NCharacter>();
 
     }
 
@@ -341,8 +347,8 @@ namespace Protocol
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"character")]
-        public NCharacterInfo Character { get; set; }
+        [global::ProtoBuf.ProtoMember(3)]
+        public NCharacter nCharacter { get; set; }
 
     }
 
@@ -393,8 +399,8 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(1)]
         public int mapId { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"characters")]
-        public global::System.Collections.Generic.List<NCharacterInfo> Characters { get; } = new global::System.Collections.Generic.List<NCharacterInfo>();
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<NCharacter> nCharacters { get; } = new global::System.Collections.Generic.List<NCharacter>();
 
     }
 
@@ -405,8 +411,8 @@ namespace Protocol
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1)]
-        public int characterId { get; set; }
+        [global::ProtoBuf.ProtoMember(1, Name = @"entity_id")]
+        public int EntityId { get; set; }
 
     }
 

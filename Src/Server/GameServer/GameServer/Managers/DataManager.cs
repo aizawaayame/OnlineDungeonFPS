@@ -14,7 +14,7 @@ namespace GameServer.Managers
     {
         internal string DataPath;
         internal Dictionary<int, MapDefine> Maps = null;
-        internal Dictionary<int, CharacterDefine> Characters = null;
+        internal Dictionary<int, CharacterDefine> CharacterDefines = null;
         internal Dictionary<int, TeleporterDefine> Teleporters = null;
         public Dictionary<int, Dictionary<int, SpawnPointDefine>> SpawnPoints = null;
         public Dictionary<int, Dictionary<int,SpawnRuleDefine>> SpawnRules = null;
@@ -31,7 +31,7 @@ namespace GameServer.Managers
             this.Maps = JsonConvert.DeserializeObject<Dictionary<int, MapDefine>>(json);
 
             json = File.ReadAllText(this.DataPath + "CharacterDefine.txt");
-            this.Characters = JsonConvert.DeserializeObject<Dictionary<int, CharacterDefine>>(json);
+            this.CharacterDefines = JsonConvert.DeserializeObject<Dictionary<int, CharacterDefine>>(json);
 
             json = File.ReadAllText(this.DataPath + "TeleporterDefine.txt");
             this.Teleporters = JsonConvert.DeserializeObject<Dictionary<int, TeleporterDefine>>(json);

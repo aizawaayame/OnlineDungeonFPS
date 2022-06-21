@@ -10,5 +10,9 @@ namespace Common.Data
         public int ID { get; set; }
         public string Name { get; set; }
         public string Resource { get; set; }
+        public int MapPosX { get; set; }
+        public int MapPosY { get; set; }
+        public int MapPosZ { get; set; }
+        public string Description { get; set; }
     }
 }

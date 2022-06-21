@@ -6,39 +6,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameServer.Models;
 using Network;
 using Protocol;
 
 namespace GameServer.Entities
 {
     /// <summary>
-    /// Character
-    /// 玩家角色类
+    /// Player data class.
     /// </summary>
-    class Character : CharacterBase, IPostResponser
+    class Character : Entity, IPostResponser
     {
 
         #region Public Properties
-        public TCharacter Data { get; private set; }
+        public int CharacterId { get => TCharacter.ID; }
+        public int ConfigId { get => TCharacter.TID; }
 
+        public int Exp { get => NCharacter.Exp; }
+        public int Level { get => NCharacter.Level; }
+        public long Gold { get => NCharacter.Gold; }
+        public string CharacterName { get => TCharacter.Name; }
+        public CharacterClass CharacterClass { get => (CharacterClass)TCharacter.Class; }
+        public TCharacter TCharacter { get; set; }
+        public NCharacter NCharacter { get; set; }
+        public CharacterDefine Define { get; private set; }
+        
         #endregion
 
         #region Constructor
 
-        public Character(CharacterType type,TCharacter cha):
-            base(new Core.Vector3Int(cha.MapPosX, cha.MapPosY, cha.MapPosZ),new Core.Vector3Int(100,0,0))
+        public Character(TCharacter tCharacter) : base(Map.GetMapInitPos(1),Vector3Int.zero)
         {
-            this.Data = cha;
-            this.Info = new NCharacterInfo{
-                Type = type,
-                Id = cha.ID,
-                Name = cha.Name,
-                Level = 1, //cha.Level;
-                ConfigId = cha.TID,
-                Class = (CharacterClass)cha.Class,
-                mapId = cha.MapID,
-                Entity = this.EntityData
+            this.TCharacter = tCharacter;
+            this.NCharacter = new NCharacter(){
+                Class = (CharacterClass)TCharacter.Class,
+                ConfigId = TCharacter.TID,
+                EntityId = 0,
+                Entity = this.NEntity,
+                Exp = TCharacter.Exp,
+                Gold = TCharacter.Gold,
+                Id = TCharacter.ID,
+                Level = TCharacter.Level,
+                mapId = 1,
+                Name = TCharacter.Name,
             };
+            this.Define = DataManager.Instance.CharacterDefines[this.ConfigId];
         }
 
         #endregion
@@ -54,16 +66,12 @@ namespace GameServer.Entities
         {
             
         }
+        #endregion
 
-        public NCharacterInfo GetBasicInfo()
-        {
-            return new NCharacterInfo(){
-                Id = this.Id,
-                Name = this.Info.Name,
-                Class = this.Info.Class,
-                Level = this.Info.Level
-            };
-        }
+        #region Private Methods
+
+
+
         #endregion
 
     }
