@@ -30,13 +30,13 @@ namespace GameObjects
         {
             StartCoroutine(InitGameObjects());
             CharacterManager.Instance.OnCharacterEnter += OnCharacterEnter;
-            CharacterManager.Instance.OnChracterLeave += OnCharacterLeave;
+            CharacterManager.Instance.OnCharacterLeave += OnCharacterLeave;
         }
 
         void OnDestroy()
         {
             CharacterManager.Instance.OnCharacterEnter -= OnCharacterEnter;
-            CharacterManager.Instance.OnChracterLeave -= OnCharacterLeave;
+            CharacterManager.Instance.OnCharacterLeave -= OnCharacterLeave;
         }
         
         /// <summary>
@@ -68,7 +68,7 @@ namespace GameObjects
                 if (ec != null)
                 {
                     ec.Entity = character;
-                    ec.IsPlayer = character.IsPlayer;
+                    ec.IsPlayer = character.IsCurrentPlayer;
                 }
 
                 PlayerController pc = go.GetComponent<PlayerController>();
@@ -77,7 +77,9 @@ namespace GameObjects
                     if (character.NCharacter.Id == User.Instance.NCharacter.Id)
                     {
                         User.Instance.CurrentCharacterObject = go;
+                        User.Instance.PlayerController = pc;
                         pc.mainCamera.enabled = true;
+                        pc.mainCamera.GetComponent<Camera>().enabled = true;
                         pc.weaponCamera.enabled = true;
                         pc.enabled = true;
                         pc.Character = character;
@@ -85,7 +87,8 @@ namespace GameObjects
                     }
                     else
                     {
-                        pc.mainCamera.enabled = false;
+                        pc.mainCamera.enabled = true;
+                        pc.mainCamera.GetComponent<Camera>().enabled = false;
                         pc.weaponCamera.enabled = false;
                         pc.enabled = false;
                     }

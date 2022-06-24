@@ -1973,7 +1973,7 @@ PrefabInstance:
     - target: {fileID: 1376385379328462008, guid: 016405bf1e2fe44af9a829052f7fc802,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -45.737
       objectReference: {fileID: 0}
     - target: {fileID: 1376385379328462008, guid: 016405bf1e2fe44af9a829052f7fc802,
         type: 3}
@@ -2018,7 +2018,7 @@ PrefabInstance:
     - target: {fileID: 1376385379328462008, guid: 016405bf1e2fe44af9a829052f7fc802,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -22.869
       objectReference: {fileID: 0}
     - target: {fileID: 1376385379328462008, guid: 016405bf1e2fe44af9a829052f7fc802,
         type: 3}
@@ -2503,6 +2503,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1038816830}
+    - target: {fileID: 8820209144200916245, guid: e76d55484067e48c3b008442ed4e07ec,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8820209144200916250, guid: e76d55484067e48c3b008442ed4e07ec,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2612,6 +2617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ButtonWizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820209144781171722, guid: e76d55484067e48c3b008442ed4e07ec,
+        type: 3}
+      propertyPath: m_text
+      value: "\u79D8\u6CD5"
       objectReference: {fileID: 0}
     - target: {fileID: 8820209144781171722, guid: e76d55484067e48c3b008442ed4e07ec,
         type: 3}

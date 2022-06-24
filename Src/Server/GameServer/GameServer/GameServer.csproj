@@ -152,7 +152,7 @@
     </Compile>
     <Compile Include="Services\DBService.cs" />
     <Compile Include="Services\MapService.cs" />
-    <Compile Include="Services\UserSerevice.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Core\Vector3Int.cs" />
     <Compile Include="TCharacter.cs">
@@ -162,6 +162,9 @@
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="TUser.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TWeapon.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Utils\Time.cs" />

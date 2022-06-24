@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Common;
 using Entities;
+using Models;
 using Protocol;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,14 +18,21 @@ namespace Managers
     public class CharacterManager : Singleton<CharacterManager>, IDisposable    
     {
         public UnityAction<Character> OnCharacterEnter;
-        public UnityAction<Character> OnChracterLeave;
+        public UnityAction<Character> OnCharacterLeave;
 
         #region Fields&Properties
         /// <summary>
         /// Int is the entity idx, character is the client entity.
         /// </summary>
         public Dictionary<int, Character> Characters { get; private set; }= new Dictionary<int, Character>();
-        
+        public Character CurrentCharacter
+        {
+            get
+            {
+                Character character = GetCharacter(User.Instance.NCharacter.Id);
+                return character;
+            }
+        }
         #endregion
 
         #region Constructor&Deconstructor
@@ -64,6 +72,10 @@ namespace Managers
             this.Characters[cha.Id] = character;
             EntityManager.Instance.AddEntity(character);
             OnCharacterEnter?.Invoke(character);
+            if (character.EntityID == User.Instance.NCharacter.EntityId)
+            {
+                User.Instance.Character = character;
+            }
         }
 
         public void RemoveCharacter(int characterId)
@@ -72,7 +84,7 @@ namespace Managers
             if (this.Characters.ContainsKey(characterId))
             {
                 EntityManager.Instance.RemoveEntity(this.Characters[characterId].EntityID);
-                OnChracterLeave?.Invoke(this.Characters[characterId]);
+                OnCharacterLeave?.Invoke(this.Characters[characterId]);
                 this.Characters.Remove(characterId);
             }
         }

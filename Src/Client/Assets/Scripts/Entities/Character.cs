@@ -1,4 +1,5 @@
-﻿using Managers;
+﻿using Common.Battle;
+using Managers;
 using Protocol;
 using UnityEngine;
 
@@ -23,9 +24,11 @@ namespace Entities
             }
         }
         public int CharacterId { get => NCharacter.Id; }
-        public bool IsPlayer { get => this.NCharacter.Id == Models.User.Instance.NCharacter.Id; }
+        public bool IsPlayer { get => this.NCharacter.Type == CharacterType.Player; }
+        public bool IsCurrentPlayer { get => this.NCharacter.Id == Models.User.Instance.NCharacter.Id; }
+        public Attributes Attributes { get; set; } 
         public NCharacter NCharacter { get; set; }
-
+        
         public Common.Data.CharacterDefine Define
         {
             get => DataManager.Instance.CharacterDefines[(int)NCharacter.Class];

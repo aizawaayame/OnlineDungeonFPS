@@ -14,6 +14,12 @@ namespace GameServer
     
     public partial class TCharacter
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TCharacter()
+        {
+            this.Weapons = new HashSet<TWeapon>();
+        }
+    
         public int ID { get; set; }
         public int TID { get; set; }
         public string Name { get; set; }
@@ -23,5 +29,7 @@ namespace GameServer
         public int Gold { get; set; }
     
         public virtual TPlayer Player { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TWeapon> Weapons { get; set; }
     }
 }

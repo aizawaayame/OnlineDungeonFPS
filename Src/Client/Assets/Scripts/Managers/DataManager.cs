@@ -16,6 +16,8 @@ namespace Managers
         public Dictionary<int, TeleporterDefine> TeleporterDefines { get; set; }= null;
         public Dictionary<int, Dictionary<int, SpawnPointDefine>> SpawnPointDefines { get; set; }= null;
 
+        public Dictionary<int, WeaponDefine> WeaponDefines { get; set; } = null;
+
         public DataManager()
         {
             this.DataPath = "Data/";
@@ -35,6 +37,9 @@ namespace Managers
 
             json = File.ReadAllText(this.DataPath + "SpawnRuleDefinee.txt");
             this.SpawnPointDefines = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, SpawnPointDefine>>> (json);
+            
+            json = File.ReadAllText(this.DataPath + "WeaponDefines.txt");
+            this.WeaponDefines = JsonConvert.DeserializeObject<Dictionary<int, WeaponDefine>> (json);
         }
 
         public IEnumerator LoadData()

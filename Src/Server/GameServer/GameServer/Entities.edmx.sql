@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/21/2022 17:56:36
+-- Date Created: 06/24/2022 00:56:07
 -- Generated from EDMX file: E:\Unity\OnlineDungeonFPS\OnlineDungeonFPS\Src\Server\GameServer\GameServer\Entities.edmx
 -- --------------------------------------------------
 
@@ -23,6 +23,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PlayerCharacter]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Characters] DROP CONSTRAINT [FK_PlayerCharacter];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CharacterWeapons]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Weapons] DROP CONSTRAINT [FK_CharacterWeapons];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -36,6 +39,9 @@ IF OBJECT_ID(N'[dbo].[Players]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Characters]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Characters];
+GO
+IF OBJECT_ID(N'[dbo].[Weapons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Weapons];
 GO
 
 -- --------------------------------------------------
@@ -71,6 +77,13 @@ CREATE TABLE [dbo].[Characters] (
 );
 GO
 
+-- Creating table 'Weapons'
+CREATE TABLE [dbo].[Weapons] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [CharacterID] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -90,6 +103,12 @@ GO
 -- Creating primary key on [ID] in table 'Characters'
 ALTER TABLE [dbo].[Characters]
 ADD CONSTRAINT [PK_Characters]
+    PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
+-- Creating primary key on [ID] in table 'Weapons'
+ALTER TABLE [dbo].[Weapons]
+ADD CONSTRAINT [PK_Weapons]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -125,6 +144,21 @@ GO
 CREATE INDEX [IX_FK_PlayerCharacter]
 ON [dbo].[Characters]
     ([Player_ID]);
+GO
+
+-- Creating foreign key on [CharacterID] in table 'Weapons'
+ALTER TABLE [dbo].[Weapons]
+ADD CONSTRAINT [FK_CharacterWeapon]
+    FOREIGN KEY ([CharacterID])
+    REFERENCES [dbo].[Characters]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CharacterWeapon'
+CREATE INDEX [IX_FK_CharacterWeapon]
+ON [dbo].[Weapons]
+    ([CharacterID]);
 GO
 
 -- --------------------------------------------------

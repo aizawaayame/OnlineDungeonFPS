@@ -7,6 +7,21 @@ namespace Protocol
 {
 
     [global::ProtoBuf.ProtoContract()]
+    public partial class NAttributeDynamic : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"HP")]
+        public float Hp { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"MP")]
+        public float Mp { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
     public partial class NUser : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
@@ -68,14 +83,35 @@ namespace Protocol
         [global::ProtoBuf.ProtoMember(8, Name = @"level")]
         public int Level { get; set; }
 
-        [global::ProtoBuf.ProtoMember(9, Name = @"gold")]
+        [global::ProtoBuf.ProtoMember(9)]
+        public NAttributeDynamic attrDynamic { get; set; }
+
+        [global::ProtoBuf.ProtoMember(10, Name = @"gold")]
         public long Gold { get; set; }
 
-        [global::ProtoBuf.ProtoMember(10)]
+        [global::ProtoBuf.ProtoMember(11)]
         public int mapId { get; set; }
 
-        [global::ProtoBuf.ProtoMember(11, Name = @"entity")]
+        [global::ProtoBuf.ProtoMember(12, Name = @"entity")]
         public NEntity Entity { get; set; }
+
+        [global::ProtoBuf.ProtoMember(13, Name = @"weapon")]
+        public NWeapon Weapon { get; set; }
+
+        [global::ProtoBuf.ProtoMember(14)]
+        public global::System.Collections.Generic.List<NWeapon> AllWeapons { get; } = new global::System.Collections.Generic.List<NWeapon>();
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class NWeapon : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"id")]
+        public int Id { get; set; }
 
     }
 
@@ -115,6 +151,9 @@ namespace Protocol
 
         [global::ProtoBuf.ProtoMember(4, Name = @"direction")]
         public NVector3 Direction { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public NVector3 aimDirection { get; set; }
 
     }
 
@@ -449,6 +488,34 @@ namespace Protocol
 
         [global::ProtoBuf.ProtoMember(1)]
         public int teleporterId { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class WeaponChangeReuest : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"waepon")]
+        public NWeapon Waepon { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class WeaponChangeResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"result")]
+        public Result Result { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"errormsg")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Errormsg { get; set; } = "";
 
     }
 

@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle\AttributeData.cs" />
+    <Compile Include="Battle\Attributes.cs" />
+    <Compile Include="Battle\Define.cs" />
     <Compile Include="BufferUtility.cs" />
     <Compile Include="Data\CharacterDefine.cs" />
     <Compile Include="Data\SpawnRuleDefine.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Data\SpawnType.cs" />
     <Compile Include="Data\TeleporterDefine.cs" />
     <Compile Include="Data\MapDefine.cs" />
+    <Compile Include="Data\WeaponDefine.cs" />
     <Compile Include="MessageExtend.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Network\MessageDispatch.cs" />

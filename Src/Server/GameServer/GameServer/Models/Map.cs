@@ -132,9 +132,9 @@ namespace GameServer.Models
         public static Vector3Int GetMapInitPos(int mapId)
         {
             return new Vector3Int(){
-                x = DataManager.Instance.Maps[mapId].MapPosX,
-                y = DataManager.Instance.Maps[mapId].MapPosY,
-                z = DataManager.Instance.Maps[mapId].MapPosZ
+                x = DataManager.Instance.MapDefines[mapId].MapPosX,
+                y = DataManager.Instance.MapDefines[mapId].MapPosY,
+                z = DataManager.Instance.MapDefines[mapId].MapPosZ
             };
         }
 

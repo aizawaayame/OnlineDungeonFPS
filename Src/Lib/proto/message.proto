@@ -46,6 +46,12 @@ enum ENTITY_EVENT
 	JUMP = 4;
 }
 
+message NAttributeDynamic
+{
+	float HP = 1;
+	float MP = 2;
+}
+
 message NUser {
 	int32 id = 1;
 	NPlayer player = 2;
@@ -65,9 +71,17 @@ message NCharacter {
 	CHARACTER_CLASS class = 6;
 	int32 exp = 7;
 	int32 level = 8;
-	int64 gold = 9;
-	int32 mapId = 10;
-	NEntity entity = 11;
+	NAttributeDynamic attrDynamic = 9;
+	int64 gold = 10;
+	int32 mapId = 11;
+	NEntity entity = 12;
+
+	NWeapon weapon = 13;
+	repeated NWeapon AllWeapons = 14;
+}
+
+message NWeapon{
+	int32 id = 1;
 }
 
 message NVector3
@@ -89,6 +103,7 @@ message NEntity {
 	int32 mapId = 2;
 	NVector3 position = 3;
 	NVector3 direction = 4;
+	NVector3 aimDirection = 5;
 }
 
 message NEntitySync {
@@ -96,8 +111,6 @@ message NEntitySync {
 	ENTITY_EVENT event = 2;
 	NEntity entity = 3;
 }
-
-
 
 ////////////////////////////////////////////////////////////////
 //
@@ -226,4 +239,14 @@ message MapEntitySyncResponse
 message MapTeleportRequest
 {
 	int32 teleporterId = 1;
+}
+
+// Weapon Protocol
+message WeaponChangeReuest{
+	NWeapon waepon = 1;
+}
+
+message WeaponChangeResponse{
+	RESULT result = 1;
+	string errormsg = 2;
 }

@@ -1,6 +1,7 @@
 using System;
 using Network;
 using Common.Network;
+using Entities;
 using Models;
 using Protocol;
 using UnityEngine;

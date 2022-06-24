@@ -17,9 +17,9 @@ namespace Network
         
         #region Public Properties
 
-        public TUser User { get; set; }
+        public TUser TUser { get; set; }
         public Character Character { get; set; }
-        public NEntity Entity { get; set; }
+        public NEntity NEntity { get; set; }
         public IPostResponser PostResponser { get; set; }
 
         public NetMessageResponse Response

@@ -36,7 +36,7 @@ namespace GameServer.Managers
 
         public void Init()
         {
-            foreach (var mapDefine in DataManager.Instance.Maps.Values)
+            foreach (var mapDefine in DataManager.Instance.MapDefines.Values)
             {
                 Map map = new Map(mapDefine);
                 Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.Define.ID, map.Define.Name);
