@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 597260088338660283}
   - component: {fileID: 597260088338660282}
   - component: {fileID: 6494766601229218178}
+  - component: {fileID: 4917123458604662971}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -184,9 +185,9 @@ MonoBehaviour:
   playerWeaponController: {fileID: 597260088338660282}
   footstepSfxFrequency: 1
   FootstepSfxFrequencyWhileSprinting: 1
-  footstepSfx: {fileID: 0}
-  jumpSfx: {fileID: 0}
-  landSfx: {fileID: 0}
+  footstepSfx: {fileID: 8300000, guid: f404f8d3c2a4b4f48989fb1120e78fb8, type: 3}
+  jumpSfx: {fileID: 8300000, guid: 13b59a14d34add64d84a623867546ff1, type: 3}
+  landSfx: {fileID: 8300000, guid: d0f1afed8fa916244af6ca73579ded67, type: 3}
 --- !u!114 &597260088338660282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad87f38c8f8c4b0293f5295cf798d00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingWeapons: []
+  startingWeapons:
+  - {fileID: 2520854078610216520, guid: 71d989b9c797d5e4dac5da1eae96adcd, type: 3}
   weaponCamera: {fileID: 8312313055892174682}
   weaponParentSocket: {fileID: 6548945254359125740}
   defaultWeaponPosition: {fileID: 5804613235509455343}
@@ -219,6 +221,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Affiliation: 0
   AimPoint: {fileID: 6823532690916524167}
+--- !u!114 &4917123458604662971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597260088338660165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &608417987662024991
 GameObject:
   m_ObjectHideFlags: 0

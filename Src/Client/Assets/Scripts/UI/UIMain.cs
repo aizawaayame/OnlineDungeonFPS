@@ -3,24 +3,58 @@ using Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMain : MonoSingleton<UIMain>
 {
 
-    public Text uiName;
-    public Text uiLevel;
-    protected override void OnStart()
+    #region Fields
+    
+    [SerializeField] TMP_Text avatarText;
+    [SerializeField] Image healthBar;
+    [SerializeField] TMP_Text healthText;
+    
+    HealthController health;
+    #endregion
+
+    void Start()
     {
+        health = User.Instance.CurrentCharacterObject.GetComponent<HealthController>();
+        
         this.UpdateAvatar();
+
+        health.OnDamaged += OnTakeDamage;
+        health.OnHealed += OnHealed;
     }
 
+    void OnDestroy()
+    {
+        health.OnDamaged -= OnTakeDamage;
+        health.OnHealed -= OnHealed;
+    }
     private void UpdateAvatar()
     {
-        this.uiName.text = string.Format("{0}", User.Instance.CurrentCharacter.Name);
-        this.uiLevel.text = User.Instance.CurrentCharacter.Level.ToString();
+        this.avatarText.text = string.Format("{0}，{1}", User.Instance.CurrentCharacter.Name, User.Instance.CurrentCharacter.Level);
+        
     }
+    
+ 
+    #region Events
+
+    void OnHealed(float amount)
+    {
+        
+    }
+
+    void OnTakeDamage(float dmg, GameObject damageSource)
+    {
+        
+    }
+
+    #endregion
+
     public void OnClicBackSelectCharacter()
     {
         

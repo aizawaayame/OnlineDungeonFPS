@@ -139,7 +139,7 @@ public class PlayerWeaponController : MonoBehaviour
             if (Physics.Raycast(weaponCamera.transform.position, weaponCamera.transform.forward, out RaycastHit hit,
                 1000, -1, QueryTriggerInteraction.Ignore))
             {
-                if (hit.collider.GetComponentInParent<Health>() != null)
+                if (hit.collider.GetComponentInParent<HealthController>() != null)
                 {
                     IsPointingAtEnemy = true;
                 }
