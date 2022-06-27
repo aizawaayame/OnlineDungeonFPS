@@ -1,42 +1,33 @@
-﻿using System.Collections.Generic;
-using Common;
+﻿using Common;
 using Network;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameServer.Managers
 {
     class SessionManager:Singleton<SessionManager>
     {
+        public Dictionary<int,NetConnection<NetSession>> Sessions = new Dictionary<int, NetConnection<NetSession>>();
 
-        #region Fields
-        /// <summary>
-        /// the key is characterID, the value is the players session.
-        /// </summary>
-        private readonly Dictionary<int, NetConnection<NetSession>> sessions = new Dictionary<int, NetConnection<NetSession>>();
-        
-        #endregion
-
-        #region Public Methods
-
-        public bool AddSession(int characterId, NetConnection<NetSession> session)
+        public void AddSession(int characterId,NetConnection<NetSession> session)
         {
-            if (!sessions.ContainsKey(characterId))
-            {
-                this.sessions[characterId] = session;
-                return true;
-            }
-            return false;
+            this.Sessions[characterId] = session;
         }
-        public bool RemoveSession(int characterId)
+
+        public void RemoveSession(int characterId)
         {
-            return this.sessions.Remove(characterId);
+            this.Sessions.Remove(characterId);
         }
 
         public NetConnection<NetSession> GetSession(int characterId)
         {
             NetConnection<NetSession> session = null;
-            this.sessions.TryGetValue(characterId, out session);
+            this.Sessions.TryGetValue(characterId,out session);
             return session;
         }
-        #endregion
+
     }
 }

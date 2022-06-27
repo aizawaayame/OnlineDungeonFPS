@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using UnityEngine;
-using Protocol;
-using Common.Network;
-using Services;
-using Utilities;
+using Protocol.Message;
 
 namespace Network
 {
@@ -63,13 +60,9 @@ namespace Network
 
         public PackageHandler packageHandler = new PackageHandler(null);
 
-        void Awake()
-        {
-            running = true;
-        }
-
         protected override void OnStart()
         {
+            running = true;
             MessageDistributer.Instance.ThrowException = true;
         }
 
@@ -108,7 +101,7 @@ namespace Network
             }
         }
 
-        public bool IsConnected
+        public bool Connected
         {
             get
             {
@@ -138,9 +131,10 @@ namespace Network
             this.OnExpectPackageResume = null;
         }
 
-        public void Init(string serverIP, int port)
+        public void Init()
         {
-            this.address = new IPEndPoint(IPAddress.Parse(serverIP), port);
+            this.address = new IPEndPoint(IPAddress.Parse("127.0.0.1"),8000);
+            //this.address = new IPEndPoint(IPAddress.Parse("123.56.18.229"), 8000);
         }
 
         /// <summary>
@@ -230,7 +224,7 @@ namespace Network
                 return;
             }
 
-            if (!this.IsConnected)
+            if (!this.Connected)
             {
                 this.receiveBuffer.Position = 0;
                 this.sendBuffer.Position = sendOffset = 0;
@@ -308,7 +302,7 @@ namespace Network
             if (this.address == null)
                 return false;
 
-            if (this.IsConnected)
+            if (this.Connected)
             {
                 return true;
             }
@@ -436,7 +430,7 @@ namespace Network
             {
                 if (this.ProcessRecv())
                 {
-                    if (this.IsConnected)
+                    if (this.Connected)
                     {
                         this.ProcessSend();
                         this.ProceeMessage();

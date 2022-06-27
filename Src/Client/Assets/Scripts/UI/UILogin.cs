@@ -1,68 +1,63 @@
-using System;
-using Protocol;
-using Services;
-using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Utilities;
+using Services;
+using Protocol.Message;
+using System;
+using TMPro;
 
+public class UILogin : MonoBehaviour {
 
-namespace UI
-{
-    public class UILogin : MonoBehaviour
+    #region Fields
+    [SerializeField]
+    TMP_InputField username;
+    [SerializeField]
+    TMP_InputField password;
+    [SerializeField]
+    GameObject uiRegister;
+    #endregion
+    
+    void Start()
     {
-        public TMP_InputField userName;
-        public TMP_InputField password;
-
-        public Button buttonLogin;
-
-        #region Private Methods
-        void Start()
-        {
-            UserService.Instance.OnLogin += OnLogin;
-        }
-
-        void OnDestroy()
-        {
-            UserService.Instance.OnLogin -= OnLogin;
-        }
-        #endregion
-
-        #region Events
-        
-        /// <summary>
-        /// UI Click login button callback.
-        /// </summary>
-        public void OnClickLogin()
-        {
-            if (string.IsNullOrEmpty(this.userName.text))
-            {
-                MessageBox.Show("请输入用户名");
-                return;
-            }
-            if (string.IsNullOrEmpty(this.password.text))
-            {
-                MessageBox.Show("请输入密码");
-                return;
-            }
-            UserService.Instance.SendLogin(userName.text, password.text);
-        }
-
-        void OnLogin(Result result, string msg)
-        {
-            if (result == Protocol.Result.Success)
-            {   
-                Debug.LogFormat("登录成功，返回SUCCESS");
-                SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
-            }
-            else
-            {
-                MessageBox.Show("登录失败","错误提示",MessageBoxType.Information,btnOK:"",btnCancel:"");
-            }
-        }
-        #endregion
-        
-
+        UserService.Instance.OnLogin = OnLogin;
     }
+
+    void OnLogin(Result result, string msg)
+    {
+        if (result==Result.Success)
+        {
+            MessageBox.Show("登陆成功");
+            SceneManager.Instance.LoadScene("CharacterSelect");
+        }
+        else
+        {
+            MessageBox.Show("登录失败？","登录失败",MessageBoxType.Information,btnOK:"",btnCancel:"");
+        }
+    }
+
+    #region Events
+
+    public void OnClickLogin()
+    {
+        if (string.IsNullOrEmpty(this.username.text))
+        {
+            MessageBox.Show("请输入用户名");
+            return;
+        }
+        if (string.IsNullOrEmpty(this.password.text))
+        {
+            MessageBox.Show("请输入密码");
+            return;
+        }
+        UserService.Instance.SendLogin(this.username.text,this.password.text);
+    }
+
+    public void OnClickRegister()
+    {
+        uiRegister.SetActive(true);
+        this.gameObject.SetActive(false);
+    }
+    #endregion
+
 }

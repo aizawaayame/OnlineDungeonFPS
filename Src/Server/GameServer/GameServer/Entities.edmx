@@ -9,7 +9,7 @@
     <EntitySet Name="Users" EntityType="ExtremeWorldModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Players" EntityType="ExtremeWorldModel.Store.Players" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Characters" EntityType="ExtremeWorldModel.Store.Characters" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Weapons" EntityType="ExtremeWorldModel.Store.Weapons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CharacterWeapons" EntityType="ExtremeWorldModel.Store.CharacterWeapons" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserPlayer" Association="ExtremeWorldModel.Store.UserPlayer">
       <End Role="User" EntitySet="Users" />
       <End Role="Player" EntitySet="Players" />
@@ -20,7 +20,7 @@
     </AssociationSet>
     <AssociationSet Name="CharacterWeapon" Association="ExtremeWorldModel.Store.CharacterWeapon">
       <End Role="TCharacter" EntitySet="Characters" />
-      <End Role="TWeapon" EntitySet="Weapons" />
+      <End Role="TCharacterWeapon" EntitySet="CharacterWeapons" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
@@ -47,16 +47,21 @@
     <Property Name="TID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Class" Type="int" Nullable="false" />
-    <Property Name="Exp" Type="int" Nullable="false" />
     <Property Name="Level" Type="int" Nullable="false" />
-    <Property Name="Gold" Type="int" Nullable="false" />
+    <Property Name="Exp" Type="int" Nullable="false" />
+    <Property Name="MapID" Type="int" Nullable="false" DefaultValue="1" />
+    <Property Name="MapPosX" Type="int" Nullable="false" />
+    <Property Name="MapPosY" Type="int" Nullable="false" />
+    <Property Name="MapPosZ" Type="int" Nullable="false" />
+    <Property Name="Gold" Type="bigint" Nullable="false" />
     <Property Name="Player_ID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Weapons">
+  <EntityType Name="CharacterWeapons">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WeaponID" Type="int" Nullable="false" />
     <Property Name="CharacterID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserPlayer">
@@ -85,12 +90,12 @@
   </Association>
   <Association Name="CharacterWeapon">
     <End Role="TCharacter" Type="ExtremeWorldModel.Store.Characters" Multiplicity="1" />
-    <End Role="TWeapon" Type="ExtremeWorldModel.Store.Weapons" Multiplicity="*" />
+    <End Role="TCharacterWeapon" Type="ExtremeWorldModel.Store.CharacterWeapons" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TCharacter">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="TWeapon">
+      <Dependent Role="TCharacterWeapon">
         <PropertyRef Name="CharacterID" />
       </Dependent>
     </ReferentialConstraint>
@@ -121,10 +126,10 @@
             <End Role="Player" EntitySet="Players" />
             <End Role="Character" EntitySet="Characters" />
           </AssociationSet>
-          <EntitySet Name="Weapons" EntityType="ExtremeWorldModel.TWeapon" />
+          <EntitySet Name="CharacterWeapons" EntityType="ExtremeWorldModel.TCharacterWeapon" />
           <AssociationSet Name="CharacterWeapon" Association="ExtremeWorldModel.CharacterWeapon">
             <End Role="TCharacter" EntitySet="Characters" />
-            <End Role="TWeapon" EntitySet="Weapons" />
+            <End Role="TCharacterWeapon" EntitySet="CharacterWeapons" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="TPlayer">
@@ -147,31 +152,36 @@
           <Property Name="TID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Class" Type="Int32" Nullable="false" />
-          <Property Name="Exp" Type="Int32" Nullable="false" />
           <Property Name="Level" Type="Int32" Nullable="false" />
-          <Property Name="Gold" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Weapons" Relationship="ExtremeWorldModel.CharacterWeapon" FromRole="TCharacter" ToRole="TWeapon" />
-          </EntityType>
+          <Property Name="Exp" Type="Int32" Nullable="false" />
+          <Property Name="MapID" Type="Int32" Nullable="false" DefaultValue="1" />
+          <Property Name="MapPosX" Type="Int32" Nullable="false" />
+          <Property Name="MapPosY" Type="Int32" Nullable="false" />
+          <Property Name="MapPosZ" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Weapons" Relationship="ExtremeWorldModel.CharacterWeapon" FromRole="TCharacter" ToRole="TCharacterWeapon" />
+          <Property Name="Gold" Type="Int64" Nullable="false" />
+        </EntityType>
         <Association Name="PlayerCharacter">
           <End Type="ExtremeWorldModel.TPlayer" Role="Player" Multiplicity="1" />
           <End Type="ExtremeWorldModel.TCharacter" Role="Character" Multiplicity="*" />
         </Association>
-        <EntityType Name="TWeapon">
+        <EntityType Name="TCharacterWeapon">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Character" Relationship="ExtremeWorldModel.CharacterWeapon" FromRole="TWeapon" ToRole="TCharacter" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeaponID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="ExtremeWorldModel.CharacterWeapon" FromRole="TCharacterWeapon" ToRole="TCharacter" />
           <Property Name="CharacterID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="CharacterWeapon">
           <End Type="ExtremeWorldModel.TCharacter" Role="TCharacter" Multiplicity="1" />
-          <End Type="ExtremeWorldModel.TWeapon" Role="TWeapon" Multiplicity="*" />
+          <End Type="ExtremeWorldModel.TCharacterWeapon" Role="TCharacterWeapon" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TCharacter">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="TWeapon">
+            <Dependent Role="TCharacterWeapon">
               <PropertyRef Name="CharacterID" />
             </Dependent>
           </ReferentialConstraint>
@@ -206,16 +216,21 @@
           <ScalarProperty Name="TID" ColumnName="TID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Class" ColumnName="Class" />
-          <ScalarProperty Name="Exp" ColumnName="Exp" />
           <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Exp" ColumnName="Exp" />
+          <ScalarProperty Name="MapID" ColumnName="MapID" />
+          <ScalarProperty Name="MapPosX" ColumnName="MapPosX" />
+          <ScalarProperty Name="MapPosY" ColumnName="MapPosY" />
+          <ScalarProperty Name="MapPosZ" ColumnName="MapPosZ" />
           <ScalarProperty Name="Gold" ColumnName="Gold" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Weapons">
-      <EntityTypeMapping TypeName="IsTypeOf(ExtremeWorldModel.TWeapon)">
-        <MappingFragment StoreEntitySet="Weapons">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+    <EntitySetMapping Name="CharacterWeapons">
+      <EntityTypeMapping TypeName="IsTypeOf(ExtremeWorldModel.TCharacterWeapon)">
+        <MappingFragment StoreEntitySet="CharacterWeapons">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="WeaponID" ColumnName="WeaponID" />
           <ScalarProperty Name="CharacterID" ColumnName="CharacterID" />
         </MappingFragment>
       </EntityTypeMapping>

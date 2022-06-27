@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/24/2022 00:56:07
+-- Date Created: 06/27/2022 15:10:24
 -- Generated from EDMX file: E:\Unity\OnlineDungeonFPS\OnlineDungeonFPS\Src\Server\GameServer\GameServer\Entities.edmx
 -- --------------------------------------------------
 
@@ -23,8 +23,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PlayerCharacter]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Characters] DROP CONSTRAINT [FK_PlayerCharacter];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CharacterWeapons]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Weapons] DROP CONSTRAINT [FK_CharacterWeapons];
+IF OBJECT_ID(N'[dbo].[FK_CharacterWeapon]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CharacterWeapons] DROP CONSTRAINT [FK_CharacterWeapon];
 GO
 
 -- --------------------------------------------------
@@ -40,8 +40,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Characters]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Characters];
 GO
-IF OBJECT_ID(N'[dbo].[Weapons]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Weapons];
+IF OBJECT_ID(N'[dbo].[CharacterWeapons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CharacterWeapons];
 GO
 
 -- --------------------------------------------------
@@ -70,16 +70,21 @@ CREATE TABLE [dbo].[Characters] (
     [TID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Class] int  NOT NULL,
-    [Exp] int  NOT NULL,
     [Level] int  NOT NULL,
-    [Gold] int  NOT NULL,
+    [Exp] int  NOT NULL,
+    [MapID] int  NOT NULL,
+    [MapPosX] int  NOT NULL,
+    [MapPosY] int  NOT NULL,
+    [MapPosZ] int  NOT NULL,
+    [Gold] bigint  NOT NULL,
     [Player_ID] int  NOT NULL
 );
 GO
 
--- Creating table 'Weapons'
-CREATE TABLE [dbo].[Weapons] (
-    [ID] int IDENTITY(1,1) NOT NULL,
+-- Creating table 'CharacterWeapons'
+CREATE TABLE [dbo].[CharacterWeapons] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [WeaponID] int  NOT NULL,
     [CharacterID] int  NOT NULL
 );
 GO
@@ -106,10 +111,10 @@ ADD CONSTRAINT [PK_Characters]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'Weapons'
-ALTER TABLE [dbo].[Weapons]
-ADD CONSTRAINT [PK_Weapons]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'CharacterWeapons'
+ALTER TABLE [dbo].[CharacterWeapons]
+ADD CONSTRAINT [PK_CharacterWeapons]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -146,8 +151,8 @@ ON [dbo].[Characters]
     ([Player_ID]);
 GO
 
--- Creating foreign key on [CharacterID] in table 'Weapons'
-ALTER TABLE [dbo].[Weapons]
+-- Creating foreign key on [CharacterID] in table 'CharacterWeapons'
+ALTER TABLE [dbo].[CharacterWeapons]
 ADD CONSTRAINT [FK_CharacterWeapon]
     FOREIGN KEY ([CharacterID])
     REFERENCES [dbo].[Characters]
@@ -157,7 +162,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CharacterWeapon'
 CREATE INDEX [IX_FK_CharacterWeapon]
-ON [dbo].[Weapons]
+ON [dbo].[CharacterWeapons]
     ([CharacterID]);
 GO
 

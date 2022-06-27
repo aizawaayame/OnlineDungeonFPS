@@ -143,7 +143,8 @@ MonoBehaviour:
   m_text: "\u5927\u9E21\u5DF4\u585E\u83CA\u82B1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34df7a8663b07584d993642ad627ce2f, type: 2}
-  m_sharedMaterial: {fileID: -5846126233418116609, guid: 34df7a8663b07584d993642ad627ce2f, type: 2}
+  m_sharedMaterial: {fileID: -5846126233418116609, guid: 34df7a8663b07584d993642ad627ce2f,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -221,14 +222,14 @@ GameObject:
   - component: {fileID: 8987466714369542124}
   - component: {fileID: 8987466714369542127}
   - component: {fileID: 8987466714369542126}
-  - component: {fileID: 1335332070008132293}
+  - component: {fileID: 3730991246831681334}
   m_Layer: 5
   m_Name: UICharacterInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8987466714369542113
 RectTransform:
   m_ObjectHideFlags: 0
@@ -333,7 +334,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1335332070008132293
+--- !u!114 &3730991246831681334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,11 +343,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8987466714369542112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f794c2db03ee44cabe9ad103e742dc4e, type: 3}
+  m_Script: {fileID: 11500000, guid: ac29c996f621b6e4aa6bea0aa847090e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterLevel: {fileID: 7649410440258592290}
-  characterName: {fileID: 5910981899276262168}
+  charLevel: {fileID: 7649410440258592290}
+  charName: {fileID: 5910981899276262168}
   highlight: {fileID: 3717100325856710534}
 --- !u!1 &9006096260786683399
 GameObject:
@@ -416,7 +417,8 @@ MonoBehaviour:
   m_text: 120
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34df7a8663b07584d993642ad627ce2f, type: 2}
-  m_sharedMaterial: {fileID: -5846126233418116609, guid: 34df7a8663b07584d993642ad627ce2f, type: 2}
+  m_sharedMaterial: {fileID: -5846126233418116609, guid: 34df7a8663b07584d993642ad627ce2f,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

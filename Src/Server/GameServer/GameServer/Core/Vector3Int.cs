@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Protocol;
 
 namespace GameServer.Core
 {
     using Common.Utils;
+    using Protocol.Message;
     // Vector3Int
     using System;
     /// <summary>
@@ -248,8 +248,8 @@ namespace GameServer.Core
         {
             return new Vector3Int(v.X, v.Y, v.Z);
         }
-
         /*
+        
 
         /// <summary>
         ///   <para>Converts a  Vector3 to a Vector3Int by doing a Floor to each value.</para>
@@ -276,8 +276,8 @@ namespace GameServer.Core
         public static Vector3Int RoundToInt(Vector3 v)
         {
             return new Vector3Int(MathUtil.RoundToInt(v.x), MathUtil.RoundToInt(v.y), MathUtil.RoundToInt(v.z));
-        }
-        */
+        }*/
+        
 
         public static Vector3Int operator +(Vector3Int a, Vector3Int b)
         {

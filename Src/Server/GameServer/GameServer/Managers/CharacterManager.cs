@@ -1,20 +1,22 @@
 ﻿using Common;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Protocol.Message;
 using GameServer.Entities;
 
 namespace GameServer.Managers
 {
     class CharacterManager : Singleton<CharacterManager>
     {
+        public Dictionary<int, Character> Characters = new Dictionary<int, Character>();
 
-        #region Fields
+        public CharacterManager()
+        {
 
-        public Dictionary<int, Character> Characters { get; set; }= new Dictionary<int, Character>();
-        
-        #endregion
-
-        #region Public Methods
-
+        }
         public void Init()
         {
 
@@ -25,11 +27,12 @@ namespace GameServer.Managers
             this.Characters.Clear();
         }
 
-        public Character AddCharacter(TCharacter tCharacter)
+        public Character AddCharacter(TCharacter cha)
         {
-            Character character = new Character(tCharacter);
-            EntityManager.Instance.AddEntity(character.MapId,character);
-            this.Characters[character.CharacterId] = character;
+            Character character = new Character(CharacterType.Player, cha);
+            EntityManager.Instance.AddEntity(cha.MapID, character);
+            character.Info.EntityId = character.entityId;
+            this.Characters[character.Id] = character;
             return character;
         }
 
@@ -37,8 +40,14 @@ namespace GameServer.Managers
         public void RemoveCharacter(int characterId)
         {
             var cha = this.Characters[characterId];
-            EntityManager.Instance.RemoveEntity(cha.MapId, cha);
+            EntityManager.Instance.RemoveEntity(cha.Data.MapID,cha);
             this.Characters.Remove(characterId);
+            /*if (this.Characters.ContainsKey(characterId))
+            {
+                var cha = this.Characters[characterId];
+                EntityManager.Instance.RemoveEntity(cha.Data.MapID, cha);
+                
+            }*/
         }
 
         public Character GetCharacter(int characterId)
@@ -47,6 +56,5 @@ namespace GameServer.Managers
             this.Characters.TryGetValue(characterId, out character);
             return character;
         }
-        #endregion
     }
 }

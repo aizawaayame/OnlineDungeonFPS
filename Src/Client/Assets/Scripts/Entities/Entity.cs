@@ -1,46 +1,59 @@
-﻿using Common;
-using Protocol;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
+using Protocol.Message;
 
 namespace Entities
 {
-    /// <summary>
-    /// Contains the logic and network data whose type is int.
-    /// </summary>
     public class Entity
     {
+        public int entityId;
 
-        #region Fields&Properties
-        public int MapId { get => NEntity.mapId; }
-        public int EntityID
+
+        public Vector3Int position;
+        public Vector3Int direction;
+        public int speed;
+
+
+        private NEntity entityData;
+        public NEntity EntityData
         {
-            get => NEntity.Id;
+            get {
+                UpdateEntityData();
+                return entityData;
+            }
+            set {
+                entityData = value;
+                this.SetEntityData(value);
+            }
         }
 
-        public Vector3Int Position
+        public Entity(NEntity entity)
         {
-            get => NEntity.Position;
-            set => NEntity.Position = value;
+            this.entityId = entity.Id;
+            this.entityData = entity;
+            this.SetEntityData(entity);
         }
 
-        public Vector3Int Direction
+        public virtual void OnUpdate(float delta)
         {
-            get => NEntity.Direction;
-            set => NEntity.Direction = value;
+
         }
 
-        public NEntity NEntity { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        public Entity(NEntity nEntity)
+        public void SetEntityData(NEntity entity)
         {
-            NEntity = nEntity;
+            this.position = this.position.FromNVector3(entity.Position);
+            this.direction = this.direction.FromNVector3(entity.Direction);
+            this.speed = entity.Speed;
         }
 
-        #endregion
-
+        public void UpdateEntityData()
+        {
+            entityData.Position.FromVector3Int(this.position);
+            entityData.Direction.FromVector3Int(this.direction);
+            entityData.Speed = this.speed;
+        }
     }
 }

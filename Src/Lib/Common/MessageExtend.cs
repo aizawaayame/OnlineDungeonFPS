@@ -1,7 +1,10 @@
-﻿using Protocol;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-namespace Common
+namespace Protocol.Message
 {
 
     public static class MessageExtend
@@ -13,7 +16,7 @@ namespace Common
 
         public static string String(this NEntity self)
         {
-            return string.Format("({0}:pos:{1},dir:{2},spd:{3}", self.Id, self.Position.String(), self.Direction.String());
+            return string.Format("({0}:pos:{1},dir:{2},spd:{3}", self.Id, self.Position.String(), self.Direction.String(), self.Speed);
         }
 
 
@@ -46,13 +49,13 @@ namespace Common
         }
 
 
-        public static Vector3Int FromNVector3ToVector3Int(this Vector3Int self,NVector3 nVector)
+        public static Vector3Int FromNVector3(this Vector3Int self,NVector3 nVector)
         {
             return new Vector3Int(nVector.X, nVector.Y, nVector.Z);
         }
 
 
-        public static NVector3 FromVector3IntToNVector3(this NVector3 self, Vector3Int nVector)
+        public static NVector3 FromVector3Int(this NVector3 self, Vector3Int nVector)
         {
             self.X = nVector.x;
             self.Y = nVector.y;

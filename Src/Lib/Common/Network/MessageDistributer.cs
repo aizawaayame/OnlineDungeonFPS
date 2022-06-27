@@ -27,13 +27,12 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Protocol;
+using Common;
 
-namespace Common.Network
+namespace Network
 {
     /// <summary>
     /// MessageDistributer
@@ -54,7 +53,7 @@ namespace Common.Network
         class MessageArgs
         {
             public T sender;
-            public NetMessage message;
+            public Protocol.Message.NetMessage message;
         }
         private Queue<MessageArgs> messageQueue = new Queue<MessageArgs>();
 
@@ -119,7 +118,7 @@ namespace Common.Network
             }
         }
 
-        public void ReceiveMessage(T sender ,NetMessage message)
+        public void ReceiveMessage(T sender ,Protocol.Message.NetMessage message)
         {
             this.messageQueue.Enqueue(new MessageArgs() { sender = sender, message = message });
             threadEvent.Set();
@@ -221,6 +220,11 @@ namespace Common.Network
                 ActiveThreadCount = Interlocked.Decrement(ref ActiveThreadCount);
                 Log.Warning("MessageDistribute thread end");
             }
+        }
+
+        public void Subscribe<T1>(object onTeamLeave)
+        {
+            throw new NotImplementedException();
         }
     }
 }

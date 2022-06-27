@@ -5,31 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
-using GameServer.Network;
 using System.Configuration;
 
 using System.Threading;
+
+using Network;
 using GameServer.Services;
 using GameServer.Managers;
-using GameServer.Utils;
-using Network;
+
 
 namespace GameServer
 {
     class GameServer
     {
-        NetService network;
         Thread thread;
         bool running = false;
+        NetService network;
+
         public bool Init()
         {
-            int Port = Properties.Settings.Default.ServerPort;
             network = new NetService();
-            network.Init(Port);
-            DBService.Instance.Init();
+            network.Init();
+            DBService.Instance.Init();  
             DataManager.Instance.Load();
-            MapService.Instance.Init();
             UserService.Instance.Init();
+            MapService.Instance.Init();
+            CharacterManager.Instance.Init();
+
             thread = new Thread(new ThreadStart(this.Update));
 
             return true;
@@ -38,6 +40,7 @@ namespace GameServer
         public void Start()
         {
             network.Start();
+            //HelloWordService.Instance.Start();
             running = true;
             thread.Start();
         }
@@ -52,11 +55,13 @@ namespace GameServer
 
         public void Update()
         {
+            var mapManager = MapManager.Instance;
             while (running)
             {
                 Time.Tick();
                 Thread.Sleep(100);
                 //Console.WriteLine("{0} {1} {2} {3} {4}", Time.deltaTime, Time.frameCount, Time.ticks, Time.time, Time.realtimeSinceStartup);
+                mapManager.Update();
             }
         }
     }

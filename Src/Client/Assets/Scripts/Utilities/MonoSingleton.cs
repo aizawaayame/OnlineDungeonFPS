@@ -1,40 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Utilities
+
+public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
+    public bool global = true;
+    static T instance;
+    public static T Instance
     {
-        public bool global = true;
-        static T instance;
-
-        public static T Instance
+        get
         {
-            get
+            if (instance == null)
             {
-                if (instance == null)
-                {
-                    instance = (T)FindObjectOfType<T>();
-                }
-                return instance;
+                instance =(T)FindObjectOfType<T>();
             }
+            return instance;
         }
 
-        void Start()
-        {
-            if (global)
-            {
-                DontDestroyOnLoad(this.gameObject);
-            }
-            this.OnStart();
-        }
-
-        protected virtual void OnStart()
-        {
-
-        }
     }
 
+    void Awake()
+    {
+        if (global)
+        {
+            if (instance!=null&&instance!= this.gameObject.GetComponent<T>())
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            DontDestroyOnLoad(this.gameObject);
+            instance = this.gameObject.GetComponent<T>();
+        }
+            
+        this.OnStart();
+    }
+
+    protected virtual void OnStart()
+    {
+
+    }
 }

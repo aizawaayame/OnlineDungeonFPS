@@ -17,19 +17,24 @@ namespace GameServer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TCharacter()
         {
-            this.Weapons = new HashSet<TWeapon>();
+            this.MapID = 1;
+            this.Weapons = new HashSet<TCharacterWeapon>();
         }
     
         public int ID { get; set; }
         public int TID { get; set; }
         public string Name { get; set; }
         public int Class { get; set; }
-        public int Exp { get; set; }
         public int Level { get; set; }
-        public int Gold { get; set; }
+        public int Exp { get; set; }
+        public int MapID { get; set; }
+        public int MapPosX { get; set; }
+        public int MapPosY { get; set; }
+        public int MapPosZ { get; set; }
+        public long Gold { get; set; }
     
         public virtual TPlayer Player { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TWeapon> Weapons { get; set; }
+        public virtual ICollection<TCharacterWeapon> Weapons { get; set; }
     }
 }

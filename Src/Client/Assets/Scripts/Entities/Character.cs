@@ -1,48 +1,86 @@
-﻿using Common.Battle;
-using Managers;
-using Protocol;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Protocol.Message;
 using UnityEngine;
 
 namespace Entities
 {
     public class Character : Entity
     {
+        public NCharacterInfo Info;
 
-        #region Fields&Properties
+        public Common.Data.CharacterDefine Define;
+
+        public int Id
+        {
+            get { return this.Info.Id; }
+        }
+
         public string Name
         {
             get
             {
-                if (this.NCharacter.Type == CharacterType.Player)
-                {
-                    return NCharacter.Name;
-                }
+                if (this.Info.Type == CharacterType.Player)
+                    return this.Info.Name;
                 else
-                {
                     return this.Define.Name;
-                }
             }
         }
-        public int CharacterId { get => NCharacter.Id; }
-        public bool IsPlayer { get => this.NCharacter.Type == CharacterType.Player; }
-        public bool IsCurrentPlayer { get => this.NCharacter.Id == Models.User.Instance.NCharacter.Id; }
-        public Attributes Attributes { get; set; } 
-        public NCharacter NCharacter { get; set; }
-        
-        public Common.Data.CharacterDefine Define
-        {
-            get => DataManager.Instance.CharacterDefines[(int)NCharacter.Class];
-        }
-        
-        #endregion
 
-        #region Constructors
-
-        public Character(NCharacter nCharacter) : base(nCharacter.Entity)
+        public bool IsPlayer
         {
-            NCharacter = nCharacter;
+            get
+            {
+                return this.Info.Type == CharacterType.Player;
+                //return this.Info.Id == Models.User.Instance.CurrentCharacter.Id;
+            }
         }
 
-        #endregion
+        public bool IsCurrentPlayer
+        {
+            get
+            {
+                if (!IsPlayer) return false;
+                return this.Info.Id == Models.User.Instance.CurrentCharacter.Id;
+            }
+        }
+
+        public Character(NCharacterInfo info) : base(info.Entity)
+        {
+            this.Info = info;
+            this.Define = DataManager.Instance.Characters[info.ConfigId];
+        }
+
+        public void MoveForward()
+        {
+            Debug.LogFormat("MoveForward");
+            this.speed = this.Define.Speed;
+        }
+
+        public void MoveBack()
+        {
+            Debug.LogFormat("MoveBack");
+            this.speed = -this.Define.Speed;
+        }
+
+        public void Stop()
+        {
+            Debug.LogFormat("Stop");
+            this.speed = 0;
+        }
+
+        public void SetDirection(Vector3Int direction)
+        {
+           // Debug.LogFormat("SetDirection:{0}", direction);
+            this.direction = direction;
+        }
+
+        public void SetPosition(Vector3Int position)
+        {
+            //Debug.LogFormat("SetPosition:{0}", position);
+            this.position = position;
+        }
     }
 }

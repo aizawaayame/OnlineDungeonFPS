@@ -1,43 +1,38 @@
-﻿
-using Common.Data;
-using Entities;
-using GameObjects;
-using Managers;
-using Utilities;
-using Protocol;
+﻿using Common.Data;
+using Protocol.Message;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Models
 {
-    /// <summary>
-    /// contains user's info
-    /// </summary>
-    public class User : Singleton<User>
+    class User : Singleton<User>
     {
-        public float HP
+        NUserInfo userInfo;
+
+
+        public NUserInfo Info
         {
-            get => Character.Attributes.HP;
-            set => Character.Attributes.HP = value;
+            get { return userInfo; }
         }
 
-        public float MP
-        {
-            get => Character.Attributes.MP;
-            set => Character.Attributes.MP = value;
-        }
-        public NUser NUser { get; set; }
-        public Character Character { get; set; }
-        public PlayerController PlayerController { get; set; }
-        public NCharacter NCharacter { get; set; }
-        public GameObject CurrentCharacterObject { get; set; }
 
-        public MapDefine CurrentMapDefine
+        public void SetupUserInfo(NUserInfo info)
         {
-            get
-            {
-                MapDefine mapDefine = DataManager.Instance.MapDefines[NCharacter.mapId];
-                return mapDefine;
-            }
+            this.userInfo = info;
         }
+
+        public void AddGold(int gold)
+        {
+            this.CurrentCharacter.Gold += gold;
+        }
+
+
+        public NCharacterInfo CurrentCharacter { get; set; }
+        public MapDefine CurrentMapData { get; set; }
+        public UnityEngine.GameObject CurrentCharacterObject { get; set; }
+
     }
 }

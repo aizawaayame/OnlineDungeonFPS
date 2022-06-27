@@ -1,54 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Text;
 using Common;
-using Entities;
-using Models;
-using Protocol;
+using Network;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Entities;
+using Protocol.Message;
+
 namespace Managers
 {
-    /// <summary>
-    /// Manage all the characters in the user's map.
-    /// Manage character enter map and leave map event.
-    /// </summary>
-    public class CharacterManager : Singleton<CharacterManager>, IDisposable    
+    class CharacterManager : Singleton<CharacterManager>, IDisposable
     {
+        public Dictionary<int, Character> Characters = new Dictionary<int, Character>();
+
+
         public UnityAction<Character> OnCharacterEnter;
         public UnityAction<Character> OnCharacterLeave;
 
-        #region Fields&Properties
-        /// <summary>
-        /// Int is the entity idx, character is the client entity.
-        /// </summary>
-        public Dictionary<int, Character> Characters { get; private set; }= new Dictionary<int, Character>();
-        public Character CurrentCharacter
-        {
-            get
-            {
-                Character character = GetCharacter(User.Instance.NCharacter.Id);
-                return character;
-            }
-        }
-        #endregion
-
-        #region Constructor&Deconstructor
-
         public CharacterManager()
         {
-            
+
         }
-        
+
         public void Dispose()
         {
         }
-
-        #endregion
-        
-        #region Public Methods
 
         public void Init()
         {
@@ -65,46 +44,38 @@ namespace Managers
             this.Characters.Clear();
         }
 
-        public void AddCharacter(NCharacter cha)
+        public void AddCharacter(Protocol.Message.NCharacterInfo cha)
         {
-            Debug.LogFormat("AddCharacter:{0}:{1} Map:{2}", cha.Id, cha.Name, cha.mapId);
+            Debug.LogFormat("AddCharacter:{0}:{1} Map:{2} Entity:{3}", cha.Id, cha.Name, cha.mapId, cha.Entity.String());
             Character character = new Character(cha);
-            this.Characters[cha.Id] = character;
+            this.Characters[cha.EntityId] = character;
             EntityManager.Instance.AddEntity(character);
-            OnCharacterEnter?.Invoke(character);
-            if (character.EntityID == User.Instance.NCharacter.EntityId)
+            if (OnCharacterEnter != null)
             {
-                User.Instance.Character = character;
+                OnCharacterEnter(character);
             }
         }
 
-        public void RemoveCharacter(int characterId)
+
+        public void RemoveCharacter(int entityId)
         {
-            Debug.LogFormat("RemoveCharacter:{0}", characterId);
-            if (this.Characters.ContainsKey(characterId))
+            Debug.LogFormat("RemoveCharacter:{0}", entityId);
+            if (this.Characters.ContainsKey(entityId))
             {
-                EntityManager.Instance.RemoveEntity(this.Characters[characterId].EntityID);
-                OnCharacterLeave?.Invoke(this.Characters[characterId]);
-                this.Characters.Remove(characterId);
+                EntityManager.Instance.RemoveEntity(this.Characters[entityId].Info.Entity);
+                if (OnCharacterLeave != null)
+                {
+                    OnCharacterLeave(this.Characters[entityId]);
+                }
+                this.Characters.Remove(entityId);
             }
         }
 
-        public Character GetCharacter(int entityId)
+        public Character GetCharacter(int id)
         {
             Character character;
-            this.Characters.TryGetValue(entityId, out character);
+            this.Characters.TryGetValue(id, out character);
             return character;
         }
-        #endregion
-
-        #region Indexer
-
-        public Character this[int characterId]
-        {
-            get => Characters[characterId];
-            set => Characters[characterId] = value;
-        }
-
-        #endregion
     }
 }

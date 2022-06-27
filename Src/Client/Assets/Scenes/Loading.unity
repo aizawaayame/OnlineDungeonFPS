@@ -352,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &135592046
 RectTransform:
   m_ObjectHideFlags: 0
@@ -425,12 +425,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 135592045}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad3337e4b30decf4ab72a70e4dbf4392, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c8bb62ce5ce3754abb525b5d8f1f5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userName: {fileID: 301672824175818840}
+  username: {fileID: 301672824175818840}
   password: {fileID: 301672824882866681}
-  buttonLogin: {fileID: 1214785337905865867}
+  uiRegister: {fileID: 176166149}
 --- !u!1 &136183511
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,12 +471,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 136183511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 612262781e54d4b478de280a0930bc05, type: 3}
+  m_Script: {fileID: 11500000, guid: b09743d2a886c6b4f9146874485c8567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UILoad: {fileID: 1214708845}
-  UILogin: {fileID: 1351665100}
+  UILoading: {fileID: 1214708845}
+  UILogin: {fileID: 135592045}
   progressBar: {fileID: 887833003}
+  progressText: {fileID: 1019137806}
 --- !u!1 &176166149
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,13 +570,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 176166149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64cf69166d898454abce417d62453dac, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c4aef486f5cdd341a5d47a259991708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userName: {fileID: 1654238192}
+  username: {fileID: 1654238192}
   password: {fileID: 62701687}
   passwordConfirm: {fileID: 600828544}
-  buttonRegister: {fileID: 1915292783}
+  uiLogin: {fileID: 135592045}
 --- !u!1 &253622384
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +670,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &338111377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 338111379}
+  - component: {fileID: 338111378}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &338111378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338111377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07f59903f46be44592cf686d82fe8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  global: 1
+--- !u!4 &338111379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338111377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 64.71, y: 23.25, z: 43.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &338395812
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +933,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 569227375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb53cc58e84c73418dd1eb8f5948e60, type: 3}
+  m_Script: {fileID: 11500000, guid: 750c4d578a0cc594f9408253b427d2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   global: 1
@@ -2686,7 +2731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1351665101
 RectTransform:
   m_ObjectHideFlags: 0

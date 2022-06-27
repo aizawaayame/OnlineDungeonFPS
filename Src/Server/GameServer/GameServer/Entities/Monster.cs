@@ -1,14 +1,19 @@
 ﻿using GameServer.Core;
+using Protocol.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Protocol;
 
 namespace GameServer.Entities
 {
-    class Monster 
+    class Monster : CharacterBase
     {
+        public Monster(int tid, int level, Vector3Int pos, Vector3Int dir) : base(CharacterType.Monster, tid, level, pos, dir)
+        {
+            //this.Info = new NCharacterInfo();
+            //this.Info.Name ="555";
+        }
     }
 }

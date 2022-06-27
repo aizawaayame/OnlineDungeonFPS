@@ -1,14 +1,13 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-namespace Assets
+class Resloader
 {
-    public static class Resloader
+    public static T Load<T>(string path) where T : UnityEngine.Object
     {
-        public static T Load<T>(string path) where T : Object
-        {
-            return Resources.Load<T>(path);
-        }
+        return Resources.Load<T>(path);
     }
 }

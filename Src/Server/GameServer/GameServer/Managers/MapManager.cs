@@ -4,54 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
-using GameServer.Models;
+using Models;
 
 namespace GameServer.Managers
 {
     class MapManager : Singleton<MapManager>
     {
+        Dictionary<int, Map> Maps = new Dictionary<int, Map>();
 
-        #region Fields
-
-        /// <summary>
-        /// the key is mapID
-        /// </summary>
-        readonly Dictionary<int, Map> maps = new Dictionary<int, Map>();
-
-        #endregion
-
-        #region Indexer
+        public void Init()
+        {
+            foreach (var mapdefine in DataManager.Instance.Maps.Values)
+            {
+                Map map = new Map(mapdefine);
+                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.Define.ID, map.Define.Name);
+                this.Maps[mapdefine.ID] = map;
+            }
+        }
 
         public Map this[int key]
         {
             get
             {
-                return this.maps[key];
+                return this.Maps[key];
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
-        public void Init()
-        {
-            foreach (var mapDefine in DataManager.Instance.MapDefines.Values)
-            {
-                Map map = new Map(mapDefine);
-                Log.InfoFormat("MapManager.Init > Map:{0}:{1}", map.Define.ID, map.Define.Name);
-                this.maps[mapDefine.ID] = map;
-            }
-        }
 
         public void Update()
         {
-            foreach(var map in this.maps.Values)
+            foreach(var map in this.Maps.Values)
             {
                 map.Update();
             }
         }
-        #endregion
-
     }
 }

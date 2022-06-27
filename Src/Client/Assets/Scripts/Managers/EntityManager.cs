@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using Entities;
-using Protocol;
-using Utilities;
+﻿using Entities;
+using Protocol.Message;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Managers
 {
@@ -11,19 +13,11 @@ namespace Managers
         void OnEntityChanged(Entity entity);
         void OnEntityEvent(EntityEvent @event);
     }
-     class EntityManager : Singleton<EntityManager>
+    class EntityManager : Singleton<EntityManager>
     {
 
-        #region Fields
-        /// <summary>
-        /// the id is EntityId
-        /// </summary>
         Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
         Dictionary<int, IEntityNotify> notifiers = new Dictionary<int, IEntityNotify>();
-
-        #endregion
-
-        #region Public Methods
 
         public void RegisterEntityChangeNotify(int entityId, IEntityNotify notify)
         {
@@ -32,35 +26,35 @@ namespace Managers
 
         public void AddEntity(Entity entity)
         {
-            entities[entity.EntityID] = entity;
+            entities[entity.entityId] = entity;
         }
-        
-        public void RemoveEntity(int entityId)
+
+        public void RemoveEntity(NEntity entity)
         {
-            this.entities.Remove(entityId);
-            if (notifiers.ContainsKey(entityId))
+            this.entities.Remove(entity.Id);
+            if (notifiers.ContainsKey(entity.Id))
             {
-                notifiers[entityId].OnEntityRemoved();
-                notifiers.Remove(entityId);
+                notifiers[entity.Id].OnEntityRemoved();
+                notifiers.Remove(entity.Id);
             }
         }
 
-        internal void OnEntitySync(NEntitySync nEntitySync)
+        internal void OnEntitySync(NEntitySync data)
         {
-            entities.TryGetValue(nEntitySync.Id, out Entity entity);
+            Entity entity = null;
+            entities.TryGetValue(data.Id, out entity);
             if (entity != null)
             {
-                if (nEntitySync.Entity != null)
+                if (data.Entity != null)
                 {
-                    entity.NEntity = nEntitySync.Entity;
+                    entity.EntityData = data.Entity;
                 }
-                if (notifiers.ContainsKey(nEntitySync.Id))
+                if (notifiers.ContainsKey(data.Id))
                 {
-                    notifiers[entity.EntityID].OnEntityChanged(entity);
-                    notifiers[entity.EntityID].OnEntityEvent(nEntitySync.Event);
+                    notifiers[entity.entityId].OnEntityChanged(entity);
+                    notifiers[entity.entityId].OnEntityEvent(data.Event);
                 }
             }
         }
-        #endregion
     }
 }
