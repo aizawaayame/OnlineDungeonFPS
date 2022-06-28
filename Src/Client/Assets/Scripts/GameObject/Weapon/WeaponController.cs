@@ -71,6 +71,7 @@ public class WeaponController : MonoBehaviour
     #region Properties
     public float LastChargeTriggerTimestamp { get; private set; }
     public GameObject Owner { get; set; }
+    public GameObject WeaponRoot { get => weaponRoot; }
     public GameObject SourcePrefab { get; set; }
     public bool IsCharging { get; private set; }
     public float CurrentAmmoRatio { get; private set; }
@@ -102,13 +103,13 @@ public class WeaponController : MonoBehaviour
             continuousShootAudioSource.playOnAwake = false;
             continuousShootAudioSource.clip = continuousShootLoopSfx;
             continuousShootAudioSource.outputAudioMixerGroup =
-                AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponShoot);
+                AudioUtil.GetAudioGroup(AudioUtil.AudioGroups.WeaponShoot);
             continuousShootAudioSource.loop = true;
         }
         
     }
 
-    void PlaySFX(AudioClip sfx) => AudioUtility.CreateSFX(sfx, transform.position, AudioUtility.AudioGroups.WeaponShoot, 0.0f);
+    void PlaySFX(AudioClip sfx) => AudioUtil.CreateSFX(sfx, transform.position, AudioUtil.AudioGroups.WeaponShoot, 0.0f);
 
 
     void Reload()

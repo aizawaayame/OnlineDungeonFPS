@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Managers;
 using Protocol.Message;
 using UnityEngine;
 

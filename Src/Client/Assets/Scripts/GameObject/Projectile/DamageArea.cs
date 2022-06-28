@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using Unity.FPS.Game;
 using UnityEngine;
 
 public class DamageArea : MonoBehaviour
@@ -15,23 +16,23 @@ public class DamageArea : MonoBehaviour
     public void InflictDamageInArea(float damage, Vector3 center, LayerMask layers,
         QueryTriggerInteraction interaction, GameObject owner)
     {
-        List<HealthController> healths = new List<HealthController>();
+        List<DamageableModule> damageables = new List<DamageableModule>();
         Collider[] affectedColliders = Physics.OverlapSphere(center, areaOfEffectDistance, layers, interaction);
         foreach (var coll in affectedColliders)
         {
-            HealthController health = GetComponentInParent<HealthController>();
-            if (health != null)
+            DamageableModule damageable = coll.GetComponent<DamageableModule>();
+            if (damageable != null)
             {
-                if (!healths.Contains(health))
+                if (!damageables.Contains(damageable))
                 {
-                    healths.Add(health);
+                    damageables.Add(damageable);
                 }
             }
         }
-        foreach (HealthController health in healths)
+        foreach (DamageableModule damageable in damageables)
         {
-            float distance = Vector3.Distance(health.transform.position, transform.position);
-            health.InflictDamage(
+            float distance = Vector3.Distance(damageable.transform.position, transform.position);
+            damageable.InflictDamage(
                 damage * damageRatioOverDistance.Evaluate(distance / areaOfEffectDistance), owner);
         }
     }

@@ -1,13 +1,12 @@
-﻿
-using Unity.FPS.Game;
+﻿using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour
 {
-    public UnityAction<float> OnHealed;
-    public UnityAction<float, GameObject> OnDamaged;
-    public UnityAction OnDie;
+    public UnityAction<float> onHealed;
+    public UnityAction<float, UnityEngine.GameObject> onDamaged;
+    public UnityAction onDie;
 
     #region Const
 
@@ -49,11 +48,11 @@ public class HealthController : MonoBehaviour
         float trueHealAmount = CurrentHealth - healthBefore;
         if (trueHealAmount > 0f)
         {
-            OnHealed?.Invoke(trueHealAmount);
+            onHealed?.Invoke(trueHealAmount);
         }
     }
 
-    public void TakeDamage(float dmg, GameObject damageSource)
+    public void TakeDamage(float dmg, UnityEngine.GameObject damageSource)
     {
         float healthBefore = CurrentHealth;
         CurrentHealth -= dmg;
@@ -61,17 +60,10 @@ public class HealthController : MonoBehaviour
         float trueDamageAmount = healthBefore - CurrentHealth;
         if (trueDamageAmount > 0f)
         {
-            OnDamaged?.Invoke(trueDamageAmount, damageSource);
+            onDamaged?.Invoke(trueDamageAmount, damageSource);
         }
+        HandleDeath();
     }
-
-    public void InflictDamage(float damage,GameObject damageSource)
-    {
-        float totalDamage = damage;
-        this.TakeDamage(totalDamage,damageSource);
-        
-    }
-    
 
     #endregion
     
@@ -81,12 +73,11 @@ public class HealthController : MonoBehaviour
     {
         if (IsDead)
             return;
-
         // call OnDie action
         if (CurrentHealth <= 0f)
         {
             IsDead = true;
-            OnDie?.Invoke();
+            onDie?.Invoke();
         }
     }
     

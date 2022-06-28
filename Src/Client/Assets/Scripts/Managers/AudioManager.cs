@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
-
+using Utilities;
 namespace Managers
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : MonoSingleton<AudioManager>
     {
         public AudioMixer[] AudioMixers { get; set; }
 

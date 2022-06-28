@@ -1,14 +1,10 @@
-﻿using Unity.FPS.Game;
+﻿using Managers;
 using UnityEngine;
 using UnityEngine.Audio;
-using AudioManager = Managers.AudioManager;
-
 namespace Utilities
 {
-    public static class AudioUtility
+    public static class AudioUtil
     {
-        static AudioManager audioManager;
-
         public enum AudioGroups
         {
             DamageTick,
@@ -23,7 +19,7 @@ namespace Utilities
             HUDObjective,
             EnemyAttack
         }
-
+        
         public static void CreateSFX(AudioClip clip, Vector3 position, AudioGroups audioGroup, float spatialBlend,
             float rolloffDistanceMin = 1f)
         {
@@ -43,10 +39,7 @@ namespace Utilities
 
         public static AudioMixerGroup GetAudioGroup(AudioGroups group)
         {
-            if (audioManager == null)
-                audioManager = GameObject.FindObjectOfType<AudioManager>();
-
-            var groups = audioManager.FindMatchingGroups(group.ToString());
+            var groups = AudioManager.Instance.FindMatchingGroups(group.ToString());
 
             if (groups.Length > 0)
                 return groups[0];
@@ -57,22 +50,16 @@ namespace Utilities
 
         public static void SetMasterVolume(float value)
         {
-            if (audioManager == null)
-                audioManager = GameObject.FindObjectOfType<AudioManager>();
-
             if (value <= 0)
                 value = 0.001f;
             float valueInDb = Mathf.Log10(value) * 20;
 
-            audioManager.SetFloat("MasterVolume", valueInDb);
+            AudioManager.Instance.SetFloat("MasterVolume", valueInDb);
         }
 
         public static float GetMasterVolume()
         {
-            if (audioManager == null)
-                audioManager = GameObject.FindObjectOfType<AudioManager>();
-
-            audioManager.GetFloat("MasterVolume", out var valueInDb);
+            AudioManager.Instance.GetFloat("MasterVolume", out var valueInDb);
             return Mathf.Pow(10f, valueInDb / 20.0f);
         }
     }

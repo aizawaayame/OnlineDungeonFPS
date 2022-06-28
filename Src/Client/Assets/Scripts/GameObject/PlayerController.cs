@@ -1,4 +1,6 @@
-﻿using Unity.FPS.Game;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 using Managers;
@@ -6,7 +8,7 @@ using Models;
 using Protocol.Message;
 using Services;
 
-[RequireComponent(typeof(CharacterController), typeof(AudioSource))]
+[RequireComponent(typeof(CharacterController), typeof(AudioSource),typeof(HealthController))]
 public class PlayerController : MonoBehaviour
 {
 
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip landSfx;
     CharacterController charController;
     Actor actor;
+    HealthController health;
     Vector3 groundNormal;
     Vector3 characterVelocity;
     Vector3 lastImpactSpeed;
@@ -84,16 +87,18 @@ public class PlayerController : MonoBehaviour
     public Camera WeaponCamera { get => playerWeaponController.WeaponCamera; }
 
     #endregion
-    
+
     void Start()
     {
+        ActorManager.Instance.SetPlayer(gameObject);
         charController = GetComponent<CharacterController>();
         actor = GetComponent<Actor>();
+        health = GetComponent<HealthController>();
+        health.onDie += OnDie;
         charController.enableOverlapRecovery = true;
         SetCrouchingState(false, true);
         UpdateCharacterHeight(true);
     }
-
     void Update()
     {
         HasJumpedThisFrame = false;

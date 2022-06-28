@@ -30,6 +30,7 @@ public class LoadingManager : MonoBehaviour {
         UnityLogger.Init();
         Common.Log.Init("Unity");
         Common.Log.Info("LoadingManager start");
+        Application.targetFrameRate = 60;
         //初始化面板
         UILoading.SetActive(false);
         UILogin.SetActive(false);

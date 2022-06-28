@@ -158,7 +158,7 @@ public class ProjectileStandard : ProjectileBase
     bool IsHitValid(RaycastHit hit)
     {
 
-        if (hit.collider.isTrigger && hit.collider.GetComponentInParent<HealthController>() == null)
+        if (hit.collider.isTrigger && hit.collider.GetComponent<DamageableModule>() == null)
         {
             return false;
         }
@@ -182,10 +182,10 @@ public class ProjectileStandard : ProjectileBase
         else
         {
             // point damage
-            HealthController health = collider.GetComponentInParent<HealthController>();
-            if (health)
+            DamageableModule damageable = collider.GetComponent<DamageableModule>();
+            if (damageable)
             {
-                health.InflictDamage(damage, projectileBase.Owner);
+                damageable.InflictDamage(damage, projectileBase.Owner);
             }
         }
 
@@ -203,7 +203,7 @@ public class ProjectileStandard : ProjectileBase
         // impact sfx
         if (impactSfxClip)
         {
-            AudioUtility.CreateSFX(impactSfxClip, point, AudioUtility.AudioGroups.Impact, 1f, 3f);
+            AudioUtil.CreateSFX(impactSfxClip, point, AudioUtil.AudioGroups.Impact, 1f, 3f);
         }
 
         // Self Destruct

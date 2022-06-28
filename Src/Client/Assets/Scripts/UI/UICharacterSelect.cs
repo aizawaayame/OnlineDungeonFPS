@@ -4,12 +4,11 @@ using UnityEngine.UI;
 using Models;
 using Services;
 using Protocol.Message;
-using UnityEngine.Events;
-using Common.Data;
+using Managers;
 using TMPro;
 
 
-    public class UICharacterSelect : MonoBehaviour {
+public class UICharacterSelect : MonoBehaviour {
     
     #region Fields
 

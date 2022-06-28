@@ -25,14 +25,14 @@ public class UIMain : MonoSingleton<UIMain>
         
         this.UpdateAvatar();
 
-        health.OnDamaged += OnTakeDamage;
-        health.OnHealed += OnHealed;
+        health.onDamaged += OnTakeDamage;
+        health.onHealed += OnHealed;
     }
 
     void OnDestroy()
     {
-        health.OnDamaged -= OnTakeDamage;
-        health.OnHealed -= OnHealed;
+        health.onDamaged -= OnTakeDamage;
+        health.onHealed -= OnHealed;
     }
     private void UpdateAvatar()
     {
