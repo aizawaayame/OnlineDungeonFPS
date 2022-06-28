@@ -18,6 +18,7 @@ public class PatrolPath : MonoBehaviour
     public List<Transform> PathNodes { get => pathNodes; }
 
     #endregion
+    
     void Start()
     {
         foreach (var enemyController in enemiesToAssign)
@@ -25,6 +26,8 @@ public class PatrolPath : MonoBehaviour
             enemyController.PatrolPath = this;
         }
     }
+
+    #region Public Methods
 
     public float GetDistanceToNode(Vector3 origin, int destinationNodeIndex)
     {
@@ -45,5 +48,8 @@ public class PatrolPath : MonoBehaviour
 
         return pathNodes[nodeIndex].position;
     }
+
+    #endregion
+
 }
 

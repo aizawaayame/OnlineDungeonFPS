@@ -39,14 +39,13 @@ public class MonsterMobile : MonoBehaviour
     AudioSource audioSource;
 
     #endregion
-
-
+    
     #region Properties
 
     public AIState AiState { get; private set; }
 
     #endregion
-
+    
     void Start()
     {
         monsterController = GetComponent<MonsterController>();
@@ -76,7 +75,9 @@ public class MonsterMobile : MonoBehaviour
             moveSpeed / monsterController.NavMeshAgent.speed);
     }
 
-    void UpdateAiStateTransitions()
+    #region Private Methods
+
+        void UpdateAiStateTransitions()
     {
         switch (AiState)
         {
@@ -146,12 +147,6 @@ public class MonsterMobile : MonoBehaviour
         {
             OnDetectVfx[i].Play();
         }
-
-        if (OnDetectSfx)
-        {
-            AudioUtil.CreateSFX(OnDetectSfx, transform.position, AudioUtil.AudioGroups.EnemyDetection, 1f);
-        }
-
         animator.SetBool(ANIM_ALERTED_PARAMETER, true);
     }
 
@@ -180,6 +175,10 @@ public class MonsterMobile : MonoBehaviour
 
         animator.SetTrigger(ANIM_ON_DAMAGED_PARAMETER);
     }
+
+    #endregion
+
+
 }
 
 

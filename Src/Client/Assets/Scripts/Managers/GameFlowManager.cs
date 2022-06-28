@@ -13,7 +13,6 @@ namespace Managers
         }
         void Start()
         {
-            AudioUtil.SetMasterVolume(1);
         }
         void OnDestroy()
         {

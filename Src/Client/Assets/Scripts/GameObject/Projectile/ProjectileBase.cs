@@ -4,7 +4,7 @@ using UnityEngine.Events;
 public abstract class ProjectileBase : MonoBehaviour
 {
     
-    public UnityAction OnShoot;
+    public UnityAction onShoot;
     
     #region Properties
     public GameObject Owner { get; private set; }
@@ -23,7 +23,7 @@ public abstract class ProjectileBase : MonoBehaviour
         InheritedMuzzleVelocity = controller.MuzzleWorldVelocity;
         InitialCharge = controller.CurrentCharge;
 
-        OnShoot?.Invoke();
+        onShoot?.Invoke();
     }
 }
 

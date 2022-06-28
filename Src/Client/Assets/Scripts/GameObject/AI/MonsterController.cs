@@ -375,10 +375,6 @@ public class MonsterController : MonoBehaviour
             DetectionModule.OnDamaged(damageSource);
             onDamaged?.Invoke();
             lastTimeDamaged = Time.time;
-
-            if (DamageTick && !wasDamagedThisFrame)
-                AudioUtil.CreateSFX(DamageTick, transform.position, AudioUtil.AudioGroups.DamageTick, 0f);
-        
             wasDamagedThisFrame = true;
         }
     }

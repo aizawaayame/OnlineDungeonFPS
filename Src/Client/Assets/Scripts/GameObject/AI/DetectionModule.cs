@@ -36,8 +36,10 @@ public class DetectionModule : MonoBehaviour
     protected float TimeLastSeenTarget = Mathf.NegativeInfinity;
 
     #endregion
-    
-    /// <summary>
+
+    #region Public Methods
+
+     /// <summary>
     /// Handle monster's target detection.
     /// </summary>
     /// <param name="actor">The actor of the monster.</param>
@@ -124,5 +126,7 @@ public class DetectionModule : MonoBehaviour
             animator.SetTrigger(ANIM_ATTACK_PARAMETER);
         }
     }
+
+    #endregion
 }
 

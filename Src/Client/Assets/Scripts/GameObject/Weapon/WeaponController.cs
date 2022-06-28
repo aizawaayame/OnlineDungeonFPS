@@ -72,6 +72,7 @@ public class WeaponController : MonoBehaviour
     public float LastChargeTriggerTimestamp { get; private set; }
     public GameObject Owner { get; set; }
     public GameObject WeaponRoot { get => weaponRoot; }
+    public Transform WeaponMuzzle { get => weaponMuzzle; }
     public GameObject SourcePrefab { get; set; }
     public bool IsCharging { get; private set; }
     public float CurrentAmmoRatio { get; private set; }
@@ -102,14 +103,11 @@ public class WeaponController : MonoBehaviour
             continuousShootAudioSource = gameObject.AddComponent<AudioSource>();
             continuousShootAudioSource.playOnAwake = false;
             continuousShootAudioSource.clip = continuousShootLoopSfx;
-            continuousShootAudioSource.outputAudioMixerGroup =
-                AudioUtil.GetAudioGroup(AudioUtil.AudioGroups.WeaponShoot);
             continuousShootAudioSource.loop = true;
         }
         
     }
-
-    void PlaySFX(AudioClip sfx) => AudioUtil.CreateSFX(sfx, transform.position, AudioUtil.AudioGroups.WeaponShoot, 0.0f);
+    
 
 
     void Reload()

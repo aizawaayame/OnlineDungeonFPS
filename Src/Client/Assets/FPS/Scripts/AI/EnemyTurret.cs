@@ -132,6 +132,7 @@ namespace Unity.FPS.AI
 
         void OnDetectedTarget()
         {
+            
             if (AiState == AIState.Idle)
             {
                 AiState = AIState.Attack;

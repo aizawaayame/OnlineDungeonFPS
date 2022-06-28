@@ -41,7 +41,7 @@ public class ProjectileStandard : ProjectileBase
     void OnEnable()
     {
         projectileBase = GetComponent<ProjectileBase>();
-        projectileBase.OnShoot += OnShoot;
+        projectileBase.onShoot += OnShoot;
         Destroy(gameObject, maxLifeTime);
     }
 
@@ -139,7 +139,6 @@ public class ProjectileStandard : ProjectileBase
                     closestHit = hit;
                 }
             }
-
             if (foundHit)
             {
                 if (closestHit.distance <= 0f)
@@ -147,7 +146,6 @@ public class ProjectileStandard : ProjectileBase
                     closestHit.point = root.position;
                     closestHit.normal = -transform.forward;
                 }
-
                 OnHit(closestHit.point, closestHit.normal, closestHit.collider);
             }
         }
@@ -188,7 +186,6 @@ public class ProjectileStandard : ProjectileBase
                 damageable.InflictDamage(damage, projectileBase.Owner);
             }
         }
-
         // impact vfx
         if (impactVfx)
         {
@@ -199,13 +196,6 @@ public class ProjectileStandard : ProjectileBase
                 Destroy(impactVfxInstance.gameObject, impactVfxLifetime);
             }
         }
-
-        // impact sfx
-        if (impactSfxClip)
-        {
-            AudioUtil.CreateSFX(impactSfxClip, point, AudioUtil.AudioGroups.Impact, 1f, 3f);
-        }
-
         // Self Destruct
         Destroy(this.gameObject);
     }

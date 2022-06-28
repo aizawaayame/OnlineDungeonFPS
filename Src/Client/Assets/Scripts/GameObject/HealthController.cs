@@ -14,9 +14,15 @@ public class HealthController : MonoBehaviour
 
     #endregion
 
+    #region Fields
+
+    [SerializeField] float maxHealth;
+
+    #endregion
+    
     #region Properties
 
-    public float MaxHealth { get; set; }
+    public float MaxHealth { get=>maxHealth; set => maxHealth = value; }
     public float CurrentHealth { get; set; }
     
     bool CanPickup { get => CurrentHealth < MaxHealth; }
@@ -54,6 +60,7 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(float dmg, UnityEngine.GameObject damageSource)
     {
+        Debug.Log($"{CurrentHealth}");
         float healthBefore = CurrentHealth;
         CurrentHealth -= dmg;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
@@ -82,11 +89,6 @@ public class HealthController : MonoBehaviour
     }
     
     #endregion
-
-
-
-
-  
-
+    
 }
 

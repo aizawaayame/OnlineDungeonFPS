@@ -34,7 +34,6 @@ public class PlayerWeaponController : MonoBehaviour
     const float DEFAULT_FOV = 60f;
     const float WEAPON_FOV_MULTIPLIER = 1f;
     const float WEAPON_SWITCH_DELAY = 1f;
-    readonly LayerMask FPS_WEAPON_LAYER;
 
     #endregion
 
@@ -46,7 +45,7 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] Transform defaultWeaponPosition;
     [SerializeField] Transform aimingWeaponPosition;
     [SerializeField] Transform downWeaponPosition;
-    
+    [SerializeField] LayerMask fpsWeaponLayer ;
     WeaponController[] weaponSlots = new WeaponController[9]; // 9 available weapon slots
     PlayerController playerController;
     float weaponBobFactor;
@@ -365,7 +364,7 @@ public class PlayerWeaponController : MonoBehaviour
                 weaponInstance.Owner = gameObject;
                 weaponInstance.SourcePrefab = weaponPrefab.gameObject;
                 weaponInstance.ShowWeapon(false);
-                int layerIndex = Mathf.RoundToInt(Mathf.Log(FPS_WEAPON_LAYER.value, 2));
+                int layerIndex = Mathf.RoundToInt(Mathf.Log(fpsWeaponLayer.value, 2));
                 foreach (Transform t in weaponInstance.gameObject.GetComponentsInChildren<Transform>(true))
                 {
                     t.gameObject.layer = layerIndex;
