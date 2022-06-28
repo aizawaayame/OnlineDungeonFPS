@@ -28,7 +28,7 @@ public class DetectionModule : MonoBehaviour
     #region Properties
     public Transform DetectionSourcePoint { get => detectionSourcePoint; }
     public float DetectionRange { get => detectionRange; }
-    public float AttackRange { get => AttackRange; }
+    public float AttackRange { get => attackRange; }
     public GameObject KnownDetectedTarget { get; private set; }
     public bool IsTargetInAttackRange { get; private set; }
     public bool IsSeeingTarget { get; private set; }
