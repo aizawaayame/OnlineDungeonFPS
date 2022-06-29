@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 597260088338660282}
   - component: {fileID: 4917123458604662971}
   - component: {fileID: -5132872093195328814}
+  - component: {fileID: 4355642510433950543}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -202,11 +203,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingWeapons:
   - {fileID: 2520854078610216520, guid: 71d989b9c797d5e4dac5da1eae96adcd, type: 3}
+  - {fileID: 2826243092228638715, guid: 4e023421c4ab31040b85bb66159acf3c, type: 3}
   weaponCamera: {fileID: 8312313055892174682}
   weaponParentSocket: {fileID: 6548945254359125740}
   defaultWeaponPosition: {fileID: 5804613235509455343}
   aimingWeaponPosition: {fileID: 4564432940025050856}
   downWeaponPosition: {fileID: 8113081958950162868}
+  fpsWeaponLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &4917123458604662971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
 --- !u!114 &-5132872093195328814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +239,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affiliation: 0
   aimPoint: {fileID: 6823532690916524167}
+--- !u!114 &4355642510433950543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597260088338660165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d21adc8c2f34b67a37d7d9ac05ec09c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4917123458604662971}
 --- !u!1 &608417987662024991
 GameObject:
   m_ObjectHideFlags: 0

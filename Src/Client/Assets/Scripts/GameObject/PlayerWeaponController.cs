@@ -17,9 +17,9 @@ public class PlayerWeaponController : MonoBehaviour
         PutUpNew,
     }
     
-    public UnityAction<WeaponController> OnSwitchedToWeapon;
-    public UnityAction<WeaponController, int> OnAddedWeapon;
-    public UnityAction<WeaponController, int> OnRemovedWeapon;
+    public UnityAction<WeaponController> onSwitchedToWeapon;
+    public UnityAction<WeaponController, int> onAddedWeapon;
+    public UnityAction<WeaponController, int> onRemovedWeapon;
 
     #region Const
     
@@ -77,7 +77,7 @@ public class PlayerWeaponController : MonoBehaviour
 
         SetFov(DEFAULT_FOV);
 
-        OnSwitchedToWeapon += OnWeaponSwitched;
+        onSwitchedToWeapon += OnWeaponSwitched;
 
         // Add starting weapons
         foreach (var weapon in startingWeapons)
@@ -200,9 +200,9 @@ public class PlayerWeaponController : MonoBehaviour
                 ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
 
                 WeaponController newWeapon = GetWeaponAtSlotIndex(weaponSwitchNewWeaponIndex);
-                if (OnSwitchedToWeapon != null)
+                if (onSwitchedToWeapon != null)
                 {
-                    OnSwitchedToWeapon.Invoke(newWeapon);
+                    onSwitchedToWeapon.Invoke(newWeapon);
                 }
             }
             else
@@ -316,9 +316,9 @@ public class PlayerWeaponController : MonoBehaviour
                 ActiveWeaponIndex = weaponSwitchNewWeaponIndex;
                 switchingTimeFactor = 0f;
                 WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
-                if (OnSwitchedToWeapon != null)
+                if (onSwitchedToWeapon != null)
                 {
-                    OnSwitchedToWeapon.Invoke(newWeapon);
+                    onSwitchedToWeapon.Invoke(newWeapon);
                 }
 
                 if (newWeapon)
@@ -372,9 +372,9 @@ public class PlayerWeaponController : MonoBehaviour
 
                 weaponSlots[i] = weaponInstance;
 
-                if (OnAddedWeapon != null)
+                if (onAddedWeapon != null)
                 {
-                    OnAddedWeapon.Invoke(weaponInstance, i);
+                    onAddedWeapon.Invoke(weaponInstance, i);
                 }
 
                 return true;
@@ -396,9 +396,9 @@ public class PlayerWeaponController : MonoBehaviour
             {
                 weaponSlots[i] = null;
 
-                if (OnRemovedWeapon != null)
+                if (onRemovedWeapon != null)
                 {
-                    OnRemovedWeapon.Invoke(weaponInstance, i);
+                    onRemovedWeapon.Invoke(weaponInstance, i);
                 }
 
                 Destroy(weaponInstance.gameObject);

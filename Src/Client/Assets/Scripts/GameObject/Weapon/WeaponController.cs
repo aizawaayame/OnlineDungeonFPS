@@ -27,10 +27,10 @@ public class WeaponController : MonoBehaviour
     
     #region Fields
     
-    [SerializeField] string weaponName;
-    [SerializeField] Sprite weaponIcon;
+    [SerializeField] public string weaponName;
+    [SerializeField] public Sprite weaponIcon;
     [SerializeField] public CrosshairData crosshairDataDefault;
-    [SerializeField] CrosshairData crosshairDataTargetInSight;
+    [SerializeField] public CrosshairData crosshairDataTargetInSight;
     [SerializeField] GameObject weaponRoot;
     [SerializeField] Transform weaponMuzzle;
     [SerializeField] WeaponShootType shootType;
@@ -96,8 +96,7 @@ public class WeaponController : MonoBehaviour
         currentAmmo = maxAmmo;
         lastMuzzlePosition = weaponMuzzle.position;
         shootAudioSource = GetComponent<AudioSource>();
-
-
+        
         if (useContinuousShootSound)
         {
             continuousShootAudioSource = gameObject.AddComponent<AudioSource>();

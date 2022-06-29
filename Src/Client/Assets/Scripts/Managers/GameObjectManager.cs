@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Entities;
-using Services;
-using Protocol.Message;
 using Models;
-using Managers;
+
 
 namespace Managers
 {
@@ -88,9 +85,13 @@ namespace Managers
                 if (character.IsCurrentPlayer)
                 {
                     User.Instance.CurrentCharacterObject = go;
+                    Debug.Log("指定角色成功");
                     pc.enabled = true;
                     pc.MainCamera.enabled = true;
                     pc.WeaponCamera.enabled = true;
+
+                    HealthController health = pc.GetComponent<HealthController>();
+                    health.MaxHealth = 995 + User.Instance.CurrentCharacter.Level * 10;
                 }
                 else
                 {

@@ -25132,6 +25132,8 @@ GameObject:
   - component: {fileID: 6688923625835218249}
   - component: {fileID: 6688923625835218250}
   - component: {fileID: 6688923625835218251}
+  - component: {fileID: 416172958445862370}
+  - component: {fileID: 9103982427019468349}
   m_Layer: 0
   m_Name: Monster_Turret
   m_TagString: Untagged
@@ -25290,6 +25292,37 @@ MonoBehaviour:
   - {fileID: 2980255395326809894}
   - {fileID: 8109752382487725104}
   onDetectSfx: {fileID: 8300000, guid: 7fac2ef5c59df1a45985d3eb894e8d47, type: 3}
+--- !u!114 &416172958445862370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688923625835218252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d10f2a749ed4502b6bfa19e1b297f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 6688923625835218248}
+  HealthBarImage: {fileID: 1053988570769828065}
+  HealthBarPivot: {fileID: 5813352282469781007}
+  HideFullHealthBar: 1
+--- !u!114 &9103982427019468349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6688923625835218252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef63c6d0a6074d07b831902fcf22117f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CompassMarkerPrefab: {fileID: 4644687174481478704, guid: d316aa8b72f5973488bfae66842031c0,
+    type: 3}
+  TextDirection: 
 --- !u!1 &7521577297637140043
 GameObject:
   m_ObjectHideFlags: 0
@@ -30295,18 +30328,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3089750633521961120}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3089750633521824290 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: fad35a70731ab804c975c717ee8862a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 3089750633521961120}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3089750633521824294 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400006, guid: fad35a70731ab804c975c717ee8862a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 3089750633521961120}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3089750633512545728 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: fad35a70731ab804c975c717ee8862a5,
@@ -30316,6 +30337,18 @@ Animator:
 --- !u!4 &3089750633521824306 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400018, guid: fad35a70731ab804c975c717ee8862a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3089750633521961120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3089750633521824290 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: fad35a70731ab804c975c717ee8862a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3089750633521961120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3089750633521824294 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: fad35a70731ab804c975c717ee8862a5,
     type: 3}
   m_PrefabInstance: {fileID: 3089750633521961120}
   m_PrefabAsset: {fileID: 0}

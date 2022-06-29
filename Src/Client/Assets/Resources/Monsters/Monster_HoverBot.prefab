@@ -9764,6 +9764,8 @@ GameObject:
   - component: {fileID: 2936550448841225464}
   - component: {fileID: 2936550448841225465}
   - component: {fileID: 2936550448841225466}
+  - component: {fileID: 2312232564977179587}
+  - component: {fileID: 5921944132926672940}
   m_Layer: 0
   m_Name: Monster_HoverBot
   m_TagString: Untagged
@@ -10022,6 +10024,37 @@ MonoBehaviour:
   PitchDistortionMovementSpeed:
     Min: 1
     Max: 1.5
+--- !u!114 &2312232564977179587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936550448841225467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d10f2a749ed4502b6bfa19e1b297f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 2936550448841225471}
+  HealthBarImage: {fileID: 8841666195705764182}
+  HealthBarPivot: {fileID: 2245766757727104852}
+  HideFullHealthBar: 1
+--- !u!114 &5921944132926672940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936550448841225467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef63c6d0a6074d07b831902fcf22117f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CompassMarkerPrefab: {fileID: 4644687174481478704, guid: d316aa8b72f5973488bfae66842031c0,
+    type: 3}
+  TextDirection: 
 --- !u!1 &3293889435474976426
 GameObject:
   m_ObjectHideFlags: 0

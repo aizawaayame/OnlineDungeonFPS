@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-[RequireComponent(typeof(WeaponController))]
 public class WeaponFuelCellHandler : MonoBehaviour
 {
 

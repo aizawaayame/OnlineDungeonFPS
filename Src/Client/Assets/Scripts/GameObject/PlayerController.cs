@@ -12,7 +12,7 @@ using Services;
 public class PlayerController : MonoBehaviour
 {
 
-    public UnityAction<bool> OnStanceChanged;
+    public UnityAction<bool> onStanceChanged;
 
     #region Const
 
@@ -298,9 +298,9 @@ public class PlayerController : MonoBehaviour
             targetCharacterHeight = CAPSULE_HEIGHT_STANDING;
         }
 
-        if (OnStanceChanged != null)
+        if (onStanceChanged != null)
         {
-            OnStanceChanged.Invoke(crouched);
+            onStanceChanged.Invoke(crouched);
         }
 
         IsCrouching = crouched;

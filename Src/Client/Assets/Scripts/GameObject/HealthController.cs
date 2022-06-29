@@ -10,7 +10,7 @@ public class HealthController : MonoBehaviour
 
     #region Const
 
-    const float CRITICAL_HEALTH_RATIO = 0.3f;
+     const float CRITICAL_HEALTH_RATIO = 0.3f;
 
     #endregion
 
@@ -21,13 +21,13 @@ public class HealthController : MonoBehaviour
     #endregion
     
     #region Properties
-
+    public float CriticalHealthRatio { get => CRITICAL_HEALTH_RATIO; }
     public float MaxHealth { get=>maxHealth; set => maxHealth = value; }
     public float CurrentHealth { get; set; }
     
-    bool CanPickup { get => CurrentHealth < MaxHealth; }
+    public bool CanPickup { get => CurrentHealth < MaxHealth; }
 
-    bool IsCritical
+    public bool IsCritical
     {
         get
         {
