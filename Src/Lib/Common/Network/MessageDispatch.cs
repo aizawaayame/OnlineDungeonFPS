@@ -30,6 +30,9 @@ namespace Network
             if (message.mapCharacterEnter != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.mapCharacterEnter); }
             if (message.mapEntitySync != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.mapEntitySync); }
 
+            if (message.buyWeapon != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.buyWeapon); }
+            if (message.addGold != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.addGold); }
+
         }
     }
 }
