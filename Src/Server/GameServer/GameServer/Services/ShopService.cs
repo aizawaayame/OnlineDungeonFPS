@@ -11,7 +11,7 @@ using GameServer.Managers;
 
 namespace GameServer.Services
 {
-    class ShopService
+    class ShopService : Singleton<ShopService>
     {
         public ShopService()
         {
@@ -20,9 +20,16 @@ namespace GameServer.Services
 
         }
 
+        public void Init()
+        {
+
+        }
+
         private void OnAddGold(NetConnection<NetSession> sender, GoldAddRequest message)
         {
+           
             long gold = sender.Session.Character.Gold;
+            Log.InfoFormat($"AddGold:{gold}");
             gold += message.goldAdd;
             sender.Session.Character.Gold = gold;
             int dbid = sender.Session.Character.Id;
@@ -35,6 +42,7 @@ namespace GameServer.Services
         private void OnBuyWeapon(NetConnection<NetSession> sender, BuyWeaponRequest message)
         {
             long gold = sender.Session.Character.Gold;
+            Log.InfoFormat($"BuyWeapon:{gold}");
             gold -= message.goldCost;
             sender.Session.Character.Gold = gold;
             int dbid = sender.Session.Character.Id;

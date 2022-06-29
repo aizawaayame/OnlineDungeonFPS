@@ -1,4 +1,5 @@
 ﻿using System;
+using Models;
 using UnityEngine;
 using Utilities;
 using UnityEngine.SceneManagement;
@@ -34,6 +35,7 @@ namespace Managers
         {
             EventUtil.AddListener<AllObjectivesCompletedEvent>(OnAllObjectivesCompleted);
             EventUtil.AddListener<PlayerDeathEvent>(OnPlayerDeath);
+            User.Instance.CurrentCharacterObject = GameObject.FindGameObjectWithTag("Player");
         }
 
         void Update()
@@ -78,6 +80,9 @@ namespace Managers
                 displayMessageEvent.Message = WinGameMessage;
                 displayMessageEvent.DelayBeforeDisplay = DelayBeforeWinMessage;
                 EventUtil.Broadcast(displayMessageEvent);
+                
+                User.Instance.AddGold(1500);
+                ShopService.Instance.SendAddGold(1500);
             }
             else
             {

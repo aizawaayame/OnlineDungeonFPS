@@ -171,7 +171,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4331601451828590713}
-  - component: {fileID: 6463422514764436446}
   m_Layer: 0
   m_Name: Detection_Module_SpinningRadar_L
   m_TagString: Untagged
@@ -194,23 +193,6 @@ Transform:
   m_Father: {fileID: 5516924742945577656}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6463422514764436446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276861790899143971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 927ff0b4cb9a5dd4fb83c45166cffc50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DetectionSourcePoint: {fileID: 5516924742945577602}
-  DetectionRange: 20
-  AttackRange: 15
-  KnownTargetTimeout: 15
-  Animator: {fileID: 2598942708492989202}
 --- !u!1 &525228880389304699
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +615,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050836832382206257}
-  - component: {fileID: 8780402169124123858}
   m_Layer: 0
   m_Name: Navigation_Module_TwinBladeJets
   m_TagString: Untagged
@@ -656,21 +637,6 @@ Transform:
   m_Father: {fileID: 5516924742945577606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -28.682001, y: 3.3750002, z: 1.4050001}
---- !u!114 &8780402169124123858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2575326700716883051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d6b672a3f9d27468cfdd79b2119c7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  AngularSpeed: 180
-  Acceleration: 10
 --- !u!1 &2598942708500365520
 GameObject:
   m_ObjectHideFlags: 0
@@ -5973,7 +5939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionSourcePoint: {fileID: 5516924742945577650}
-  detectionRange: 30
+  detectionRange: 300
   attackRange: 35
   knownTargetTimeout: 4
   animator: {fileID: 0}
@@ -13514,8 +13480,9 @@ MonoBehaviour:
   DeathVfx: {fileID: 8950624839484268180, guid: 2a8f5052fe50f7b41b17149abb0f7414,
     type: 3}
   DeathVfxSpawnPoint: {fileID: 7306313364729029040}
-  LootPrefab: {fileID: 0}
-  DropRate: 1
+  LootPrefab: {fileID: 3821022647543183838, guid: 2503d1dab0c6786478c8f58445d627c8,
+    type: 3}
+  DropRate: 0.4
 --- !u!114 &8922119594368642095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13537,8 +13504,8 @@ MonoBehaviour:
   OnDetectSfx: {fileID: 8300000, guid: 5b2687ed4e9fddd4ab750c59e9c4174b, type: 3}
   MovementSound: {fileID: 0}
   PitchDistortionMovementSpeed:
-    Min: 1
-    Max: 1.5
+    Min: 0
+    Max: 0
 --- !u!114 &8922119594368642094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13551,7 +13518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 400
+  maxHealth: 40
 --- !u!114 &8922119594368642092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13589,7 +13556,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 4
 --- !u!82 &8524973801720517878
 AudioSource:
   m_ObjectHideFlags: 0

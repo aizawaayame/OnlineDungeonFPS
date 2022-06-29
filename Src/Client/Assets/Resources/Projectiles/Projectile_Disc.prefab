@@ -98,24 +98,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39707e12cfc643c9861302810f49f694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.2
-  root: {fileID: 991169692527565698}
-  tip: {fileID: 991169692527565698}
-  maxLifeTime: 5
-  impactVfx: {fileID: 4260779743739990948, guid: bbe6bdea7cd168e428a309e9eb2e728b,
+  Radius: 0.2
+  Root: {fileID: 991169692527565698}
+  Tip: {fileID: 991169692527565698}
+  MaxLifeTime: 5
+  ImpactVfx: {fileID: 4260779743739990948, guid: bbe6bdea7cd168e428a309e9eb2e728b,
     type: 3}
-  impactVfxLifetime: 5
-  impactVfxSpawnOffset: 0.1
-  impactSfxClip: {fileID: 8300000, guid: cba089de3eef16d46baeda4077140a74, type: 3}
-  hittableLayers:
+  ImpactVfxLifetime: 5
+  ImpactVfxSpawnOffset: 0.1
+  ImpactSfxClip: {fileID: 8300000, guid: cba089de3eef16d46baeda4077140a74, type: 3}
+  HittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  speed: 30
-  gravityDownAcceleration: 10
-  trajectoryCorrectionDistance: -1
-  inheritWeaponVelocity: 0
-  damage: 40
-  areaOfDamage: {fileID: 991169692527565700}
+  Speed: 30
+  GravityDownAcceleration: 10
+  TrajectoryCorrectionDistance: -1
+  InheritWeaponVelocity: 0
+  Damage: 40
+  AreaOfDamage: {fileID: 991169692527565700}
 --- !u!114 &991169692527565700
 MonoBehaviour:
   m_ObjectHideFlags: 0

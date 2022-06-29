@@ -52,7 +52,8 @@ namespace Managers
 
         private void CreateCharacterObject(Character character)
         {
-            if (!Characters.ContainsKey(character.entityId) || Characters[character.entityId] == null)
+            User.Instance.CurrentCharacterObject = GameObject.FindGameObjectWithTag("Player");
+            /*if (!Characters.ContainsKey(character.entityId) || Characters[character.entityId] == null)
             {
                 Object obj = Resloader.Load<Object>(character.Define.Resource);
                 if (obj == null)
@@ -65,7 +66,7 @@ namespace Managers
                 Characters[character.entityId] = go;
 
             }
-            this.InitGameObject(Characters[character.entityId], character);
+            this.InitGameObject(Characters[character.entityId], character);*/
         }
 
         void InitGameObject(GameObject go, Character character)

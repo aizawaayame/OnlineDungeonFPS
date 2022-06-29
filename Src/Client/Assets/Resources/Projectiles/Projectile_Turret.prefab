@@ -44,24 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39707e12cfc643c9861302810f49f694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.1
-  root: {fileID: 1234775102728566840}
-  tip: {fileID: 3182641313367060089}
-  maxLifeTime: 5
-  impactVfx: {fileID: 7655095426451682942, guid: 4d48b487f11e62940a978c7c0c0cbcb4,
+  Radius: 0.1
+  Root: {fileID: 1234775102728566840}
+  Tip: {fileID: 3182641313367060089}
+  MaxLifeTime: 5
+  ImpactVfx: {fileID: 7655095426451682942, guid: 4d48b487f11e62940a978c7c0c0cbcb4,
     type: 3}
-  impactVfxLifetime: 5
-  impactVfxSpawnOffset: 0.1
-  impactSfxClip: {fileID: 0}
-  hittableLayers:
+  ImpactVfxLifetime: 5
+  ImpactVfxSpawnOffset: 0.1
+  ImpactSfxClip: {fileID: 0}
+  HittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  speed: 100
-  gravityDownAcceleration: 0
-  trajectoryCorrectionDistance: 5
-  inheritWeaponVelocity: 0
-  damage: 3
-  areaOfDamage: {fileID: 0}
+  Speed: 100
+  GravityDownAcceleration: 0
+  TrajectoryCorrectionDistance: 5
+  InheritWeaponVelocity: 0
+  Damage: 3
+  AreaOfDamage: {fileID: 0}
 --- !u!1 &6301279559776689890
 GameObject:
   m_ObjectHideFlags: 0

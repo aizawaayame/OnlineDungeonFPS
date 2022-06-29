@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4355642510433950543}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,7 +203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingWeapons:
   - {fileID: 2520854078610216520, guid: 71d989b9c797d5e4dac5da1eae96adcd, type: 3}
-  - {fileID: 2826243092228638715, guid: 4e023421c4ab31040b85bb66159acf3c, type: 3}
   weaponCamera: {fileID: 8312313055892174682}
   weaponParentSocket: {fileID: 6548945254359125740}
   defaultWeaponPosition: {fileID: 5804613235509455343}
@@ -224,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 1000
 --- !u!114 &-5132872093195328814
 MonoBehaviour:
   m_ObjectHideFlags: 0

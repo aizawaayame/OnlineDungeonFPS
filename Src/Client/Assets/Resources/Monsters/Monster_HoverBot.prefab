@@ -9813,7 +9813,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 4
 --- !u!82 &2693099721870068780
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9923,7 +9923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 15
 --- !u!114 &2936550448841225464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9994,8 +9994,9 @@ MonoBehaviour:
   DeathVfx: {fileID: 8950624839484268180, guid: 2a8f5052fe50f7b41b17149abb0f7414,
     type: 3}
   DeathVfxSpawnPoint: {fileID: 3923822918647691626}
-  LootPrefab: {fileID: 0}
-  DropRate: 1
+  LootPrefab: {fileID: 3821022647543183838, guid: 2503d1dab0c6786478c8f58445d627c8,
+    type: 3}
+  DropRate: 0.1
 --- !u!114 &2936550448841225466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21258,7 +21259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionSourcePoint: {fileID: 7496273225617632079}
-  detectionRange: 20
+  detectionRange: 300
   attackRange: 10
   knownTargetTimeout: 12
   animator: {fileID: 0}

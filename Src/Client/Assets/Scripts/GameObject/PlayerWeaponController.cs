@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
 using Managers;
-using Models;
-using Protocol.Message;
-using Services;
-using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -63,10 +59,7 @@ public class PlayerWeaponController : MonoBehaviour
     public bool IsAiming { get; private set; }
     public bool IsPointingAtEnemy { get; private set; }
     public int ActiveWeaponIndex { get; private set; }
-
-
-
-
+    
 
     void Start()
     {

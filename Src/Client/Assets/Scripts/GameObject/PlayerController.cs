@@ -1,12 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Unity.FPS.Game;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using Managers;
 using Models;
 using Protocol.Message;
 using Services;
+using Utilities;
 
 [RequireComponent(typeof(CharacterController), typeof(AudioSource),typeof(HealthController))]
 public class PlayerController : MonoBehaviour
@@ -122,7 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         IsDead = true;
         playerWeaponController.SwitchToWeaponIndex(-1, true);
-        EventManager.Broadcast(Events.PlayerDeathEvent);
+        EventUtil.Broadcast(Events.PlayerDeathEvent);
     }
 
     void GroundCheck()

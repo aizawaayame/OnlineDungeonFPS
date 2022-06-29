@@ -14,6 +14,7 @@ namespace GameServer.Services
 {
     class MapService : Singleton<MapService>
     {
+        float timeLastLog;
         public MapService()
         {
             MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<MapEntitySyncRequest>(this.OnMapEntitySync);
@@ -24,12 +25,17 @@ namespace GameServer.Services
         public void Init()
         {
             MapManager.Instance.Init();
+            timeLastLog = Time.time;
         }
 
         private void OnMapEntitySync(NetConnection<NetSession> sender, MapEntitySyncRequest request)
         {
             Character character = sender.Session.Character;
-            Log.InfoFormat("OnEntitySync: characterID:{0}:{1} Entity.Id:{2} Evt:{3} Entity:{4}", character.Id, character.Info.Name, request.entitySync.Id, request.entitySync.Event, request.entitySync.Entity.String());
+            if (Time.time - timeLastLog > 3f)
+            {
+                Log.InfoFormat("OnEntitySync: characterID:{0}:{1} Entity.Id:{2} Evt:{3} Entity:{4}", character.Id, character.Info.Name, request.entitySync.Id, request.entitySync.Event, request.entitySync.Entity.String());
+                timeLastLog = Time.time;
+            }
             MapManager.Instance[character.Info.mapId].UpdateEntity(request.entitySync);
         }
 

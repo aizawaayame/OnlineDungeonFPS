@@ -39,6 +39,7 @@ public class LoadingManager : MonoBehaviour {
         yield return DataManager.Instance.LoadData();
         MapService.Instance.Init();
         UserService.Instance.Init();
+        ShopService.Instance.Init();
         StatusService.Instance.Init();
         
         //进度条加载

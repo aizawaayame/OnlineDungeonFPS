@@ -1,6 +1,4 @@
-﻿
-using System.Collections.Generic;
-using Unity.FPS.Game;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageArea : MonoBehaviour

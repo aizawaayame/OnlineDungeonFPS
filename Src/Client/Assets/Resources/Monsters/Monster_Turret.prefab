@@ -25192,7 +25192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1acdf7ff65a44a50b53c35df5f9864f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 400
+  maxHealth: 80
 --- !u!114 &6688923625835218249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25263,8 +25263,9 @@ MonoBehaviour:
   DeathVfx: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647,
     type: 3}
   DeathVfxSpawnPoint: {fileID: 3089750633521824296}
-  LootPrefab: {fileID: 0}
-  DropRate: 1
+  LootPrefab: {fileID: 3821022647543183838, guid: 2503d1dab0c6786478c8f58445d627c8,
+    type: 3}
+  DropRate: 0.5
 --- !u!114 &6688923625835218251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30241,7 +30242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionSourcePoint: {fileID: 2025336986380032760}
-  detectionRange: 30
+  detectionRange: 300
   attackRange: 35
   knownTargetTimeout: 4
   animator: {fileID: 0}

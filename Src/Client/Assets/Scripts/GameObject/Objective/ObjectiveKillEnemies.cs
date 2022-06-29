@@ -44,12 +44,12 @@ public class ObjectiveKillEnemies : Objective
         // update the objective text according to how many enemies remain to kill
         if (targetRemaining == 0)
         {
-            CompleteObjective(string.Empty, GetUpdatedCounterAmount(), "Objective complete : " + Title);
+            CompleteObjective(string.Empty, GetUpdatedCounterAmount(), "任务完成 : " + Title);
         }
         else if (targetRemaining == 1)
         {
             string notificationText = NotificationEnemiesRemainingThreshold >= targetRemaining
-                ? "One enemy left"
+                ? "只剩下最后一个怪物了"
                 : string.Empty;
             UpdateObjective(string.Empty, GetUpdatedCounterAmount(), notificationText);
         }
@@ -57,7 +57,7 @@ public class ObjectiveKillEnemies : Objective
         {
             // create a notification text if needed, if it stays empty, the notification will not be created
             string notificationText = NotificationEnemiesRemainingThreshold >= targetRemaining
-                ? targetRemaining + " enemies to kill left"
+                ? "剩下" + targetRemaining + " 个怪物需要消灭 "
                 : string.Empty;
 
             UpdateObjective(string.Empty, GetUpdatedCounterAmount(), notificationText);

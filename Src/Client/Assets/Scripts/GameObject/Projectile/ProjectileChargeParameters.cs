@@ -20,7 +20,7 @@ public class ProjectileChargeParameters : MonoBehaviour
     void OnShoot()
     {
         // Apply the parameters based on projectile charge
-        Unity.FPS.Gameplay.ProjectileStandard proj = GetComponent<Unity.FPS.Gameplay.ProjectileStandard>();
+        ProjectileStandard proj = GetComponent<ProjectileStandard>();
         if (proj)
         {
             proj.Damage = Damage.GetValueFromRatio(projectileBase.InitialCharge);
